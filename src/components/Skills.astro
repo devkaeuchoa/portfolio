@@ -1,0 +1,36 @@
+---
+import { content, type Lang } from '../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = content[lang];
+const heading = lang === 'pt' ? 'Habilidades' : 'Skills';
+---
+
+<section id="skills">
+	<h2>{heading}</h2>
+	<ul class="skills">
+		{t.skills.map((skill) => <li>{skill}</li>)}
+	</ul>
+</section>
+
+<style>
+	.skills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+		padding: 0;
+	}
+
+	.skills li {
+		background: var(--color-surface);
+		border: 1px solid #262a33;
+		border-radius: 999px;
+		padding: 0.3rem 0.9rem;
+		font-size: 0.9rem;
+	}
+</style>

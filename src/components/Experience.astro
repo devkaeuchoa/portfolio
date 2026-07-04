@@ -1,0 +1,227 @@
+---
+import { content, type Lang } from '../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = content[lang];
+const heading = lang === 'pt' ? 'Experiência' : 'Experience';
+
+function extractYears(period: string): string {
+  const years = period.match(/\d{4}/g) ?? [];
+  const isOngoing = /atual|present/i.test(period);
+  const label = lang === 'pt' ? 'atual' : 'Present';
+
+  if (isOngoing) return years.length ? `${years[0]} — ${label}` : label;
+  if (years.length >= 2 && years[0] !== years[1]) return `${years[0]} — ${years[1]}`;
+  return years[0] ?? period;
+}
+
+const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
+---
+
+<section id="experiencia">
+	<h2>{heading}</h2>
+	<div class="timeline">
+		{
+			t.experience.map((job, i) => {
+				const isCurrent = /atual|present/i.test(job.period);
+				const descId = `exp-desc-${lang}-${i}`;
+				return (
+					<div class="row">
+						<span class="year">{extractYears(job.period)}</span>
+						<span class="dot-col">
+							<span
+								class:list={['dot', isCurrent && 'current']}
+								data-toggle={i}
+								role="button"
+								tabindex="0"
+								aria-expanded="false"
+								aria-controls={descId}
+								aria-label={`${toggleLabel} ${job.role} · ${job.company}`}
+							/>
+						</span>
+						<div class="content">
+							<h3
+								class:list={['role-company', isCurrent && 'current']}
+								data-toggle={i}
+								role="button"
+								tabindex="0"
+								aria-expanded="false"
+								aria-controls={descId}
+							>
+								{job.role} · {job.company}
+								<span class="chevron" aria-hidden="true">
+									›
+								</span>
+							</h3>
+							<p id={descId} class="description" hidden>
+								{job.description}
+							</p>
+						</div>
+					</div>
+				);
+			})
+		}
+	</div>
+</section>
+
+<script>
+	const toggles = document.querySelectorAll<HTMLElement>('[data-toggle]');
+
+	toggles.forEach((el) => {
+		const group = document.querySelectorAll<HTMLElement>(
+			`[data-toggle="${el.dataset.toggle}"]`
+		);
+		const descId = el.getAttribute('aria-controls');
+		const desc = descId ? document.getElementById(descId) : null;
+		const row = el.closest<HTMLElement>('.row');
+		if (!desc || !row) return;
+
+		const toggle = () => {
+			const expanded = row.classList.toggle('is-open');
+			desc.hidden = !expanded;
+			group.forEach((t) => t.setAttribute('aria-expanded', String(expanded)));
+		};
+
+		el.addEventListener('click', toggle);
+		el.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				toggle();
+			}
+		});
+	});
+</script>
+
+<style>
+	.timeline {
+		display: grid;
+		grid-template-columns: max-content 1.5rem 1fr;
+		column-gap: 1rem;
+		row-gap: 0;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.row {
+		display: contents;
+	}
+
+	.year {
+		text-align: right;
+		white-space: nowrap;
+		color: var(--color-muted);
+		font-size: 0.9rem;
+		padding-top: 0.3rem;
+	}
+
+	.dot-col {
+		position: relative;
+		display: flex;
+		justify-content: center;
+	}
+
+	.dot-col::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 2px;
+		background: #262a33;
+	}
+
+	.row:first-child .dot-col::before {
+		top: 0.675rem;
+	}
+
+	.row:last-child .dot-col::before {
+		bottom: calc(100% - 0.675rem);
+	}
+
+	.dot {
+		width: 0.65rem;
+		height: 0.65rem;
+		margin-top: 0.35rem;
+		border-radius: 50%;
+		background: var(--color-accent);
+		position: relative;
+		z-index: 1;
+		cursor: pointer;
+		transition: transform 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.dot.current {
+		width: 0.8rem;
+		height: 0.8rem;
+		margin-top: 0.3rem;
+		box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.25);
+	}
+
+	.dot:hover,
+	.dot:focus-visible {
+		transform: scale(1.35);
+		box-shadow: 0 0 0 4px rgba(125, 211, 252, 0.3);
+		outline: none;
+	}
+
+	.content {
+		padding-bottom: 2rem;
+	}
+
+	.row:last-child .content {
+		padding-bottom: 0;
+	}
+
+	h3.role-company {
+		margin: 0;
+		font-size: 1.05rem;
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		width: fit-content;
+	}
+
+	h3.role-company.current {
+		font-weight: 800;
+		color: var(--color-accent);
+	}
+
+	h3.role-company:hover,
+	h3.role-company:focus-visible {
+		color: var(--color-accent);
+		outline: none;
+	}
+
+	.chevron {
+		display: inline-block;
+		color: var(--color-muted);
+		font-size: 0.85em;
+		transition: transform 0.15s ease;
+	}
+
+	.row.is-open .chevron {
+		transform: rotate(90deg);
+	}
+
+	.description {
+		margin: 0.6rem 0 0;
+	}
+
+	@media (max-width: 480px) {
+		.timeline {
+			grid-template-columns: 3.2rem 1.5rem 1fr;
+			column-gap: 0.6rem;
+		}
+
+		.year {
+			font-size: 0.8rem;
+			white-space: normal;
+			line-height: 1.2;
+		}
+	}
+</style>

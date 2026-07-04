@@ -1,0 +1,56 @@
+---
+import { content, type Lang } from '../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = content[lang];
+const heading = lang === 'pt' ? 'Formação' : 'Education';
+---
+
+<section id="formacao">
+	<h2>{heading}</h2>
+	{
+		t.education.map((item) => (
+			<article class="entry">
+				<div class="entry-header">
+					<h3>{item.degree}</h3>
+					<span class="period">{item.period}</span>
+				</div>
+				<p class="institution">{item.institution}</p>
+			</article>
+		))
+	}
+</section>
+
+<style>
+	.entry + .entry {
+		margin-top: 1.5rem;
+	}
+
+	.entry-header {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.5rem;
+		align-items: baseline;
+	}
+
+	h3 {
+		margin: 0;
+		font-size: 1.05rem;
+	}
+
+	.period {
+		color: var(--color-muted);
+		font-size: 0.9rem;
+		white-space: nowrap;
+	}
+
+	.institution {
+		color: var(--color-muted);
+		margin: 0.2rem 0 0;
+	}
+</style>

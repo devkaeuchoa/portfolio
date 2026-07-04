@@ -1,0 +1,74 @@
+---
+import { content, type Lang } from '../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = content[lang];
+const heading = lang === 'pt' ? 'Projetos' : 'Projects';
+const repoLabel = lang === 'pt' ? 'Ver código →' : 'View code →';
+---
+
+{t.projects.length > 0 && (
+<section id="projetos">
+	<h2>{heading}</h2>
+	{
+		t.projects.map((project) => (
+			<article class="entry">
+				<h3>
+					{project.url ? (
+						<a href={project.url} target="_blank" rel="noreferrer">
+							{project.name}
+						</a>
+					) : (
+						project.name
+					)}
+				</h3>
+				<p>{project.description}</p>
+				<ul class="tags">
+					{project.tags.map((tag) => <li>{tag}</li>)}
+				</ul>
+				{project.repo && (
+					<a class="repo-link" href={project.repo} target="_blank" rel="noreferrer">
+						{repoLabel}
+					</a>
+				)}
+			</article>
+		))
+	}
+</section>
+)}
+
+<style>
+	.entry + .entry {
+		margin-top: 2rem;
+	}
+
+	h3 {
+		margin: 0 0 0.3rem;
+		font-size: 1.05rem;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		list-style: none;
+		padding: 0;
+		margin: 0.6rem 0;
+	}
+
+	.tags li {
+		font-size: 0.8rem;
+		color: var(--color-muted);
+		border: 1px solid #262a33;
+		border-radius: 999px;
+		padding: 0.15rem 0.7rem;
+	}
+
+	.repo-link {
+		font-size: 0.9rem;
+	}
+</style>

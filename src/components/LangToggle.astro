@@ -1,0 +1,31 @@
+---
+import type { Lang } from '../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const targetHref = lang === 'pt' ? '/en/' : '/';
+const targetLabel = lang === 'pt' ? 'English' : 'Português';
+---
+
+<a class="lang-toggle" href={targetHref}>{targetLabel}</a>
+
+<style>
+	.lang-toggle {
+		position: fixed;
+		top: 1rem;
+		right: 1rem;
+		font-size: 0.85rem;
+		padding: 0.35rem 0.8rem;
+		border: 1px solid #262a33;
+		border-radius: 999px;
+		background: var(--color-surface);
+		text-decoration: none;
+	}
+
+	.lang-toggle:hover {
+		border-color: var(--color-accent);
+	}
+</style>

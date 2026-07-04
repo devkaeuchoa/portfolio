@@ -1,0 +1,79 @@
+---
+import { profile, content, type Lang } from '../data/resume';
+import LangToggle from '../components/LangToggle.astro';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+}
+
+const { lang, title, description } = Astro.props;
+const t = content[lang];
+const pageTitle = title ?? `${profile.name} — ${t.title}`;
+const pageDescription = description ?? t.summary;
+const htmlLang = lang === 'pt' ? 'pt-BR' : 'en';
+---
+
+<html lang={htmlLang}>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={pageDescription} />
+		<meta name="generator" content={Astro.generator} />
+		<title>{pageTitle}</title>
+	</head>
+	<body>
+		<LangToggle lang={lang} />
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--color-bg: #0b0c10;
+		--color-surface: #14161c;
+		--color-text: #e7e9ee;
+		--color-muted: #9aa0ac;
+		--color-accent: #7dd3fc;
+		--max-width: 780px;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		background: var(--color-bg);
+		color: var(--color-text);
+		font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+		line-height: 1.6;
+	}
+
+	main {
+		max-width: var(--max-width);
+		margin: 0 auto;
+		padding: 3rem 1.5rem 5rem;
+	}
+
+	a {
+		color: var(--color-accent);
+	}
+
+	h1,
+	h2,
+	h3 {
+		line-height: 1.2;
+	}
+
+	section + section {
+		margin-top: 3rem;
+	}
+</style>
