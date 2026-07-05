@@ -44,15 +44,27 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 							/>
 						</span>
 						<div class="content">
-							<h3
-								class:list={['role-company', isCurrent && 'current']}
-								data-toggle={i}
-								role="button"
-								tabindex="0"
-								aria-expanded={isCurrent ? 'true' : 'false'}
-								aria-controls={descId}
-							>
-								{job.role} · {job.company}
+							<h3 class:list={['role-company', isCurrent && 'current']}>
+								<span
+									class="role-text"
+									data-toggle={i}
+									role="button"
+									tabindex="0"
+									aria-expanded={isCurrent ? 'true' : 'false'}
+									aria-controls={descId}
+									aria-label={`${toggleLabel} ${job.role} · ${job.company}`}
+								>
+									{job.role}
+								</span>
+								{' · '}
+								<a
+									class="company-link"
+									href={job.companyUrl}
+									target="_blank"
+									rel="noreferrer"
+								>
+									{job.company}
+								</a>
 								<span class="chevron" aria-hidden="true">
 									›
 								</span>
@@ -179,22 +191,43 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 	h3.role-company {
 		margin: 0;
 		font-size: 1.05rem;
-		cursor: pointer;
 		display: inline-flex;
 		align-items: center;
+		flex-wrap: wrap;
 		gap: 0.35rem;
 		width: fit-content;
 	}
 
-	h3.role-company.current {
-		font-weight: 800;
-		color: var(--color-accent);
+	.role-text {
+		cursor: pointer;
+		color: var(--color-text);
 	}
 
-	h3.role-company:hover,
-	h3.role-company:focus-visible {
-		color: var(--color-accent);
+	h3.role-company.current .role-text {
+		font-weight: 800;
+	}
+
+	h3.role-company:not(.current) .role-text {
+		font-weight: 400;
+		opacity: 0.9;
+	}
+
+	.role-text:hover,
+	.role-text:focus-visible {
+		text-decoration: underline;
+		opacity: 1;
 		outline: none;
+	}
+
+	.company-link {
+		font-weight: 700;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.company-link:hover,
+	.company-link:focus-visible {
+		color: var(--color-text);
 	}
 
 	.chevron {

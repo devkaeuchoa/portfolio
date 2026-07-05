@@ -12,6 +12,7 @@ export const profile = {
 export interface Experience {
   role: string;
   company: string;
+  companyUrl: string;
   period: string;
   description: string;
 }
@@ -70,6 +71,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Desenvolvedor Front-end Sênior',
         company: 'HostGator América Latina',
+        companyUrl: 'https://www.hostgator.com.br/sobre-a-hostgator',
         period: 'outubro de 2025 — atual',
         description:
           'Parte do time de desenvolvimento de uma nova plataforma cliente para gerenciamento de agentes de IA. Aplicação de práticas de desenvolvimento orientadas por IA para acelerar a entrega de funcionalidades e elevar a qualidade do código. Definição de uma arquitetura frontend escalável e de fácil manutenção, alinhada ao crescimento do negócio. Colaboração com times multidisciplinares para definição de soluções técnicas e evolução do produto.',
@@ -77,6 +79,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Desenvolvedor Sênior Frontend',
         company: 'Inter',
+        companyUrl: 'https://inter.co/',
         period: 'fevereiro de 2024 — outubro de 2025',
         description:
           'Liderança no desenvolvimento frontend com foco em páginas estáticas otimizadas para SEO, melhorando indexação e visibilidade orgânica. Criação e evolução de um Design System em React, com componentes reutilizáveis, acessíveis e escaláveis. Desenvolvimento de uma arquitetura de UI orientada a servidor (Server-Driven UI), facilitando a criação de páginas por usuários internos. Estruturação de uma prática de mentoria no time, apoiando o desenvolvimento técnico de pessoas desenvolvedoras juniores.',
@@ -84,6 +87,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Consultor de Desenvolvimento Front-end',
         company: 'Thoughtworks',
+        companyUrl: 'https://www.thoughtworks.com/pt-br/about-us',
         period: 'abril de 2021 — fevereiro de 2024',
         description:
           'Consultoria em desenvolvimento de sistemas web de e-commerce para grandes redes de varejo internacionais. Stack: React, TypeScript, CSS/SASS.',
@@ -91,6 +95,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Desenvolvedor de Front-end',
         company: 'Symplicity Corporation',
+        companyUrl: 'https://www.symplicity.com/',
         period: 'abril de 2019 — abril de 2021',
         description:
           'Desenvolvimento e manutenção dos sistemas da empresa com ênfase em tarefas de front-end e acessibilidade. Stack: Angular, AngularJS, CSS/SASS, JavaScript; back-end em PHP.',
@@ -98,6 +103,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Desenvolvedor Full-Stack',
         company: 'BitX',
+        companyUrl: 'https://bitx.com.br/whitelabel/',
         period: 'setembro de 2018 — março de 2019',
         description:
           'Desenvolvimento de tarefas relacionadas a aplicativos Android e painel administrativo web. Stack: Android Nativo (Java/Kotlin) com geolocalização e integração com Maps, Bootstrap/JavaScript no front-end, Node.js no back-end.',
@@ -105,6 +111,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Desenvolvedor Full-Stack',
         company: 'Órbita Consultoria e Sistemas',
+        companyUrl: 'https://www.orbita.srv.br/',
         period: 'março de 2018 — agosto de 2018',
         description:
           'Desenvolvimento e manutenção de sistema web para gestão pública. Stack: Bootstrap 3/AdminLTE e JavaScript no front-end, PHP CodeIgniter (base legada) no back-end.',
@@ -112,6 +119,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Bolsista em Iniciação Científica',
         company: 'Universidade Federal do Pará',
+        companyUrl: 'https://ufpa.br/',
         period: 'agosto de 2016 — março de 2018',
         description:
           'Pesquisa acadêmica na área de Cidades Inteligentes, produção de artigos científicos e desenvolvimento de aplicativo Android. Tecnologias: Android Nativo (Java/Kotlin), integração com APIs de terceiros, geolocalização e mapas.',
@@ -119,6 +127,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Pesquisador Acadêmico',
         company: 'Illinois Institute of Technology',
+        companyUrl: 'https://www.iit.edu/',
         period: 'junho de 2016 — julho de 2016',
         description:
           'Pesquisa para construção de aplicativo Android para controle de uma frota de drones autônomos. Tecnologias: Android nativo (Java), integração com API, geolocalização.',
@@ -164,6 +173,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Senior Front-end Developer',
         company: 'HostGator América Latina',
+        companyUrl: 'https://www.hostgator.com.br/sobre-a-hostgator',
         period: 'October 2025 — Present',
         description:
           'Part of the development team building a new client platform for managing AI agents. Applying AI-driven development practices to speed up feature delivery and raise code quality. Defining a scalable, maintainable frontend architecture aligned with business growth. Collaborating with cross-functional teams on technical solutions and product evolution.',
@@ -171,6 +181,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Senior Frontend Developer',
         company: 'Inter',
+        companyUrl: 'https://inter.co/',
         period: 'February 2024 — October 2025',
         description:
           'Led frontend development focused on static, SEO-optimized pages, improving indexing and organic visibility. Created and evolved a React Design System with reusable, accessible, scalable components. Built a server-driven UI architecture, enabling internal users to create pages themselves. Set up a mentoring practice on the team, supporting the technical growth of junior developers.',
@@ -178,6 +189,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Front-end Development Consultant',
         company: 'Thoughtworks',
+        companyUrl: 'https://www.thoughtworks.com/pt-br/about-us',
         period: 'April 2021 — February 2024',
         description:
           'Consulting work on e-commerce web system development for large international retail stores. Stack: React, TypeScript, CSS/SASS.',
@@ -185,6 +197,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Front-end Developer',
         company: 'Symplicity Corporation',
+        companyUrl: 'https://www.symplicity.com/',
         period: 'April 2019 — April 2021',
         description:
           "Development and maintenance of the company's systems, with emphasis on front-end and accessibility tasks. Stack: Angular, AngularJS, CSS/SASS, JavaScript; PHP back-end.",
@@ -192,6 +205,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Full-Stack Developer',
         company: 'BitX',
+        companyUrl: 'https://bitx.com.br/whitelabel/',
         period: 'September 2018 — March 2019',
         description:
           'Development of Android app features and a web admin dashboard. Stack: Native Android (Java/Kotlin) with geolocation and Maps integration, Bootstrap/JavaScript front-end, Node.js back-end.',
@@ -199,6 +213,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Full-Stack Developer',
         company: 'Órbita Consultoria e Sistemas',
+        companyUrl: 'https://www.orbita.srv.br/',
         period: 'March 2018 — August 2018',
         description:
           'Development and maintenance of a web system for public administration. Stack: Bootstrap 3/AdminLTE and JavaScript front-end, PHP CodeIgniter (legacy codebase) back-end.',
@@ -206,6 +221,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Undergraduate Research Fellow',
         company: 'Universidade Federal do Pará',
+        companyUrl: 'https://ufpa.br/',
         period: 'August 2016 — March 2018',
         description:
           'Academic research in the Smart Cities field, producing scientific papers and an Android application. Technologies: Native Android (Java/Kotlin), third-party API integration, geolocation and maps.',
@@ -213,6 +229,7 @@ export const content: Record<Lang, ResumeContent> = {
       {
         role: 'Academic Researcher',
         company: 'Illinois Institute of Technology',
+        companyUrl: 'https://www.iit.edu/',
         period: 'June 2016 — July 2016',
         description:
           'Research toward building an Android app to control a fleet of autonomous drones. Technologies: Native Android (Java), API integration, geolocation.',
