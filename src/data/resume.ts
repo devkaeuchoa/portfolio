@@ -1,3 +1,5 @@
+import type { TechKey } from './techIcons';
+
 export type Lang = 'pt' | 'en';
 
 export const profile = {
@@ -14,6 +16,7 @@ export interface Experience {
   company: string;
   companyUrl: string;
   companySummary?: string;
+  stack: TechKey[];
   period: string;
   description: string;
 }
@@ -75,6 +78,7 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://www.hostgator.com.br/sobre-a-hostgator',
         companySummary:
           'A HostGator é uma empresa de hospedagem de sites, com soluções que vão de hospedagem compartilhada a servidores dedicados e VPS. Atende mais de 4,5 milhões de clientes globalmente, com foco em ajudar empreendedores a tirar suas ideias do papel e ganhar presença digital.',
+        stack: ['react', 'typescript', 'php'],
         period: 'outubro de 2025 — atual',
         description:
           'Parte do time de desenvolvimento de uma nova plataforma cliente para gerenciamento de agentes de IA. Aplicação de práticas de desenvolvimento orientadas por IA para acelerar a entrega de funcionalidades e elevar a qualidade do código. Definição de uma arquitetura frontend escalável e de fácil manutenção, alinhada ao crescimento do negócio. Colaboração com times multidisciplinares para definição de soluções técnicas e evolução do produto.',
@@ -85,6 +89,7 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://inter.co/',
         companySummary:
           'O Inter é um super app financeiro que oferece conta digital gratuita, cartão de crédito, investimentos e soluções para pessoas físicas e empresas. Conta com cashback (Inter Shop), conta em dólar e um ecossistema completo de serviços financeiros.',
+        stack: ['react', 'typescript', 'nodejs'],
         period: 'fevereiro de 2024 — outubro de 2025',
         description:
           'Liderança no desenvolvimento frontend com foco em páginas estáticas otimizadas para SEO, melhorando indexação e visibilidade orgânica. Criação e evolução de um Design System em React, com componentes reutilizáveis, acessíveis e escaláveis. Desenvolvimento de uma arquitetura de UI orientada a servidor (Server-Driven UI), facilitando a criação de páginas por usuários internos. Estruturação de uma prática de mentoria no time, apoiando o desenvolvimento técnico de pessoas desenvolvedoras juniores.',
@@ -95,9 +100,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://www.thoughtworks.com/pt-br/about-us',
         companySummary:
           'A Thoughtworks é uma consultoria global de tecnologia com mais de 30 anos de atuação, presente em 47 escritórios e 18 países. Une expertise em design, engenharia de software e inteligência artificial para apoiar a transformação digital de empresas de diversos setores.',
+        stack: ['react', 'typescript', 'sass'],
         period: 'abril de 2021 — fevereiro de 2024',
         description:
-          'Consultoria em desenvolvimento de sistemas web de e-commerce para grandes redes de varejo internacionais. Stack: React, TypeScript, CSS/SASS.',
+          'Consultoria em desenvolvimento de sistemas web de e-commerce para grandes redes de varejo internacionais.',
       },
       {
         role: 'Desenvolvedor de Front-end',
@@ -105,9 +111,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://www.symplicity.com/',
         companySummary:
           'A Symplicity é uma plataforma de software voltada para universidades, com soluções para serviços de carreira, vida residencial, conduta estudantil e recrutamento. Seu foco é simplificar operações do campus e preparar estudantes para o mercado de trabalho.',
+        stack: ['angular', 'sass', 'javascript', 'php'],
         period: 'abril de 2019 — abril de 2021',
         description:
-          'Desenvolvimento e manutenção dos sistemas da empresa com ênfase em tarefas de front-end e acessibilidade. Stack: Angular, AngularJS, CSS/SASS, JavaScript; back-end em PHP.',
+          'Desenvolvimento e manutenção dos sistemas da empresa com ênfase em tarefas de front-end e acessibilidade.',
       },
       {
         role: 'Desenvolvedor Full-Stack',
@@ -115,9 +122,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://bitx.com.br/whitelabel/',
         companySummary:
           'A BitX é uma empresa de inovação que oferece soluções whitelabel prontas para logística e marketplace, permitindo que negócios lancem seus próprios aplicativos sem desenvolver do zero. Foca em reduzir custo e tempo de implementação para quem quer expandir no e-commerce.',
+        stack: ['android', 'java', 'kotlin', 'bootstrap', 'javascript', 'nodejs'],
         period: 'setembro de 2018 — março de 2019',
         description:
-          'Desenvolvimento de tarefas relacionadas a aplicativos Android e painel administrativo web. Stack: Android Nativo (Java/Kotlin) com geolocalização e integração com Maps, Bootstrap/JavaScript no front-end, Node.js no back-end.',
+          'Desenvolvimento de tarefas relacionadas a aplicativos Android e painel administrativo web.',
       },
       {
         role: 'Desenvolvedor Full-Stack',
@@ -125,9 +133,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://www.orbita.srv.br/',
         companySummary:
           'A Órbita Tecnologia desenvolve soluções de gestão digital para o setor público, com foco em transparência, agilidade e automação de processos administrativos municipais. Seus sistemas já estão implementados em diversos municípios brasileiros.',
+        stack: ['bootstrap', 'javascript', 'php'],
         period: 'março de 2018 — agosto de 2018',
         description:
-          'Desenvolvimento e manutenção de sistema web para gestão pública. Stack: Bootstrap 3/AdminLTE e JavaScript no front-end, PHP CodeIgniter (base legada) no back-end.',
+          'Desenvolvimento e manutenção de sistema web para gestão pública.',
       },
       {
         role: 'Bolsista em Iniciação Científica',
@@ -135,9 +144,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://ufpa.br/',
         companySummary:
           'A Universidade Federal do Pará (UFPA) é uma universidade pública federal brasileira, referência em ensino, pesquisa e extensão na região Amazônica. É multicampi e oferece cursos de graduação e pós-graduação em diversas áreas do conhecimento.',
+        stack: ['android', 'java', 'kotlin'],
         period: 'agosto de 2016 — março de 2018',
         description:
-          'Pesquisa acadêmica na área de Cidades Inteligentes, produção de artigos científicos e desenvolvimento de aplicativo Android. Tecnologias: Android Nativo (Java/Kotlin), integração com APIs de terceiros, geolocalização e mapas.',
+          'Pesquisa acadêmica na área de Cidades Inteligentes, produção de artigos científicos e desenvolvimento de aplicativo Android.',
       },
       {
         role: 'Pesquisador Acadêmico',
@@ -145,9 +155,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://www.iit.edu/',
         companySummary:
           'O Illinois Institute of Technology (Illinois Tech) é uma universidade de pesquisa privada em Chicago, com forte foco em tecnologia e áreas STEM. Oferece mais de 50 cursos de graduação e 100 programas de pós-graduação alinhados ao mercado de trabalho.',
+        stack: ['android', 'java'],
         period: 'junho de 2016 — julho de 2016',
         description:
-          'Pesquisa para construção de aplicativo Android para controle de uma frota de drones autônomos. Tecnologias: Android nativo (Java), integração com API, geolocalização.',
+          'Pesquisa para construção de aplicativo Android para controle de uma frota de drones autônomos.',
       },
     ],
     education: [
@@ -193,6 +204,7 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://www.hostgator.com.br/sobre-a-hostgator',
         companySummary:
           'HostGator is a web hosting company offering everything from shared hosting to dedicated servers and VPS. It serves more than 4.5 million customers worldwide, focused on helping entrepreneurs bring their ideas online.',
+        stack: ['react', 'typescript', 'php'],
         period: 'October 2025 — Present',
         description:
           'Part of the development team building a new client platform for managing AI agents. Applying AI-driven development practices to speed up feature delivery and raise code quality. Defining a scalable, maintainable frontend architecture aligned with business growth. Collaborating with cross-functional teams on technical solutions and product evolution.',
@@ -203,6 +215,7 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://inter.co/',
         companySummary:
           'Inter is a financial super app offering a free digital account, credit card, investments, and solutions for individuals and businesses. It also features cashback (Inter Shop), a dollar account, and a full ecosystem of financial services.',
+        stack: ['react', 'typescript', 'nodejs'],
         period: 'February 2024 — October 2025',
         description:
           'Led frontend development focused on static, SEO-optimized pages, improving indexing and organic visibility. Created and evolved a React Design System with reusable, accessible, scalable components. Built a server-driven UI architecture, enabling internal users to create pages themselves. Set up a mentoring practice on the team, supporting the technical growth of junior developers.',
@@ -213,9 +226,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://www.thoughtworks.com/pt-br/about-us',
         companySummary:
           'Thoughtworks is a global technology consultancy with more than 30 years of experience, present in 47 offices across 18 countries. It combines design, software engineering, and AI expertise to support digital transformation across industries.',
+        stack: ['react', 'typescript', 'sass'],
         period: 'April 2021 — February 2024',
         description:
-          'Consulting work on e-commerce web system development for large international retail stores. Stack: React, TypeScript, CSS/SASS.',
+          'Consulting work on e-commerce web system development for large international retail stores.',
       },
       {
         role: 'Front-end Developer',
@@ -223,9 +237,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://www.symplicity.com/',
         companySummary:
           'Symplicity is a software platform built for universities, offering solutions for career services, residential life, student conduct, and recruiting. It focuses on simplifying campus operations and preparing students for the job market.',
+        stack: ['angular', 'sass', 'javascript', 'php'],
         period: 'April 2019 — April 2021',
         description:
-          "Development and maintenance of the company's systems, with emphasis on front-end and accessibility tasks. Stack: Angular, AngularJS, CSS/SASS, JavaScript; PHP back-end.",
+          "Development and maintenance of the company's systems, with emphasis on front-end and accessibility tasks.",
       },
       {
         role: 'Full-Stack Developer',
@@ -233,9 +248,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://bitx.com.br/whitelabel/',
         companySummary:
           'BitX is an innovation company offering ready-made whitelabel solutions for logistics and marketplace apps, letting businesses launch their own platforms without building from scratch. It focuses on cutting cost and time for companies expanding into e-commerce.',
+        stack: ['android', 'java', 'kotlin', 'bootstrap', 'javascript', 'nodejs'],
         period: 'September 2018 — March 2019',
         description:
-          'Development of Android app features and a web admin dashboard. Stack: Native Android (Java/Kotlin) with geolocation and Maps integration, Bootstrap/JavaScript front-end, Node.js back-end.',
+          'Development of Android app features and a web admin dashboard.',
       },
       {
         role: 'Full-Stack Developer',
@@ -243,9 +259,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://www.orbita.srv.br/',
         companySummary:
           'Órbita Tecnologia builds digital management solutions for the public sector, focused on transparency, agility, and automating municipal administrative processes. Its systems are already deployed across several Brazilian municipalities.',
+        stack: ['bootstrap', 'javascript', 'php'],
         period: 'March 2018 — August 2018',
         description:
-          'Development and maintenance of a web system for public administration. Stack: Bootstrap 3/AdminLTE and JavaScript front-end, PHP CodeIgniter (legacy codebase) back-end.',
+          'Development and maintenance of a web system for public administration.',
       },
       {
         role: 'Undergraduate Research Fellow',
@@ -253,9 +270,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://ufpa.br/',
         companySummary:
           'Universidade Federal do Pará (UFPA) is a Brazilian federal public university, a reference in teaching, research, and outreach in the Amazon region. It is a multi-campus institution offering undergraduate and graduate programs across many fields.',
+        stack: ['android', 'java', 'kotlin'],
         period: 'August 2016 — March 2018',
         description:
-          'Academic research in the Smart Cities field, producing scientific papers and an Android application. Technologies: Native Android (Java/Kotlin), third-party API integration, geolocation and maps.',
+          'Academic research in the Smart Cities field, producing scientific papers and an Android application.',
       },
       {
         role: 'Academic Researcher',
@@ -263,9 +281,10 @@ export const content: Record<Lang, ResumeContent> = {
         companyUrl: 'https://www.iit.edu/',
         companySummary:
           'Illinois Institute of Technology (Illinois Tech) is a private research university in Chicago with a strong focus on technology and STEM fields. It offers 50+ undergraduate majors and 100+ industry-aligned graduate programs.',
+        stack: ['android', 'java'],
         period: 'June 2016 — July 2016',
         description:
-          'Research toward building an Android app to control a fleet of autonomous drones. Technologies: Native Android (Java), API integration, geolocation.',
+          'Research toward building an Android app to control a fleet of autonomous drones.',
       },
     ],
     education: [

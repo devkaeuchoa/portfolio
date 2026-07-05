@@ -1,5 +1,6 @@
 ---
 import { content, type Lang } from '../data/resume';
+import { techIcons } from '../data/techIcons';
 
 interface Props {
   lang: Lang;
@@ -22,10 +23,17 @@ function extractYears(period: string): string {
 const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 const ctaLabel = lang === 'pt' ? 'Ir para o site' : 'Go to website';
 const closeLabel = lang === 'pt' ? 'Fechar' : 'Close';
+const expandAllLabel = lang === 'pt' ? 'Ver todos' : 'View all';
+const collapseAllLabel = lang === 'pt' ? 'Recolher todos' : 'Collapse all';
 ---
 
 <section id="experiencia">
-	<h2>{heading}</h2>
+	<div class="section-header">
+		<h2>{heading}</h2>
+		<button type="button" class="toggle-all" data-toggle-all data-expand-label={expandAllLabel} data-collapse-label={collapseAllLabel}>
+			{expandAllLabel}
+		</button>
+	</div>
 	<div class="timeline">
 		{
 			t.experience.map((job, i) => {
@@ -46,6 +54,25 @@ const closeLabel = lang === 'pt' ? 'Fechar' : 'Close';
 							/>
 						</span>
 						<div class="content">
+							<div class="stack-row" role="list">
+								{job.stack.map((key) => {
+									const icon = techIcons[key];
+									return (
+										<button
+											type="button"
+											class="tech-pill"
+											data-tech-toggle
+											aria-label={icon.label}
+											role="listitem"
+										>
+											<svg class="tech-icon" viewBox="0 0 24 24" aria-hidden="true">
+												<path d={icon.path} />
+											</svg>
+											<span class="tech-label">{icon.label}</span>
+										</button>
+									);
+								})}
+							</div>
 							<h3 class="role-company">
 								<span
 									class="role-text"
@@ -150,6 +177,32 @@ const closeLabel = lang === 'pt' ? 'Fechar' : 'Close';
 		});
 	});
 
+	const toggleAllBtn = document.querySelector<HTMLButtonElement>('[data-toggle-all]');
+	const rows = document.querySelectorAll<HTMLElement>('.timeline .row');
+
+	if (toggleAllBtn) {
+		const expandLabel = toggleAllBtn.dataset.expandLabel ?? '';
+		const collapseLabel = toggleAllBtn.dataset.collapseLabel ?? '';
+
+		const setAllRows = (open: boolean) => {
+			rows.forEach((row) => {
+				row.classList.toggle('is-open', open);
+				const desc = row.querySelector<HTMLElement>('.description');
+				if (desc) desc.hidden = !open;
+				row.querySelectorAll<HTMLElement>('[data-toggle]').forEach((t) => {
+					t.setAttribute('aria-expanded', String(open));
+				});
+			});
+			toggleAllBtn.textContent = open ? collapseLabel : expandLabel;
+			toggleAllBtn.setAttribute('aria-expanded', String(open));
+		};
+
+		toggleAllBtn.addEventListener('click', () => {
+			const anyClosed = Array.from(rows).some((row) => !row.classList.contains('is-open'));
+			setAllRows(anyClosed);
+		});
+	}
+
 	// Dispositivos sem hover "de verdade" (touch) precisam de um clique para
 	// revelar o popover/bottom sheet, já que não há :hover para acioná-lo.
 	const hasRealHover = () => window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -198,16 +251,56 @@ const closeLabel = lang === 'pt' ? 'Fechar' : 'Close';
 			}
 		});
 	});
+
+	const techPills = document.querySelectorAll<HTMLElement>('[data-tech-toggle]');
+
+	techPills.forEach((pill) => {
+		pill.addEventListener('click', () => {
+			const wasExpanded = pill.classList.contains('expanded');
+			techPills.forEach((p) => p.classList.remove('expanded'));
+			pill.classList.toggle('expanded', !wasExpanded);
+		});
+	});
 </script>
 
 <style>
+	.section-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.section-header h2 {
+		margin: 0;
+	}
+
+	.toggle-all {
+		background: var(--color-surface);
+		border: 1px solid #262a33;
+		border-radius: 999px;
+		padding: 0.35rem 0.9rem;
+		font-size: 0.85rem;
+		color: var(--color-text);
+		cursor: pointer;
+		white-space: nowrap;
+	}
+
+	.toggle-all:hover,
+	.toggle-all:focus-visible {
+		border-color: var(--color-accent);
+		outline: none;
+	}
+
 	.timeline {
+		--stack-offset: 2.15rem;
 		display: grid;
 		grid-template-columns: max-content 1.5rem 1fr;
 		column-gap: 1rem;
 		row-gap: 0;
 		list-style: none;
-		margin: 0;
+		margin: 2rem 0 0;
 		padding: 0;
 	}
 
@@ -220,7 +313,7 @@ const closeLabel = lang === 'pt' ? 'Fechar' : 'Close';
 		white-space: nowrap;
 		color: var(--color-muted);
 		font-size: 0.9rem;
-		padding-top: 0.3rem;
+		padding-top: calc(var(--stack-offset) + 0.3rem);
 	}
 
 	.dot-col {
@@ -239,17 +332,17 @@ const closeLabel = lang === 'pt' ? 'Fechar' : 'Close';
 	}
 
 	.row:first-child .dot-col::before {
-		top: 0.675rem;
+		top: calc(var(--stack-offset) + 0.675rem);
 	}
 
 	.row:last-child .dot-col::before {
-		bottom: calc(100% - 0.675rem);
+		bottom: calc(100% - (var(--stack-offset) + 0.675rem));
 	}
 
 	.dot {
 		width: 0.65rem;
 		height: 0.65rem;
-		margin-top: 0.35rem;
+		margin-top: calc(var(--stack-offset) + 0.35rem);
 		border-radius: 50%;
 		background: var(--color-accent);
 		position: relative;
@@ -261,7 +354,7 @@ const closeLabel = lang === 'pt' ? 'Fechar' : 'Close';
 	.row.is-open .dot {
 		width: 0.8rem;
 		height: 0.8rem;
-		margin-top: 0.3rem;
+		margin-top: calc(var(--stack-offset) + 0.3rem);
 		box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.25);
 	}
 
@@ -278,6 +371,75 @@ const closeLabel = lang === 'pt' ? 'Fechar' : 'Close';
 
 	.row:last-child .content {
 		padding-bottom: 0;
+	}
+
+	.stack-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin-bottom: 0.6rem;
+	}
+
+	.tech-pill {
+		display: inline-flex;
+		align-items: center;
+		height: 1.55rem;
+		padding: 0 0.35rem;
+		background: var(--color-surface);
+		border: 1px solid #262a33;
+		border-radius: 999px;
+		color: var(--color-muted);
+		cursor: pointer;
+		overflow: hidden;
+		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+	}
+
+	.tech-icon {
+		width: 0.95rem;
+		height: 0.95rem;
+		flex-shrink: 0;
+		fill: currentColor;
+	}
+
+	.tech-label {
+		max-width: 0;
+		opacity: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		font-size: 0.72rem;
+		font-weight: 600;
+		transition: max-width 0.2s ease, opacity 0.2s ease, margin-left 0.2s ease;
+	}
+
+	.tech-pill:focus-visible {
+		color: var(--color-text);
+		border-color: var(--color-accent);
+		outline: none;
+	}
+
+	.tech-pill:focus-visible .tech-label,
+	.tech-pill.expanded .tech-label {
+		max-width: 140px;
+		opacity: 1;
+		margin-left: 0.35rem;
+	}
+
+	.tech-pill.expanded {
+		color: var(--color-text);
+		border-color: var(--color-accent);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.tech-pill:hover {
+			color: var(--color-text);
+			border-color: var(--color-accent);
+		}
+
+		.tech-pill:hover .tech-label {
+			max-width: 140px;
+			opacity: 1;
+			margin-left: 0.35rem;
+		}
 	}
 
 	h3.role-company {
