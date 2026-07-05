@@ -8,23 +8,23 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = content[lang];
-const heading = lang === 'pt' ? 'Experiência' : 'Experience';
+const heading = { pt: 'Experiência', en: 'Experience', es: 'Experiencia' }[lang];
 
 function extractYears(period: string): string {
   const years = period.match(/\d{4}/g) ?? [];
-  const isOngoing = /atual|present/i.test(period);
-  const label = lang === 'pt' ? 'atual' : 'Present';
+  const isOngoing = /atual|present|actualidad/i.test(period);
+  const label = { pt: 'atual', en: 'Present', es: 'actualidad' }[lang];
 
   if (isOngoing) return years.length ? `${years[0]} — ${label}` : label;
   if (years.length >= 2 && years[0] !== years[1]) return `${years[0]} — ${years[1]}`;
   return years[0] ?? period;
 }
 
-const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
-const ctaLabel = lang === 'pt' ? 'Ir para o site' : 'Go to website';
-const closeLabel = lang === 'pt' ? 'Fechar' : 'Close';
-const expandAllLabel = lang === 'pt' ? 'Ver todos' : 'View all';
-const collapseAllLabel = lang === 'pt' ? 'Recolher todos' : 'Collapse all';
+const toggleLabel = { pt: 'Mostrar detalhes de', en: 'Show details for', es: 'Mostrar detalles de' }[lang];
+const ctaLabel = { pt: 'Ir para o site', en: 'Go to website', es: 'Ir al sitio web' }[lang];
+const closeLabel = { pt: 'Fechar', en: 'Close', es: 'Cerrar' }[lang];
+const expandAllLabel = { pt: 'Ver todos', en: 'View all', es: 'Ver todos' }[lang];
+const collapseAllLabel = { pt: 'Recolher todos', en: 'Collapse all', es: 'Contraer todos' }[lang];
 ---
 
 <section id="experiencia">
@@ -37,7 +37,7 @@ const collapseAllLabel = lang === 'pt' ? 'Recolher todos' : 'Collapse all';
 	<div class="timeline">
 		{
 			t.experience.map((job, i) => {
-				const isCurrent = /atual|present/i.test(job.period);
+				const isCurrent = /atual|present|actualidad/i.test(job.period);
 				const descId = `exp-desc-${lang}-${i}`;
 				return (
 					<div class:list={['row', isCurrent && 'is-open']}>
@@ -278,7 +278,7 @@ const collapseAllLabel = lang === 'pt' ? 'Recolher todos' : 'Collapse all';
 
 	.toggle-all {
 		background: var(--color-surface);
-		border: 1px solid #262a33;
+		border: 1px solid var(--color-border);
 		border-radius: 999px;
 		padding: 0.35rem 0.9rem;
 		font-size: 0.85rem;
@@ -328,7 +328,7 @@ const collapseAllLabel = lang === 'pt' ? 'Recolher todos' : 'Collapse all';
 		top: 0;
 		bottom: 0;
 		width: 2px;
-		background: #262a33;
+		background: var(--color-border);
 	}
 
 	.row:first-child .dot-col::before {
@@ -355,13 +355,13 @@ const collapseAllLabel = lang === 'pt' ? 'Recolher todos' : 'Collapse all';
 		width: 0.8rem;
 		height: 0.8rem;
 		margin-top: calc(var(--stack-offset) + 0.3rem);
-		box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.25);
+		box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.25);
 	}
 
 	.dot:hover,
 	.dot:focus-visible {
 		transform: scale(1.35);
-		box-shadow: 0 0 0 4px rgba(125, 211, 252, 0.3);
+		box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.3);
 		outline: none;
 	}
 
@@ -386,7 +386,7 @@ const collapseAllLabel = lang === 'pt' ? 'Recolher todos' : 'Collapse all';
 		height: 1.55rem;
 		padding: 0 0.35rem;
 		background: var(--color-surface);
-		border: 1px solid #262a33;
+		border: 1px solid var(--color-border);
 		border-radius: 999px;
 		color: var(--color-muted);
 		cursor: pointer;
@@ -505,7 +505,7 @@ const collapseAllLabel = lang === 'pt' ? 'Recolher todos' : 'Collapse all';
 		transform: translateX(-50%) translateY(4px);
 		width: 280px;
 		background: var(--color-surface);
-		border: 1px solid #262a33;
+		border: 1px solid var(--color-border);
 		border-radius: 10px;
 		padding: 2rem 1.25rem 1.25rem;
 		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -532,8 +532,8 @@ const collapseAllLabel = lang === 'pt' ? 'Recolher todos' : 'Collapse all';
 		width: 10px;
 		height: 10px;
 		background: var(--color-surface);
-		border-right: 1px solid #262a33;
-		border-bottom: 1px solid #262a33;
+		border-right: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	.company-close {

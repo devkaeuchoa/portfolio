@@ -7,7 +7,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = content[lang];
-const heading = lang === 'pt' ? 'Formação' : 'Education';
+const heading = { pt: 'Formação', en: 'Education', es: 'Formación' }[lang];
 ---
 
 <section id="formacao">

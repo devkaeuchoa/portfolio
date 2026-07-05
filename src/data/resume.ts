@@ -1,12 +1,12 @@
 import type { TechKey } from './techIcons';
 
-export type Lang = 'pt' | 'en';
+export type Lang = 'pt' | 'en' | 'es';
 
 export const profile = {
   name: 'Kaê Uchôa Sarmanho',
-  email: 'kaeuchoas@gmail.com',
+  email: 'devkaeuchoa@gmail.com',
   links: {
-    github: 'https://github.com/kaeuchoa',
+    github: 'https://github.com/devkaeuchoa',
     linkedin: 'https://www.linkedin.com/in/kaeuchoa',
   },
 };
@@ -295,6 +295,132 @@ export const content: Record<Lang, ResumeContent> = {
       },
       {
         degree: "Bachelor's, Computer Science",
+        institution: 'State University of New York at Fredonia',
+        period: '2015 — 2016',
+      },
+    ],
+    projects: [],
+  },
+  es: {
+    title: 'Desarrollador Web',
+    location: 'Brasil',
+    tagline: 'Construyendo interfaces web rápidas, accesibles y bien estructuradas.',
+    summary:
+      'Desarrollador de software con énfasis en productos para la Web (Front-end). Me gustan las tareas que implican arquitectura de software y estructuración/refactorización de código. Durante mi período académico participé en el programa Ciencia sin Fronteras en EE. UU., una experiencia que reforzó mi interés en proyectos que ayuden a las personas de forma constructiva. Siempre busco estar lo más cerca posible del cliente final, y tengo un perfil calificado para trabajar en equipo, presentar proyectos y apoyar el desarrollo de soluciones.',
+    summaryShort:
+      'Desarrollador de software con énfasis en productos para la Web (Front-end). Me gustan las tareas que implican arquitectura de software y estructuración/refactorización de código.',
+    skills: [
+      'React',
+      'Next.js',
+      'TypeScript',
+      'JavaScript',
+      'Angular / AngularJS',
+      'CSS / SASS',
+      'Design Systems',
+      'Server-Driven UI',
+      'Accesibilidad',
+      'SEO',
+      'Node.js',
+      'Git',
+    ],
+    experience: [
+      {
+        role: 'Desarrollador Front-end Sénior',
+        company: 'HostGator América Latina',
+        companyUrl: 'https://www.hostgator.com.br/sobre-a-hostgator',
+        companySummary:
+          'HostGator es una empresa de hosting web que ofrece desde alojamiento compartido hasta servidores dedicados y VPS. Atiende a más de 4,5 millones de clientes en todo el mundo, con el objetivo de ayudar a emprendedores a llevar sus ideas a internet.',
+        stack: ['react', 'typescript', 'php'],
+        period: 'octubre de 2025 — actualidad',
+        description:
+          'Parte del equipo de desarrollo de una nueva plataforma para gestionar agentes de IA. Aplicación de prácticas de desarrollo impulsadas por IA para acelerar la entrega de funcionalidades y mejorar la calidad del código. Definición de una arquitectura frontend escalable y fácil de mantener, alineada con el crecimiento del negocio. Colaboración con equipos multidisciplinarios en la definición de soluciones técnicas y la evolución del producto.',
+      },
+      {
+        role: 'Desarrollador Sénior Frontend',
+        company: 'Inter',
+        companyUrl: 'https://inter.co/',
+        companySummary:
+          'Inter es una superapp financiera que ofrece cuenta digital gratuita, tarjeta de crédito, inversiones y soluciones para personas y empresas. Cuenta con cashback (Inter Shop), cuenta en dólares y un ecosistema completo de servicios financieros.',
+        stack: ['react', 'typescript', 'nodejs'],
+        period: 'febrero de 2024 — octubre de 2025',
+        description:
+          'Liderazgo en el desarrollo frontend enfocado en páginas estáticas optimizadas para SEO, mejorando la indexación y la visibilidad orgánica. Creación y evolución de un Design System en React, con componentes reutilizables, accesibles y escalables. Desarrollo de una arquitectura de UI orientada a servidor (Server-Driven UI), facilitando la creación de páginas por usuarios internos. Estructuración de una práctica de mentoría en el equipo, apoyando el desarrollo técnico de desarrolladores junior.',
+      },
+      {
+        role: 'Consultor de Desarrollo Front-end',
+        company: 'Thoughtworks',
+        companyUrl: 'https://www.thoughtworks.com/pt-br/about-us',
+        companySummary:
+          'Thoughtworks es una consultora global de tecnología con más de 30 años de trayectoria, presente en 47 oficinas y 18 países. Combina experiencia en diseño, ingeniería de software e inteligencia artificial para apoyar la transformación digital de empresas de diversos sectores.',
+        stack: ['react', 'typescript', 'sass'],
+        period: 'abril de 2021 — febrero de 2024',
+        description:
+          'Consultoría en el desarrollo de sistemas web de comercio electrónico para grandes cadenas minoristas internacionales.',
+      },
+      {
+        role: 'Desarrollador Front-end',
+        company: 'Symplicity Corporation',
+        companyUrl: 'https://www.symplicity.com/',
+        companySummary:
+          'Symplicity es una plataforma de software para universidades, con soluciones de servicios de carrera, vida residencial, conducta estudiantil y reclutamiento. Su objetivo es simplificar las operaciones del campus y preparar a los estudiantes para el mercado laboral.',
+        stack: ['angular', 'sass', 'javascript', 'php'],
+        period: 'abril de 2019 — abril de 2021',
+        description:
+          'Desarrollo y mantenimiento de los sistemas de la empresa, con énfasis en tareas de front-end y accesibilidad.',
+      },
+      {
+        role: 'Desarrollador Full-Stack',
+        company: 'BitX',
+        companyUrl: 'https://bitx.com.br/whitelabel/',
+        companySummary:
+          'BitX es una empresa de innovación que ofrece soluciones whitelabel listas para logística y marketplace, permitiendo que los negocios lancen sus propias plataformas sin desarrollar desde cero. Se enfoca en reducir el costo y el tiempo de implementación para quienes quieren expandirse en el e-commerce.',
+        stack: ['android', 'java', 'kotlin', 'bootstrap', 'javascript', 'nodejs'],
+        period: 'septiembre de 2018 — marzo de 2019',
+        description:
+          'Desarrollo de funcionalidades para aplicaciones Android y panel administrativo web.',
+      },
+      {
+        role: 'Desarrollador Full-Stack',
+        company: 'Órbita Consultoria e Sistemas',
+        companyUrl: 'https://www.orbita.srv.br/',
+        companySummary:
+          'Órbita Tecnología desarrolla soluciones de gestión digital para el sector público, con foco en transparencia, agilidad y automatización de procesos administrativos municipales. Sus sistemas ya están implementados en varios municipios brasileños.',
+        stack: ['bootstrap', 'javascript', 'php'],
+        period: 'marzo de 2018 — agosto de 2018',
+        description:
+          'Desarrollo y mantenimiento de un sistema web para la gestión pública.',
+      },
+      {
+        role: 'Becario de Iniciación Científica',
+        company: 'Universidade Federal do Pará',
+        companyUrl: 'https://ufpa.br/',
+        companySummary:
+          'La Universidad Federal de Pará (UFPA) es una universidad pública federal brasileña, referente en enseñanza, investigación y extensión en la región amazónica. Es multicampus y ofrece carreras de grado y posgrado en diversas áreas del conocimiento.',
+        stack: ['android', 'java', 'kotlin'],
+        period: 'agosto de 2016 — marzo de 2018',
+        description:
+          'Investigación académica en el área de Ciudades Inteligentes, con producción de artículos científicos y desarrollo de una aplicación Android.',
+      },
+      {
+        role: 'Investigador Académico',
+        company: 'Illinois Institute of Technology',
+        companyUrl: 'https://www.iit.edu/',
+        companySummary:
+          'El Illinois Institute of Technology (Illinois Tech) es una universidad de investigación privada en Chicago, con fuerte enfoque en tecnología y áreas STEM. Ofrece más de 50 carreras de grado y 100 programas de posgrado alineados con el mercado laboral.',
+        stack: ['android', 'java'],
+        period: 'junio de 2016 — julio de 2016',
+        description:
+          'Investigación para la construcción de una aplicación Android para controlar una flota de drones autónomos.',
+      },
+    ],
+    education: [
+      {
+        degree: 'Licenciatura en Ciencias de la Computación',
+        institution: 'Universidade Federal do Pará',
+        period: '2013 — 2018',
+      },
+      {
+        degree: 'Licenciatura en Ciencias de la Computación',
         institution: 'State University of New York at Fredonia',
         period: '2015 — 2016',
       },

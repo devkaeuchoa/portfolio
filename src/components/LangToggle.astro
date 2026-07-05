@@ -6,26 +6,56 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const targetHref = lang === 'pt' ? '/en/' : '/';
-const targetLabel = lang === 'pt' ? 'English' : 'Português';
+
+const options: { lang: Lang; href: string; label: string }[] = [
+  { lang: 'pt', href: '/', label: 'PT' },
+  { lang: 'en', href: '/en/', label: 'EN' },
+  { lang: 'es', href: '/es/', label: 'ES' },
+];
 ---
 
-<a class="lang-toggle" href={targetHref}>{targetLabel}</a>
+<div class="lang-switcher" role="group" aria-label="Language">
+	{
+		options.map((option) =>
+			option.lang === lang ? (
+				<span class="lang-option is-current" aria-current="true">
+					{option.label}
+				</span>
+			) : (
+				<a class="lang-option" href={option.href}>
+					{option.label}
+				</a>
+			)
+		)
+	}
+</div>
 
 <style>
-	.lang-toggle {
-		position: fixed;
-		top: 1rem;
-		right: 1rem;
-		font-size: 0.85rem;
-		padding: 0.35rem 0.8rem;
-		border: 1px solid #262a33;
+	.lang-switcher {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.15rem;
+		padding: 0.2rem;
+		border: 1px solid var(--color-border);
 		border-radius: 999px;
 		background: var(--color-surface);
-		text-decoration: none;
 	}
 
-	.lang-toggle:hover {
-		border-color: var(--color-accent);
+	.lang-option {
+		font-size: 0.8rem;
+		font-weight: 600;
+		padding: 0.3rem 0.6rem;
+		border-radius: 999px;
+		text-decoration: none;
+		color: var(--color-muted);
+	}
+
+	a.lang-option:hover {
+		color: var(--color-text);
+	}
+
+	.lang-option.is-current {
+		background: var(--color-accent);
+		color: var(--color-bg);
 	}
 </style>

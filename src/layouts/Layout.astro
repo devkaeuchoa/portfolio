@@ -1,6 +1,7 @@
 ---
 import { profile, content, type Lang } from '../data/resume';
 import LangToggle from '../components/LangToggle.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 
 interface Props {
   lang: Lang;
@@ -12,7 +13,7 @@ const { lang, title, description } = Astro.props;
 const t = content[lang];
 const pageTitle = title ?? `${profile.name} — ${t.title}`;
 const pageDescription = description ?? t.summary;
-const htmlLang = lang === 'pt' ? 'pt-BR' : 'en';
+const htmlLang = { pt: 'pt-BR', en: 'en', es: 'es' }[lang];
 ---
 
 <html lang={htmlLang}>
@@ -23,9 +24,24 @@ const htmlLang = lang === 'pt' ? 'pt-BR' : 'en';
 		<meta name="description" content={pageDescription} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
+		<script is:inline>
+			(function () {
+				var stored = localStorage.getItem('theme');
+				var theme =
+					stored === 'light' || stored === 'dark'
+						? stored
+						: window.matchMedia('(prefers-color-scheme: light)').matches
+							? 'light'
+							: 'dark';
+				document.documentElement.setAttribute('data-theme', theme);
+			})();
+		</script>
 	</head>
 	<body>
-		<LangToggle lang={lang} />
+		<div class="topbar">
+			<LangToggle lang={lang} />
+			<ThemeToggle />
+		</div>
 		<slot />
 	</body>
 </html>
@@ -36,8 +52,20 @@ const htmlLang = lang === 'pt' ? 'pt-BR' : 'en';
 		--color-surface: #14161c;
 		--color-text: #e7e9ee;
 		--color-muted: #9aa0ac;
-		--color-accent: #7dd3fc;
+		--color-border: #262a33;
+		--color-accent: #4ade80;
+		--color-accent-rgb: 74, 222, 128;
 		--max-width: 780px;
+	}
+
+	:root[data-theme='light'] {
+		--color-bg: #f7faf7;
+		--color-surface: #ffffff;
+		--color-text: #10201a;
+		--color-muted: #5b6c63;
+		--color-border: #d7e0d9;
+		--color-accent: #15803d;
+		--color-accent-rgb: 21, 128, 61;
 	}
 
 	* {
@@ -55,6 +83,17 @@ const htmlLang = lang === 'pt' ? 'pt-BR' : 'en';
 		color: var(--color-text);
 		font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 		line-height: 1.6;
+		transition: background 0.2s ease, color 0.2s ease;
+	}
+
+	.topbar {
+		position: fixed;
+		top: 1rem;
+		right: 1rem;
+		z-index: 50;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
 	}
 
 	main {

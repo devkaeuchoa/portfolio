@@ -8,7 +8,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = content[lang];
-const overline = lang === 'pt' ? 'Olá, eu sou' : "Hi, I'm";
+const overline = { pt: 'Olá, eu sou', en: "Hi, I'm", es: 'Hola, soy' }[lang];
 ---
 
 <section id="sobre" class="hero-section">
@@ -99,7 +99,7 @@ const overline = lang === 'pt' ? 'Olá, eu sou' : "Hi, I'm";
 
 	.links a {
 		background: var(--color-surface);
-		border: 1px solid #262a33;
+		border: 1px solid var(--color-border);
 		border-radius: 999px;
 		padding: 0.3rem 0.9rem;
 		text-decoration: none;

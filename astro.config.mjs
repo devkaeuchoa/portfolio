@@ -6,7 +6,7 @@ export default defineConfig({
   site: 'https://kaeuchoa.github.io',
   i18n: {
     defaultLocale: 'pt',
-    locales: ['pt', 'en'],
+    locales: ['pt', 'en', 'es'],
     routing: {
       prefixDefaultLocale: false,
     },

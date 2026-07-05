@@ -7,8 +7,8 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = content[lang];
-const heading = lang === 'pt' ? 'Projetos' : 'Projects';
-const repoLabel = lang === 'pt' ? 'Ver código →' : 'View code →';
+const heading = { pt: 'Projetos', en: 'Projects', es: 'Proyectos' }[lang];
+const repoLabel = { pt: 'Ver código →', en: 'View code →', es: 'Ver código →' }[lang];
 ---
 
 {t.projects.length > 0 && (
@@ -63,7 +63,7 @@ const repoLabel = lang === 'pt' ? 'Ver código →' : 'View code →';
 	.tags li {
 		font-size: 0.8rem;
 		color: var(--color-muted);
-		border: 1px solid #262a33;
+		border: 1px solid var(--color-border);
 		border-radius: 999px;
 		padding: 0.15rem 0.7rem;
 	}
