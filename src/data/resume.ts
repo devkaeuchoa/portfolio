@@ -13,6 +13,7 @@ export interface Experience {
   role: string;
   company: string;
   companyUrl: string;
+  companySummary?: string;
   period: string;
   description: string;
 }
@@ -72,6 +73,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Desenvolvedor Front-end Sênior',
         company: 'HostGator América Latina',
         companyUrl: 'https://www.hostgator.com.br/sobre-a-hostgator',
+        companySummary:
+          'A HostGator é uma empresa de hospedagem de sites, com soluções que vão de hospedagem compartilhada a servidores dedicados e VPS. Atende mais de 4,5 milhões de clientes globalmente, com foco em ajudar empreendedores a tirar suas ideias do papel e ganhar presença digital.',
         period: 'outubro de 2025 — atual',
         description:
           'Parte do time de desenvolvimento de uma nova plataforma cliente para gerenciamento de agentes de IA. Aplicação de práticas de desenvolvimento orientadas por IA para acelerar a entrega de funcionalidades e elevar a qualidade do código. Definição de uma arquitetura frontend escalável e de fácil manutenção, alinhada ao crescimento do negócio. Colaboração com times multidisciplinares para definição de soluções técnicas e evolução do produto.',
@@ -80,6 +83,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Desenvolvedor Sênior Frontend',
         company: 'Inter',
         companyUrl: 'https://inter.co/',
+        companySummary:
+          'O Inter é um super app financeiro que oferece conta digital gratuita, cartão de crédito, investimentos e soluções para pessoas físicas e empresas. Conta com cashback (Inter Shop), conta em dólar e um ecossistema completo de serviços financeiros.',
         period: 'fevereiro de 2024 — outubro de 2025',
         description:
           'Liderança no desenvolvimento frontend com foco em páginas estáticas otimizadas para SEO, melhorando indexação e visibilidade orgânica. Criação e evolução de um Design System em React, com componentes reutilizáveis, acessíveis e escaláveis. Desenvolvimento de uma arquitetura de UI orientada a servidor (Server-Driven UI), facilitando a criação de páginas por usuários internos. Estruturação de uma prática de mentoria no time, apoiando o desenvolvimento técnico de pessoas desenvolvedoras juniores.',
@@ -174,6 +179,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Senior Front-end Developer',
         company: 'HostGator América Latina',
         companyUrl: 'https://www.hostgator.com.br/sobre-a-hostgator',
+        companySummary:
+          'HostGator is a web hosting company offering everything from shared hosting to dedicated servers and VPS. It serves more than 4.5 million customers worldwide, focused on helping entrepreneurs bring their ideas online.',
         period: 'October 2025 — Present',
         description:
           'Part of the development team building a new client platform for managing AI agents. Applying AI-driven development practices to speed up feature delivery and raise code quality. Defining a scalable, maintainable frontend architecture aligned with business growth. Collaborating with cross-functional teams on technical solutions and product evolution.',
@@ -182,6 +189,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Senior Frontend Developer',
         company: 'Inter',
         companyUrl: 'https://inter.co/',
+        companySummary:
+          'Inter is a financial super app offering a free digital account, credit card, investments, and solutions for individuals and businesses. It also features cashback (Inter Shop), a dollar account, and a full ecosystem of financial services.',
         period: 'February 2024 — October 2025',
         description:
           'Led frontend development focused on static, SEO-optimized pages, improving indexing and organic visibility. Created and evolved a React Design System with reusable, accessible, scalable components. Built a server-driven UI architecture, enabling internal users to create pages themselves. Set up a mentoring practice on the team, supporting the technical growth of junior developers.',

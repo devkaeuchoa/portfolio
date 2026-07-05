@@ -20,6 +20,8 @@ function extractYears(period: string): string {
 }
 
 const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
+const ctaLabel = lang === 'pt' ? 'Ir para o site' : 'Go to website';
+const closeLabel = lang === 'pt' ? 'Fechar' : 'Close';
 ---
 
 <section id="experiencia">
@@ -34,7 +36,7 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 						<span class="year">{extractYears(job.period)}</span>
 						<span class="dot-col">
 							<span
-								class:list={['dot', isCurrent && 'current']}
+								class="dot"
 								data-toggle={i}
 								role="button"
 								tabindex="0"
@@ -44,7 +46,7 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 							/>
 						</span>
 						<div class="content">
-							<h3 class:list={['role-company', isCurrent && 'current']}>
+							<h3 class="role-company">
 								<span
 									class="role-text"
 									data-toggle={i}
@@ -57,14 +59,55 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 									{job.role}
 								</span>
 								{' · '}
-								<a
-									class="company-link"
-									href={job.companyUrl}
-									target="_blank"
-									rel="noreferrer"
-								>
-									{job.company}
-								</a>
+								{job.companySummary ? (
+									<span class="company-wrap">
+										<a
+											class="company-link"
+											href={job.companyUrl}
+											target="_blank"
+											rel="noreferrer"
+											data-company-trigger={i}
+											aria-describedby={`company-pop-${lang}-${i}`}
+										>
+											{job.company}
+										</a>
+										<span class="company-backdrop" data-company-backdrop={i} />
+										<span
+											class="company-popover"
+											id={`company-pop-${lang}-${i}`}
+											role="dialog"
+											aria-label={job.company}
+										>
+											<span class="company-popover-arrow" aria-hidden="true" />
+											<button
+												type="button"
+												class="company-close"
+												data-company-close={i}
+												aria-label={closeLabel}
+											>
+												×
+											</button>
+											<p>{job.companySummary}</p>
+											<a
+												class="company-cta"
+												href={job.companyUrl}
+												target="_blank"
+												rel="noreferrer"
+											>
+												{ctaLabel}
+											</a>
+										</span>
+									</span>
+								) : (
+									<a
+										class="company-link"
+										href={job.companyUrl}
+										target="_blank"
+										rel="noreferrer"
+									>
+										{job.company}
+									</a>
+								)}
 								<span class="chevron" aria-hidden="true">
 									›
 								</span>
@@ -103,6 +146,55 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 			if (e.key === 'Enter' || e.key === ' ') {
 				e.preventDefault();
 				toggle();
+			}
+		});
+	});
+
+	// Dispositivos sem hover "de verdade" (touch) precisam de um clique para
+	// revelar o popover/bottom sheet, já que não há :hover para acioná-lo.
+	const hasRealHover = () => window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+	const isSheetViewport = () => window.matchMedia('(max-width: 640px)').matches;
+
+	const closeAllCompanyPopovers = () => {
+		document.querySelectorAll<HTMLElement>('.company-wrap.open').forEach((wrap) => {
+			wrap.classList.remove('open');
+		});
+		document.body.classList.remove('scroll-locked');
+	};
+
+	document.querySelectorAll<HTMLAnchorElement>('[data-company-trigger]').forEach((link) => {
+		const wrap = link.closest<HTMLElement>('.company-wrap');
+		if (!wrap) return;
+
+		link.addEventListener('click', (e) => {
+			if (!hasRealHover()) {
+				e.preventDefault();
+				closeAllCompanyPopovers();
+				wrap.classList.add('open');
+				if (isSheetViewport()) {
+					document.body.classList.add('scroll-locked');
+				}
+			}
+		});
+	});
+
+	document.querySelectorAll<HTMLElement>('[data-company-backdrop]').forEach((backdrop) => {
+		backdrop.addEventListener('click', closeAllCompanyPopovers);
+	});
+
+	document.querySelectorAll<HTMLElement>('[data-company-close]').forEach((btn) => {
+		btn.addEventListener('click', closeAllCompanyPopovers);
+	});
+
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') closeAllCompanyPopovers();
+	});
+
+	document.addEventListener('click', (e) => {
+		document.querySelectorAll<HTMLElement>('.company-wrap.open').forEach((wrap) => {
+			if (!wrap.contains(e.target as Node)) {
+				wrap.classList.remove('open');
+				document.body.classList.remove('scroll-locked');
 			}
 		});
 	});
@@ -166,7 +258,7 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 		transition: transform 0.15s ease, box-shadow 0.15s ease;
 	}
 
-	.dot.current {
+	.row.is-open .dot {
 		width: 0.8rem;
 		height: 0.8rem;
 		margin-top: 0.3rem;
@@ -203,11 +295,12 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 		color: var(--color-text);
 	}
 
-	h3.role-company.current .role-text {
+	.row.is-open .role-text {
 		font-weight: 800;
+		opacity: 1;
 	}
 
-	h3.role-company:not(.current) .role-text {
+	.row:not(.is-open) .role-text {
 		font-weight: 400;
 		opacity: 0.9;
 	}
@@ -225,9 +318,150 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 		text-underline-offset: 2px;
 	}
 
-	.company-link:hover,
+	.company-link:hover {
+		color: var(--color-text);
+	}
+
 	.company-link:focus-visible {
 		color: var(--color-text);
+		text-decoration: none;
+	}
+
+	.company-wrap {
+		position: relative;
+		display: inline-flex;
+	}
+
+	.company-backdrop {
+		display: none;
+	}
+
+	.company-popover {
+		position: absolute;
+		bottom: calc(100% + 10px);
+		left: 50%;
+		transform: translateX(-50%) translateY(4px);
+		width: 280px;
+		background: var(--color-surface);
+		border: 1px solid #262a33;
+		border-radius: 10px;
+		padding: 2rem 1.25rem 1.25rem;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transition: opacity 0.15s ease, transform 0.15s ease;
+		z-index: 20;
+		font-size: 0.85rem;
+		font-weight: 400;
+		color: var(--color-text);
+	}
+
+	.company-popover p {
+		margin: 0 0 1rem;
+		color: var(--color-muted);
+	}
+
+	.company-popover-arrow {
+		position: absolute;
+		bottom: -5px;
+		left: 50%;
+		transform: translateX(-50%) rotate(45deg);
+		width: 10px;
+		height: 10px;
+		background: var(--color-surface);
+		border-right: 1px solid #262a33;
+		border-bottom: 1px solid #262a33;
+	}
+
+	.company-close {
+		position: absolute;
+		top: 0.35rem;
+		right: 0.35rem;
+		background: none;
+		border: none;
+		color: var(--color-muted);
+		font-size: 1.4rem;
+		line-height: 1;
+		cursor: pointer;
+		padding: 0.4rem;
+		z-index: 1;
+	}
+
+	.company-cta {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+		text-align: center;
+		background: var(--color-accent);
+		color: var(--color-bg);
+		font-weight: 700;
+		text-decoration: none;
+		border-radius: 999px;
+		padding: 0.5rem 0.9rem;
+		font-size: 0.8rem;
+	}
+
+	.company-wrap.open .company-popover {
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+		transform: translateX(-50%) translateY(0);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.company-wrap:hover .company-popover,
+		.company-wrap:focus-within .company-popover {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+			transform: translateX(-50%) translateY(0);
+		}
+	}
+
+	@media (max-width: 640px) {
+		.company-backdrop {
+			display: block;
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.5);
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s ease;
+			z-index: 30;
+		}
+
+		.company-popover {
+			position: fixed;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: auto;
+			max-width: none;
+			transform: translateY(100%);
+			border-radius: 16px 16px 0 0;
+			padding: 2rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom));
+			z-index: 31;
+			transition: transform 0.25s ease;
+			box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+		}
+
+		.company-popover-arrow {
+			display: none;
+		}
+
+		.company-cta {
+			padding: 0.7rem 1rem;
+		}
+
+		.company-wrap.open .company-backdrop {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		.company-wrap.open .company-popover {
+			transform: translateY(0);
+		}
 	}
 
 	.chevron {
