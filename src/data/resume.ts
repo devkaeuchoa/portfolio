@@ -33,7 +33,9 @@ export interface Project {
 export interface ResumeContent {
   title: string;
   location: string;
+  tagline: string;
   summary: string;
+  summaryShort: string;
   skills: string[];
   experience: Experience[];
   education: Education[];
@@ -43,10 +45,13 @@ export interface ResumeContent {
 
 export const content: Record<Lang, ResumeContent> = {
   pt: {
-    title: 'Desenvolvedor Front-end Sênior',
-    location: 'Belo Horizonte, Minas Gerais, Brasil',
+    title: 'Desenvolvedor Web',
+    location: 'Brasil',
+    tagline: 'Construindo interfaces web rápidas, acessíveis e bem estruturadas.',
     summary:
       'Desenvolvedor de software com ênfase em produtos para Web (Front-end). Gosto de tarefas que envolvam arquitetura de software e estruturação/refatoração de código. Durante meu período acadêmico participei do programa Ciência sem Fronteiras nos EUA, experiência que reforçou meu interesse em projetos que ajudem pessoas de forma construtiva. Busco sempre chegar o mais próximo possível do cliente final, e tenho perfil qualificado para trabalhar em equipe, apresentar projetos e apoiar o desenvolvimento de soluções.',
+    summaryShort:
+      'Desenvolvedor de software com ênfase em produtos para Web (Front-end). Gosto de tarefas que envolvam arquitetura de software e estruturação/refatoração de código.',
     skills: [
       'React',
       'Next.js',
@@ -134,10 +139,13 @@ export const content: Record<Lang, ResumeContent> = {
     projects: [],
   },
   en: {
-    title: 'Senior Front-end Developer',
-    location: 'Belo Horizonte, Minas Gerais, Brazil',
+    title: 'Web Developer',
+    location: 'Brazil',
+    tagline: 'Building fast, accessible, well-structured web interfaces.',
     summary:
       'Software developer focused on Web products (Front-end). I enjoy work involving software architecture and code structuring/refactoring. During my academic years I took part in the Science without Borders program in the US, an experience that reinforced my interest in projects that help people in a constructive way. I always aim to stay as close as possible to the end customer, and have a profile well suited to working with people, leading project presentations, and supporting teams.',
+    summaryShort:
+      'Software developer focused on Web products (Front-end). I enjoy work involving software architecture and code structuring/refactoring.',
     skills: [
       'React',
       'Next.js',

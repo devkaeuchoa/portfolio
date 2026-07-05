@@ -1,0 +1,100 @@
+---
+// Ilustração decorativa: janela de navegador com linhas de código,
+// para remeter visualmente a desenvolvimento web.
+---
+
+<svg
+	class="illustration"
+	viewBox="0 0 400 300"
+	fill="none"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	aria-hidden="true"
+>
+	<rect x="10" y="10" width="380" height="280" rx="14" class="frame" />
+	<path d="M10 46 H390" class="frame-line" />
+	<circle cx="30" cy="28" r="5" fill="#ef4444" />
+	<circle cx="48" cy="28" r="5" fill="#f59e0b" />
+	<circle cx="66" cy="28" r="5" fill="#22c55e" />
+
+	<rect x="34" y="70" width="70" height="10" rx="5" class="code-accent" />
+	<rect x="112" y="70" width="130" height="10" rx="5" class="code-muted" />
+
+	<rect x="54" y="98" width="40" height="10" rx="5" class="code-muted" />
+	<rect x="102" y="98" width="90" height="10" rx="5" class="code-accent" />
+	<rect x="200" y="98" width="60" height="10" rx="5" class="code-muted" />
+
+	<rect x="54" y="126" width="150" height="10" rx="5" class="code-muted" />
+
+	<rect x="34" y="154" width="90" height="10" rx="5" class="code-accent" />
+
+	<rect x="54" y="182" width="60" height="10" rx="5" class="code-muted" />
+	<rect x="122" y="182" width="100" height="10" rx="5" class="code-muted" />
+
+	<rect x="34" y="210" width="50" height="10" rx="5" class="code-accent" />
+	<rect class="cursor" x="92" y="210" width="8" height="10" rx="2" />
+
+	<g class="tag-badge">
+		<circle cx="336" cy="248" r="30" />
+		<text x="336" y="254" text-anchor="middle">&lt;/&gt;</text>
+	</g>
+</svg>
+
+<style>
+	.illustration {
+		width: 100%;
+		height: auto;
+		max-width: 340px;
+	}
+
+	.frame {
+		fill: var(--color-surface);
+		stroke: #262a33;
+	}
+
+	.frame-line {
+		stroke: #262a33;
+		stroke-width: 1;
+	}
+
+	.code-muted {
+		fill: var(--color-muted);
+		opacity: 0.55;
+	}
+
+	.code-accent {
+		fill: var(--color-accent);
+		opacity: 0.85;
+	}
+
+	.cursor {
+		fill: var(--color-accent);
+		animation: blink 1.1s step-end infinite;
+	}
+
+	.tag-badge circle {
+		fill: var(--color-accent);
+	}
+
+	.tag-badge text {
+		font: 700 20px system-ui, sans-serif;
+		fill: var(--color-bg);
+	}
+
+	@keyframes blink {
+		0%,
+		45% {
+			opacity: 1;
+		}
+		50%,
+		100% {
+			opacity: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.cursor {
+			animation: none;
+		}
+	}
+</style>

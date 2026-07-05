@@ -30,7 +30,7 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 				const isCurrent = /atual|present/i.test(job.period);
 				const descId = `exp-desc-${lang}-${i}`;
 				return (
-					<div class="row">
+					<div class:list={['row', isCurrent && 'is-open']}>
 						<span class="year">{extractYears(job.period)}</span>
 						<span class="dot-col">
 							<span
@@ -38,7 +38,7 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 								data-toggle={i}
 								role="button"
 								tabindex="0"
-								aria-expanded="false"
+								aria-expanded={isCurrent ? 'true' : 'false'}
 								aria-controls={descId}
 								aria-label={`${toggleLabel} ${job.role} · ${job.company}`}
 							/>
@@ -49,7 +49,7 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 								data-toggle={i}
 								role="button"
 								tabindex="0"
-								aria-expanded="false"
+								aria-expanded={isCurrent ? 'true' : 'false'}
 								aria-controls={descId}
 							>
 								{job.role} · {job.company}
@@ -57,7 +57,7 @@ const toggleLabel = lang === 'pt' ? 'Mostrar detalhes de' : 'Show details for';
 									›
 								</span>
 							</h3>
-							<p id={descId} class="description" hidden>
+							<p id={descId} class="description" hidden={!isCurrent}>
 								{job.description}
 							</p>
 						</div>
