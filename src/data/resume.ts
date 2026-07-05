@@ -93,6 +93,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Consultor de Desenvolvimento Front-end',
         company: 'Thoughtworks',
         companyUrl: 'https://www.thoughtworks.com/pt-br/about-us',
+        companySummary:
+          'A Thoughtworks é uma consultoria global de tecnologia com mais de 30 anos de atuação, presente em 47 escritórios e 18 países. Une expertise em design, engenharia de software e inteligência artificial para apoiar a transformação digital de empresas de diversos setores.',
         period: 'abril de 2021 — fevereiro de 2024',
         description:
           'Consultoria em desenvolvimento de sistemas web de e-commerce para grandes redes de varejo internacionais. Stack: React, TypeScript, CSS/SASS.',
@@ -101,6 +103,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Desenvolvedor de Front-end',
         company: 'Symplicity Corporation',
         companyUrl: 'https://www.symplicity.com/',
+        companySummary:
+          'A Symplicity é uma plataforma de software voltada para universidades, com soluções para serviços de carreira, vida residencial, conduta estudantil e recrutamento. Seu foco é simplificar operações do campus e preparar estudantes para o mercado de trabalho.',
         period: 'abril de 2019 — abril de 2021',
         description:
           'Desenvolvimento e manutenção dos sistemas da empresa com ênfase em tarefas de front-end e acessibilidade. Stack: Angular, AngularJS, CSS/SASS, JavaScript; back-end em PHP.',
@@ -109,6 +113,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Desenvolvedor Full-Stack',
         company: 'BitX',
         companyUrl: 'https://bitx.com.br/whitelabel/',
+        companySummary:
+          'A BitX é uma empresa de inovação que oferece soluções whitelabel prontas para logística e marketplace, permitindo que negócios lancem seus próprios aplicativos sem desenvolver do zero. Foca em reduzir custo e tempo de implementação para quem quer expandir no e-commerce.',
         period: 'setembro de 2018 — março de 2019',
         description:
           'Desenvolvimento de tarefas relacionadas a aplicativos Android e painel administrativo web. Stack: Android Nativo (Java/Kotlin) com geolocalização e integração com Maps, Bootstrap/JavaScript no front-end, Node.js no back-end.',
@@ -117,6 +123,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Desenvolvedor Full-Stack',
         company: 'Órbita Consultoria e Sistemas',
         companyUrl: 'https://www.orbita.srv.br/',
+        companySummary:
+          'A Órbita Tecnologia desenvolve soluções de gestão digital para o setor público, com foco em transparência, agilidade e automação de processos administrativos municipais. Seus sistemas já estão implementados em diversos municípios brasileiros.',
         period: 'março de 2018 — agosto de 2018',
         description:
           'Desenvolvimento e manutenção de sistema web para gestão pública. Stack: Bootstrap 3/AdminLTE e JavaScript no front-end, PHP CodeIgniter (base legada) no back-end.',
@@ -125,6 +133,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Bolsista em Iniciação Científica',
         company: 'Universidade Federal do Pará',
         companyUrl: 'https://ufpa.br/',
+        companySummary:
+          'A Universidade Federal do Pará (UFPA) é uma universidade pública federal brasileira, referência em ensino, pesquisa e extensão na região Amazônica. É multicampi e oferece cursos de graduação e pós-graduação em diversas áreas do conhecimento.',
         period: 'agosto de 2016 — março de 2018',
         description:
           'Pesquisa acadêmica na área de Cidades Inteligentes, produção de artigos científicos e desenvolvimento de aplicativo Android. Tecnologias: Android Nativo (Java/Kotlin), integração com APIs de terceiros, geolocalização e mapas.',
@@ -133,6 +143,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Pesquisador Acadêmico',
         company: 'Illinois Institute of Technology',
         companyUrl: 'https://www.iit.edu/',
+        companySummary:
+          'O Illinois Institute of Technology (Illinois Tech) é uma universidade de pesquisa privada em Chicago, com forte foco em tecnologia e áreas STEM. Oferece mais de 50 cursos de graduação e 100 programas de pós-graduação alinhados ao mercado de trabalho.',
         period: 'junho de 2016 — julho de 2016',
         description:
           'Pesquisa para construção de aplicativo Android para controle de uma frota de drones autônomos. Tecnologias: Android nativo (Java), integração com API, geolocalização.',
@@ -199,6 +211,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Front-end Development Consultant',
         company: 'Thoughtworks',
         companyUrl: 'https://www.thoughtworks.com/pt-br/about-us',
+        companySummary:
+          'Thoughtworks is a global technology consultancy with more than 30 years of experience, present in 47 offices across 18 countries. It combines design, software engineering, and AI expertise to support digital transformation across industries.',
         period: 'April 2021 — February 2024',
         description:
           'Consulting work on e-commerce web system development for large international retail stores. Stack: React, TypeScript, CSS/SASS.',
@@ -207,6 +221,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Front-end Developer',
         company: 'Symplicity Corporation',
         companyUrl: 'https://www.symplicity.com/',
+        companySummary:
+          'Symplicity is a software platform built for universities, offering solutions for career services, residential life, student conduct, and recruiting. It focuses on simplifying campus operations and preparing students for the job market.',
         period: 'April 2019 — April 2021',
         description:
           "Development and maintenance of the company's systems, with emphasis on front-end and accessibility tasks. Stack: Angular, AngularJS, CSS/SASS, JavaScript; PHP back-end.",
@@ -215,6 +231,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Full-Stack Developer',
         company: 'BitX',
         companyUrl: 'https://bitx.com.br/whitelabel/',
+        companySummary:
+          'BitX is an innovation company offering ready-made whitelabel solutions for logistics and marketplace apps, letting businesses launch their own platforms without building from scratch. It focuses on cutting cost and time for companies expanding into e-commerce.',
         period: 'September 2018 — March 2019',
         description:
           'Development of Android app features and a web admin dashboard. Stack: Native Android (Java/Kotlin) with geolocation and Maps integration, Bootstrap/JavaScript front-end, Node.js back-end.',
@@ -223,6 +241,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Full-Stack Developer',
         company: 'Órbita Consultoria e Sistemas',
         companyUrl: 'https://www.orbita.srv.br/',
+        companySummary:
+          'Órbita Tecnologia builds digital management solutions for the public sector, focused on transparency, agility, and automating municipal administrative processes. Its systems are already deployed across several Brazilian municipalities.',
         period: 'March 2018 — August 2018',
         description:
           'Development and maintenance of a web system for public administration. Stack: Bootstrap 3/AdminLTE and JavaScript front-end, PHP CodeIgniter (legacy codebase) back-end.',
@@ -231,6 +251,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Undergraduate Research Fellow',
         company: 'Universidade Federal do Pará',
         companyUrl: 'https://ufpa.br/',
+        companySummary:
+          'Universidade Federal do Pará (UFPA) is a Brazilian federal public university, a reference in teaching, research, and outreach in the Amazon region. It is a multi-campus institution offering undergraduate and graduate programs across many fields.',
         period: 'August 2016 — March 2018',
         description:
           'Academic research in the Smart Cities field, producing scientific papers and an Android application. Technologies: Native Android (Java/Kotlin), third-party API integration, geolocation and maps.',
@@ -239,6 +261,8 @@ export const content: Record<Lang, ResumeContent> = {
         role: 'Academic Researcher',
         company: 'Illinois Institute of Technology',
         companyUrl: 'https://www.iit.edu/',
+        companySummary:
+          'Illinois Institute of Technology (Illinois Tech) is a private research university in Chicago with a strong focus on technology and STEM fields. It offers 50+ undergraduate majors and 100+ industry-aligned graduate programs.',
         period: 'June 2016 — July 2016',
         description:
           'Research toward building an Android app to control a fleet of autonomous drones. Technologies: Native Android (Java), API integration, geolocation.',
