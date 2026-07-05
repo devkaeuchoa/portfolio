@@ -1,0 +1,241 @@
+---
+import { profile, content, type Lang } from '../data/resume';
+import WebDevIllustration from './WebDevIllustration.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = content[lang];
+
+const mapPlaceholderText = {
+  pt: 'Mapa interativo em breve',
+  en: 'Interactive map coming soon',
+  es: 'Mapa interactivo próximamente',
+}[lang];
+const prevLabel = { pt: 'Slide anterior', en: 'Previous slide', es: 'Diapositiva anterior' }[lang];
+const nextLabel = { pt: 'Próximo slide', en: 'Next slide', es: 'Diapositiva siguiente' }[lang];
+---
+
+<div class="hero-carousel" data-hero-carousel>
+	<div class="slides">
+		<div class="slide slide-content" data-slide data-index="0" data-active="true">
+			<div class="slide-inner">
+				<p class="tagline">{t.tagline}</p>
+				<p class="summary summary-short">{t.summaryShort}</p>
+				<p class="summary summary-full">{t.summary}</p>
+				<p class="links">
+					<a href={`mailto:${profile.email}`}>{profile.email}</a>
+					<a href={profile.links.github} target="_blank" rel="noreferrer">GitHub</a>
+					<a href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+				</p>
+			</div>
+			<div class="hero-art">
+				<WebDevIllustration />
+			</div>
+		</div>
+
+		<div class="slide slide-map" data-slide data-index="1" data-active="false" aria-hidden="true">
+			<div class="map-placeholder" data-map-placeholder>
+				<svg class="map-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+					<path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z" />
+					<circle cx="12" cy="9.5" r="2.5" />
+				</svg>
+				<p class="map-placeholder-text">{mapPlaceholderText}</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="carousel-controls">
+		<button type="button" class="carousel-btn" data-carousel-prev aria-label={prevLabel}>
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+				<path d="M15 18l-6-6 6-6" />
+			</svg>
+		</button>
+		<span class="carousel-status" aria-live="polite" data-carousel-status></span>
+		<button type="button" class="carousel-btn" data-carousel-next aria-label={nextLabel}>
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+				<path d="M9 6l6 6-6 6" />
+			</svg>
+		</button>
+	</div>
+</div>
+
+<script>
+	const root = document.querySelector<HTMLElement>('[data-hero-carousel]');
+	const slides = Array.from(root?.querySelectorAll<HTMLElement>('[data-slide]') ?? []);
+	const prevBtn = root?.querySelector<HTMLButtonElement>('[data-carousel-prev]');
+	const nextBtn = root?.querySelector<HTMLButtonElement>('[data-carousel-next]');
+	const status = root?.querySelector('[data-carousel-status]');
+
+	let active = 0;
+
+	const render = () => {
+		slides.forEach((slide, i) => {
+			slide.dataset.active = String(i === active);
+			slide.setAttribute('aria-hidden', String(i !== active));
+		});
+		if (status) status.textContent = `${active + 1} / ${slides.length}`;
+	};
+
+	const go = (delta: number) => {
+		active = (active + delta + slides.length) % slides.length;
+		render();
+	};
+
+	prevBtn?.addEventListener('click', () => go(-1));
+	nextBtn?.addEventListener('click', () => go(1));
+	render();
+</script>
+
+<style>
+	.hero-carousel {
+		margin-top: 1rem;
+	}
+
+	.slides {
+		position: relative;
+		display: grid;
+		grid-template-areas: 'stack';
+	}
+
+	.slide {
+		grid-area: stack;
+		display: grid;
+		gap: 2rem;
+		align-content: start;
+	}
+
+	.slide[data-active='false'] {
+		visibility: hidden;
+	}
+
+	.slide-content {
+		grid-template-columns: 1fr;
+	}
+
+	.tagline {
+		margin: 0;
+		font-size: 1.15rem;
+	}
+
+	.summary {
+		margin: 0.75rem 0 0;
+		color: var(--color-muted);
+		max-width: 60ch;
+	}
+
+	.summary-full {
+		display: none;
+	}
+
+	.links {
+		margin: 1.25rem 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		font-size: 0.9rem;
+	}
+
+	.links a {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 0.3rem 0.9rem;
+		text-decoration: none;
+	}
+
+	.links a:hover {
+		border-color: var(--color-accent);
+	}
+
+	.hero-art {
+		display: flex;
+		justify-content: center;
+	}
+
+	.slide-map {
+		align-content: center;
+	}
+
+	.map-placeholder {
+		border: 1px dashed var(--color-border);
+		border-radius: 12px;
+		min-height: 220px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		color: var(--color-muted);
+		background: var(--color-surface);
+	}
+
+	.map-icon {
+		width: 2rem;
+		height: 2rem;
+	}
+
+	.map-placeholder-text {
+		margin: 0;
+		font-size: 0.95rem;
+	}
+
+	.carousel-controls {
+		margin-top: 1.25rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	.carousel-btn {
+		width: 2.25rem;
+		height: 2.25rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		background: var(--color-surface);
+		color: var(--color-text);
+		cursor: pointer;
+	}
+
+	.carousel-btn:hover {
+		border-color: var(--color-accent);
+	}
+
+	.carousel-btn svg {
+		width: 1.1rem;
+		height: 1.1rem;
+	}
+
+	.carousel-status {
+		font-size: 0.85rem;
+		color: var(--color-muted);
+		min-width: 3ch;
+		text-align: center;
+	}
+
+	@media (min-width: 720px) {
+		.slide-content {
+			grid-template-columns: 1.15fr 0.85fr;
+			align-items: center;
+		}
+
+		.hero-art {
+			justify-content: flex-end;
+		}
+
+		.summary-short {
+			display: none;
+		}
+
+		.summary-full {
+			display: block;
+		}
+	}
+</style>
