@@ -184,12 +184,13 @@ const mapAriaLabel = { pt: 'Mapa de localizações', en: 'Map of locations', es:
 	}
 
 	.pin.is-active .pin-halo {
-		fill: rgba(var(--color-accent-rgb), 0.45);
+		fill: rgba(var(--color-selected-rgb), 0.45);
 		r: 13;
 	}
 
 	.pin.is-active .pin-dot {
+		fill: var(--color-selected);
 		r: 7;
-		filter: drop-shadow(0 0 3px rgba(var(--color-accent-rgb), 0.8));
+		filter: drop-shadow(0 0 3px rgba(var(--color-selected-rgb), 0.8));
 	}
 </style>
