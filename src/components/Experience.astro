@@ -1,6 +1,7 @@
 ---
 import { content, type Lang } from '../data/resume';
 import { techIcons } from '../data/techIcons';
+import LocationsMap from './LocationsMap.astro';
 
 interface Props {
   lang: Lang;
@@ -34,7 +35,8 @@ const collapseAllLabel = { pt: 'Recolher todos', en: 'Collapse all', es: 'Contra
 			{expandAllLabel}
 		</button>
 	</div>
-	<div class="timeline">
+	<div class="experience-grid">
+		<div class="timeline">
 		{
 			t.experience.map((job, i) => {
 				const isCurrent = /atual|present|actualidad/i.test(job.period);
@@ -148,9 +150,21 @@ const collapseAllLabel = { pt: 'Recolher todos', en: 'Collapse all', es: 'Contra
 			})
 		}
 	</div>
+	<div class="map-col">
+		<LocationsMap lang={lang} />
+	</div>
+	</div>
 </section>
 
 <script>
+	function setRowOpen(row: HTMLElement, desc: HTMLElement, group: NodeListOf<HTMLElement>, expanded: boolean) {
+		row.classList.toggle('is-open', expanded);
+		desc.hidden = !expanded;
+		group.forEach((t) => t.setAttribute('aria-expanded', String(expanded)));
+		const index = Number(group[0]?.dataset.toggle);
+		document.dispatchEvent(new CustomEvent('experience-row-toggle', { detail: { index, expanded } }));
+	}
+
 	const toggles = document.querySelectorAll<HTMLElement>('[data-toggle]');
 
 	toggles.forEach((el) => {
@@ -163,9 +177,7 @@ const collapseAllLabel = { pt: 'Recolher todos', en: 'Collapse all', es: 'Contra
 		if (!desc || !row) return;
 
 		const toggle = () => {
-			const expanded = row.classList.toggle('is-open');
-			desc.hidden = !expanded;
-			group.forEach((t) => t.setAttribute('aria-expanded', String(expanded)));
+			setRowOpen(row, desc, group, !row.classList.contains('is-open'));
 		};
 
 		el.addEventListener('click', toggle);
@@ -186,12 +198,9 @@ const collapseAllLabel = { pt: 'Recolher todos', en: 'Collapse all', es: 'Contra
 
 		const setAllRows = (open: boolean) => {
 			rows.forEach((row) => {
-				row.classList.toggle('is-open', open);
 				const desc = row.querySelector<HTMLElement>('.description');
-				if (desc) desc.hidden = !open;
-				row.querySelectorAll<HTMLElement>('[data-toggle]').forEach((t) => {
-					t.setAttribute('aria-expanded', String(open));
-				});
+				const group = row.querySelectorAll<HTMLElement>('[data-toggle]');
+				if (desc) setRowOpen(row, desc, group, open);
 			});
 			toggleAllBtn.textContent = open ? collapseLabel : expandLabel;
 			toggleAllBtn.setAttribute('aria-expanded', String(open));
@@ -202,6 +211,23 @@ const collapseAllLabel = { pt: 'Recolher todos', en: 'Collapse all', es: 'Contra
 			setAllRows(anyClosed);
 		});
 	}
+
+	document.addEventListener('map-pin-select', (e) => {
+		const { indices } = (e as CustomEvent<{ indices: number[] }>).detail;
+		indices.forEach((index, i) => {
+			const el = document.querySelector<HTMLElement>(`[data-toggle="${index}"]`);
+			const row = el?.closest<HTMLElement>('.row');
+			const descId = el?.getAttribute('aria-controls');
+			const desc = descId ? document.getElementById(descId) : null;
+			const group = document.querySelectorAll<HTMLElement>(`[data-toggle="${index}"]`);
+			if (!row || !desc) return;
+
+			setRowOpen(row, desc, group, true);
+			row.classList.add('is-map-highlighted');
+			setTimeout(() => row.classList.remove('is-map-highlighted'), 1600);
+			if (i === 0) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		});
+	});
 
 	// Dispositivos sem hover "de verdade" (touch) precisam de um clique para
 	// revelar o popover/bottom sheet, já que não há :hover para acioná-lo.
@@ -291,6 +317,43 @@ const collapseAllLabel = { pt: 'Recolher todos', en: 'Collapse all', es: 'Contra
 	.toggle-all:focus-visible {
 		border-color: var(--color-accent);
 		outline: none;
+	}
+
+	.experience-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+		align-items: start;
+	}
+
+	.map-col {
+		order: -1;
+	}
+
+	@media (min-width: 900px) {
+		.experience-grid {
+			grid-template-columns: 1.5fr 1fr;
+		}
+
+		.map-col {
+			order: 0;
+			position: sticky;
+			top: 6rem;
+		}
+	}
+
+	.row.is-map-highlighted .content {
+		animation: map-highlight-flash 1.6s ease;
+	}
+
+	@keyframes map-highlight-flash {
+		0%,
+		100% {
+			background: transparent;
+		}
+		20% {
+			background: rgba(var(--color-accent-rgb), 0.15);
+		}
 	}
 
 	.timeline {

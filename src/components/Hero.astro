@@ -1,6 +1,6 @@
 ---
 import { profile, content, type Lang } from '../data/resume';
-import HeroCarousel from './HeroCarousel.astro';
+import WebDevIllustration from './WebDevIllustration.astro';
 
 interface Props {
   lang: Lang;
@@ -18,8 +18,18 @@ const overline = { pt: 'Olá, eu sou', en: "Hi, I'm", es: 'Hola, soy' }[lang];
 			<h1>@devkaeuchoa</h1>
 			<p class="subtitle">Kaê Uchôa</p>
 			<p class="title">{t.title} · {t.location}</p>
+			<p class="tagline">{t.tagline}</p>
+			<p class="summary summary-short">{t.summaryShort}</p>
+			<p class="summary summary-full">{t.summary}</p>
+			<p class="links">
+				<a href={`mailto:${profile.email}`}>{profile.email}</a>
+				<a href={profile.links.github} target="_blank" rel="noreferrer">GitHub</a>
+				<a href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+			</p>
 		</div>
-		<HeroCarousel lang={lang} />
+		<div class="hero-art">
+			<WebDevIllustration />
+		</div>
 	</div>
 </section>
 
@@ -32,6 +42,10 @@ const overline = { pt: 'Olá, eu sou', en: "Hi, I'm", es: 'Hola, soy' }[lang];
 	.hero {
 		max-width: 1200px;
 		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+		align-items: center;
 	}
 
 	.overline {
@@ -58,5 +72,63 @@ const overline = { pt: 'Olá, eu sou', en: "Hi, I'm", es: 'Hola, soy' }[lang];
 	.title {
 		color: var(--color-muted);
 		margin: 0.3rem 0 0;
+	}
+
+	.tagline {
+		margin: 1rem 0 0;
+		font-size: 1.15rem;
+	}
+
+	.summary {
+		margin: 0.75rem 0 0;
+		color: var(--color-muted);
+		max-width: 60ch;
+	}
+
+	.summary-full {
+		display: none;
+	}
+
+	.links {
+		margin: 1.25rem 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		font-size: 0.9rem;
+	}
+
+	.links a {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 0.3rem 0.9rem;
+		text-decoration: none;
+	}
+
+	.links a:hover {
+		border-color: var(--color-accent);
+	}
+
+	.hero-art {
+		display: flex;
+		justify-content: center;
+	}
+
+	@media (min-width: 720px) {
+		.hero {
+			grid-template-columns: 1.15fr 0.85fr;
+		}
+
+		.hero-art {
+			justify-content: flex-end;
+		}
+
+		.summary-short {
+			display: none;
+		}
+
+		.summary-full {
+			display: block;
+		}
 	}
 </style>
