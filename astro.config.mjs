@@ -3,7 +3,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kaeuchoa.github.io',
+  site: 'https://devkaeuchoa.github.io',
+  base: '/portfolio',
   i18n: {
     defaultLocale: 'pt',
     locales: ['pt', 'en', 'es'],

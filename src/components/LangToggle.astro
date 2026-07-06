@@ -7,10 +7,11 @@ interface Props {
 
 const { lang } = Astro.props;
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const options: { lang: Lang; href: string; label: string }[] = [
-  { lang: 'pt', href: '/', label: 'PT' },
-  { lang: 'en', href: '/en/', label: 'EN' },
-  { lang: 'es', href: '/es/', label: 'ES' },
+  { lang: 'pt', href: `${base}/`, label: 'PT' },
+  { lang: 'en', href: `${base}/en/`, label: 'EN' },
+  { lang: 'es', href: `${base}/es/`, label: 'ES' },
 ];
 ---
 
