@@ -11,6 +11,7 @@ import {
   siKotlin,
   siBootstrap,
   siNodedotjs,
+  siGit,
 } from 'simple-icons';
 
 export interface TechIcon {
@@ -31,6 +32,7 @@ export const techIcons = {
   kotlin: { label: 'Kotlin', path: siKotlin.path },
   bootstrap: { label: 'Bootstrap', path: siBootstrap.path },
   nodejs: { label: 'Node.js', path: siNodedotjs.path },
+  git: { label: 'Git', path: siGit.path },
 } satisfies Record<string, TechIcon>;
 
 export type TechKey = keyof typeof techIcons;

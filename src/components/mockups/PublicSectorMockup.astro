@@ -1,0 +1,133 @@
+---
+import type { Lang } from '../../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const t = {
+  pt: {
+    title: 'Processos',
+    rows: [
+      { label: 'Alvará comercial', status: 'Aprovado', ok: true },
+      { label: 'Licença ambiental', status: 'Em análise', ok: false },
+      { label: 'Certidão negativa', status: 'Aprovado', ok: true },
+    ],
+  },
+  en: {
+    title: 'Processes',
+    rows: [
+      { label: 'Business permit', status: 'Approved', ok: true },
+      { label: 'Environmental license', status: 'In review', ok: false },
+      { label: 'Clearance certificate', status: 'Approved', ok: true },
+    ],
+  },
+  es: {
+    title: 'Trámites',
+    rows: [
+      { label: 'Permiso comercial', status: 'Aprobado', ok: true },
+      { label: 'Licencia ambiental', status: 'En análisis', ok: false },
+      { label: 'Certificado negativo', status: 'Aprobado', ok: true },
+    ],
+  },
+}[lang];
+---
+
+<div class="mockup public-sector-mockup" aria-hidden="true">
+	<div class="stats-row">
+		<span class="bar" style="--h: 60%" />
+		<span class="bar" style="--h: 85%" />
+		<span class="bar" style="--h: 40%" />
+		<span class="bar" style="--h: 70%" />
+	</div>
+	<div class="table">
+		<div class="table-title">{t.title}</div>
+		{
+			t.rows.map((row) => (
+				<div class="table-row">
+					<span class="line" />
+					<span class:list={['status', row.ok ? 'ok' : 'pending']}>{row.status}</span>
+				</div>
+			))
+		}
+	</div>
+</div>
+
+<style>
+	.mockup {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		padding: 1rem 1.1rem;
+	}
+
+	.stats-row {
+		display: flex;
+		align-items: flex-end;
+		gap: 0.5rem;
+		height: 3.2rem;
+		margin-bottom: 0.9rem;
+	}
+
+	.bar {
+		flex: 1;
+		height: var(--h);
+		background: var(--color-accent);
+		opacity: 0.75;
+		border-radius: 4px 4px 0 0;
+	}
+
+	.table {
+		border-top: 1px dashed var(--color-border);
+		padding-top: 0.7rem;
+	}
+
+	.table-title {
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--color-muted);
+		margin-bottom: 0.5rem;
+	}
+
+	.table-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.6rem;
+		padding: 0.4rem 0;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.table-row:first-of-type {
+		border-top: none;
+	}
+
+	.line {
+		height: 8px;
+		width: 55%;
+		border-radius: 4px;
+		background: var(--color-border);
+	}
+
+	.status {
+		font-size: 0.68rem;
+		font-weight: 700;
+		white-space: nowrap;
+		border-radius: 999px;
+		padding: 0.15rem 0.55rem;
+	}
+
+	.status.ok {
+		color: var(--color-accent);
+		background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+	}
+
+	.status.pending {
+		color: var(--color-selected);
+		background: color-mix(in srgb, var(--color-selected) 18%, transparent);
+	}
+</style>

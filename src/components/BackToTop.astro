@@ -1,0 +1,80 @@
+---
+import type { Lang } from '../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const label = { pt: 'Voltar ao topo', en: 'Back to top', es: 'Volver arriba' }[lang];
+---
+
+<button type="button" class="back-to-top" data-back-to-top aria-label={label} hidden>
+	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+		<path d="M12 19V5" />
+		<path d="M5 12l7-7 7 7" />
+	</svg>
+</button>
+
+<script>
+	const btn = document.querySelector<HTMLButtonElement>('[data-back-to-top]');
+
+	if (btn) {
+		const toggleVisibility = () => {
+			const show = window.scrollY > 500;
+			btn.hidden = !show;
+		};
+
+		toggleVisibility();
+		window.addEventListener('scroll', toggleVisibility, { passive: true });
+
+		btn.addEventListener('click', () => {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		});
+	}
+</script>
+
+<style>
+	.back-to-top[hidden] {
+		display: none;
+	}
+
+	.back-to-top {
+		position: fixed;
+		right: 1rem;
+		bottom: 1rem;
+		z-index: 50;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.6rem;
+		height: 2.6rem;
+		padding: 0;
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		background: var(--color-surface);
+		color: var(--color-text);
+		cursor: pointer;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+		transition: border-color 0.15s ease, transform 0.15s ease;
+	}
+
+	.back-to-top:hover,
+	.back-to-top:focus-visible {
+		border-color: var(--color-accent);
+		transform: translateY(-2px);
+		outline: none;
+	}
+
+	.back-to-top svg {
+		width: 1.15rem;
+		height: 1.15rem;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.back-to-top:hover,
+		.back-to-top:focus-visible {
+			transform: none;
+		}
+	}
+</style>

@@ -1,0 +1,127 @@
+---
+import type { Lang } from '../../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const t = {
+  pt: {
+    title: 'Sacola',
+    items: '3 itens',
+    shipping: 'Frete',
+    free: 'Grátis',
+    total: 'Total',
+    cta: 'Finalizar compra',
+  },
+  en: {
+    title: 'Bag',
+    items: '3 items',
+    shipping: 'Shipping',
+    free: 'Free',
+    total: 'Total',
+    cta: 'Checkout',
+  },
+  es: {
+    title: 'Bolsa',
+    items: '3 artículos',
+    shipping: 'Envío',
+    free: 'Gratis',
+    total: 'Total',
+    cta: 'Finalizar compra',
+  },
+}[lang];
+---
+
+<div class="mockup checkout-mockup" aria-hidden="true">
+	<div class="row header">
+		<span>{t.title}</span>
+		<span class="muted">{t.items}</span>
+	</div>
+	<div class="lines">
+		<span class="line long" />
+		<span class="line short" />
+		<span class="line medium" />
+	</div>
+	<div class="row">
+		<span class="muted">{t.shipping}</span>
+		<span class="muted">{t.free}</span>
+	</div>
+	<div class="row total">
+		<span>{t.total}</span>
+		<span>$249.90</span>
+	</div>
+	<div class="cta">{t.cta}</div>
+</div>
+
+<style>
+	.mockup {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		padding: 1rem 1.1rem;
+		font-size: 0.85rem;
+	}
+
+	.row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 0.5rem 0;
+	}
+
+	.row.header {
+		font-weight: 700;
+	}
+
+	.muted {
+		color: var(--color-muted);
+	}
+
+	.lines {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		margin: 0.75rem 0;
+		padding: 0.75rem 0;
+		border-top: 1px dashed var(--color-border);
+		border-bottom: 1px dashed var(--color-border);
+	}
+
+	.line {
+		height: 8px;
+		border-radius: 4px;
+		background: var(--color-border);
+	}
+
+	.line.long {
+		width: 85%;
+	}
+
+	.line.medium {
+		width: 60%;
+	}
+
+	.line.short {
+		width: 40%;
+	}
+
+	.row.total {
+		font-weight: 700;
+		font-size: 0.95rem;
+		border-top: 1px solid var(--color-border);
+		padding-top: 0.6rem;
+	}
+
+	.cta {
+		margin-top: 0.9rem;
+		text-align: center;
+		background: var(--color-accent);
+		color: var(--color-bg);
+		font-weight: 700;
+		border-radius: 999px;
+		padding: 0.55rem 0.9rem;
+	}
+</style>

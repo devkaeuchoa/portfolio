@@ -9,6 +9,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = content[lang];
 const overline = { pt: 'Olá, eu sou', en: "Hi, I'm", es: 'Hola, soy' }[lang];
+const educationHeading = { pt: 'Formação', en: 'Education', es: 'Formación' }[lang];
 ---
 
 <section id="sobre" class="hero-section">
@@ -26,6 +27,30 @@ const overline = { pt: 'Olá, eu sou', en: "Hi, I'm", es: 'Hola, soy' }[lang];
 				<a href={profile.links.github} target="_blank" rel="noreferrer">GitHub</a>
 				<a href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
 			</p>
+			<div class="education">
+				<p class="education-heading">{educationHeading}</p>
+				<div class="education-list">
+					{
+						t.education.map((item) => (
+							<div class="education-item">
+								<span class="cap-icon" aria-hidden="true">
+									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+										<path d="M12 4 L22 8 L12 12 L2 8 Z" />
+										<path d="M6 10 V15 C6 16.5 8.5 18 12 18 C15.5 18 18 16.5 18 15 V10" />
+										<path d="M22 8 V14" />
+									</svg>
+								</span>
+								<span class="education-text">
+									<strong>{item.degree}</strong>
+									<span class="education-meta">
+										{item.institution} · {item.period}
+									</span>
+								</span>
+							</div>
+						))
+					}
+				</div>
+			</div>
 		</div>
 		<div class="hero-art">
 			<WebDevIllustration />
@@ -114,6 +139,63 @@ const overline = { pt: 'Olá, eu sou', en: "Hi, I'm", es: 'Hola, soy' }[lang];
 		justify-content: center;
 	}
 
+	.education {
+		margin-top: 1.75rem;
+	}
+
+	.education-heading {
+		margin: 0 0 0.6rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--color-muted);
+	}
+
+	.education-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+	}
+
+	.education-item {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.65rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 10px;
+		padding: 0.6rem 0.85rem;
+		transition: border-color 0.15s ease;
+	}
+
+	.education-item:hover {
+		border-color: var(--color-accent);
+	}
+
+	.cap-icon {
+		flex-shrink: 0;
+		color: var(--color-accent);
+		margin-top: 0.15rem;
+	}
+
+	.cap-icon svg {
+		width: 1.15rem;
+		height: 1.15rem;
+	}
+
+	.education-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		font-size: 0.85rem;
+	}
+
+	.education-meta {
+		color: var(--color-muted);
+		font-size: 0.78rem;
+	}
+
 	@media (min-width: 720px) {
 		.hero {
 			grid-template-columns: 1.15fr 0.85fr;
@@ -129,6 +211,15 @@ const overline = { pt: 'Olá, eu sou', en: "Hi, I'm", es: 'Hola, soy' }[lang];
 
 		.summary-full {
 			display: block;
+		}
+
+		.education-list {
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+
+		.education-item {
+			flex: 1 1 240px;
 		}
 	}
 </style>

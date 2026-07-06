@@ -1,0 +1,68 @@
+---
+import { profile, type Lang } from '../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+const rights = {
+  pt: 'Todos os direitos reservados.',
+  en: 'All rights reserved.',
+  es: 'Todos los derechos reservados.',
+}[lang];
+---
+
+<footer class="site-footer">
+	<p class="handle">@devkaeuchoa</p>
+	<p class="copyright">© {year} {profile.name} · {rights}</p>
+	<p class="links">
+		<a href={`mailto:${profile.email}`}>{profile.email}</a>
+		<a href={profile.links.github} target="_blank" rel="noreferrer">GitHub</a>
+		<a href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+	</p>
+</footer>
+
+<style>
+	.site-footer {
+		max-width: var(--max-width);
+		margin: 0 auto;
+		padding: 2.5rem 1.5rem 3rem;
+		text-align: center;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.handle {
+		margin: 0;
+		font-weight: 700;
+		color: var(--color-text);
+	}
+
+	.copyright {
+		margin: 0.4rem 0 0;
+		font-size: 0.85rem;
+		color: var(--color-muted);
+	}
+
+	.links {
+		margin: 1.1rem 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.6rem;
+		font-size: 0.85rem;
+	}
+
+	.links a {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 0.3rem 0.9rem;
+		text-decoration: none;
+	}
+
+	.links a:hover {
+		border-color: var(--color-accent);
+	}
+</style>

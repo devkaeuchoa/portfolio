@@ -1,9 +1,16 @@
 import type { TechKey } from './techIcons';
+import type { SkillKey } from './skills';
 
 export type Lang = 'pt' | 'en' | 'es';
 
+export interface Skill {
+  key: SkillKey;
+  label: string;
+  size?: 'lg';
+}
+
 export const profile = {
-  name: 'Kaê Uchôa Sarmanho',
+  name: 'Kaê Uchôa',
   email: 'devkaeuchoa@gmail.com',
   links: {
     github: 'https://github.com/devkaeuchoa',
@@ -30,8 +37,8 @@ export interface Education {
 export interface Project {
   name: string;
   description: string;
-  url?: string;
-  repo?: string;
+  period?: string;
+  mockup: 'checkout' | 'products' | 'catalog' | 'publicsector' | 'seo' | 'rideshare';
   tags: string[];
 }
 
@@ -41,7 +48,7 @@ export interface ResumeContent {
   tagline: string;
   summary: string;
   summaryShort: string;
-  skills: string[];
+  skills: Skill[];
   experience: Experience[];
   education: Education[];
   // Nenhum projeto pessoal listado ainda — adicione aqui quando tiver algo pra mostrar.
@@ -58,18 +65,18 @@ export const content: Record<Lang, ResumeContent> = {
     summaryShort:
       'Desenvolvedor de software com ênfase em produtos para Web (Front-end). Gosto de tarefas que envolvam arquitetura de software e estruturação/refatoração de código.',
     skills: [
-      'React',
-      'Next.js',
-      'TypeScript',
-      'JavaScript',
-      'Angular / AngularJS',
-      'CSS / SASS',
-      'Design Systems',
-      'Server-Driven UI',
-      'Acessibilidade',
-      'SEO',
-      'Node.js',
-      'Git',
+      { key: 'react', label: 'React', size: 'lg' },
+      { key: 'typescript', label: 'TypeScript', size: 'lg' },
+      { key: 'nextjs', label: 'Next.js' },
+      { key: 'javascript', label: 'JavaScript' },
+      { key: 'angular', label: 'Angular / AngularJS' },
+      { key: 'sass', label: 'CSS / SASS' },
+      { key: 'design-systems', label: 'Design Systems', size: 'lg' },
+      { key: 'sdui', label: 'Server-Driven UI' },
+      { key: 'accessibility', label: 'Acessibilidade' },
+      { key: 'seo', label: 'SEO' },
+      { key: 'nodejs', label: 'Node.js', size: 'lg' },
+      { key: 'git', label: 'Git' },
     ],
     experience: [
       {
@@ -173,7 +180,56 @@ export const content: Record<Lang, ResumeContent> = {
         period: '2015 — 2016',
       },
     ],
-    projects: [],
+    projects: [
+      {
+        name: 'Checkout de e-commerce de moda',
+        description:
+          'Cerca de 6 meses no time responsável pelo fluxo de finalização de compra de uma grande marca de roupas dos EUA, com foco em conversão e experiência de pagamento.',
+        period: '~6 meses',
+        mockup: 'checkout',
+        tags: ['E-commerce', 'Checkout', 'React'],
+      },
+      {
+        name: 'Página de produtos multi-marca',
+        description:
+          'Pouco menos de 1 ano no time responsável pela página de apresentação de produtos da mesma rede de moda, atuando em personalização entre as 4 marcas do grupo.',
+        period: '~1 ano',
+        mockup: 'products',
+        tags: ['E-commerce', 'Personalização', 'React'],
+      },
+      {
+        name: 'Catálogo, busca e biblioteca de componentes',
+        description:
+          'Cerca de 1 ano e meio atuando diretamente no catálogo de produtos e nos mecanismos de busca do marketplace de cashback de um super app financeiro, além de colaborar na construção da biblioteca de componentes usada como identidade visual dos produtos web.',
+        period: '~1,5 ano',
+        mockup: 'catalog',
+        tags: ['Design System', 'Busca', 'React'],
+      },
+      {
+        name: 'Sistema de gestão para o setor público',
+        description:
+          'Desenvolvimento e manutenção de um sistema web usado por prefeituras para digitalizar processos administrativos, com acompanhamento de trâmites e emissão de certidões.',
+        period: '~6 meses',
+        mockup: 'publicsector',
+        tags: ['Gestão Pública', 'PHP', 'Bootstrap'],
+      },
+      {
+        name: 'Páginas otimizadas para SEO',
+        description:
+          'Liderança no desenvolvimento de páginas estáticas otimizadas para SEO de um super app financeiro, melhorando indexação e visibilidade orgânica nos buscadores.',
+        period: '~1,5 ano',
+        mockup: 'seo',
+        tags: ['SEO', 'Static Site', 'React'],
+      },
+      {
+        name: 'Aplicativo de mobilidade urbana',
+        description:
+          'Desenvolvimento de funcionalidades de um aplicativo Android de caronas para uma startup de mobilidade, incluindo tela de mapa, roteirização e solicitação de corrida.',
+        period: '~6 meses',
+        mockup: 'rideshare',
+        tags: ['Android', 'Kotlin', 'Mobilidade'],
+      },
+    ],
   },
   en: {
     title: 'Web Developer',
@@ -184,18 +240,18 @@ export const content: Record<Lang, ResumeContent> = {
     summaryShort:
       'Software developer focused on Web products (Front-end). I enjoy work involving software architecture and code structuring/refactoring.',
     skills: [
-      'React',
-      'Next.js',
-      'TypeScript',
-      'JavaScript',
-      'Angular / AngularJS',
-      'CSS / SASS',
-      'Design Systems',
-      'Server-Driven UI',
-      'Accessibility',
-      'SEO',
-      'Node.js',
-      'Git',
+      { key: 'react', label: 'React', size: 'lg' },
+      { key: 'typescript', label: 'TypeScript', size: 'lg' },
+      { key: 'nextjs', label: 'Next.js' },
+      { key: 'javascript', label: 'JavaScript' },
+      { key: 'angular', label: 'Angular / AngularJS' },
+      { key: 'sass', label: 'CSS / SASS' },
+      { key: 'design-systems', label: 'Design Systems', size: 'lg' },
+      { key: 'sdui', label: 'Server-Driven UI' },
+      { key: 'accessibility', label: 'Accessibility' },
+      { key: 'seo', label: 'SEO' },
+      { key: 'nodejs', label: 'Node.js', size: 'lg' },
+      { key: 'git', label: 'Git' },
     ],
     experience: [
       {
@@ -299,7 +355,56 @@ export const content: Record<Lang, ResumeContent> = {
         period: '2015 — 2016',
       },
     ],
-    projects: [],
+    projects: [
+      {
+        name: 'Fashion e-commerce checkout',
+        description:
+          'About 6 months on the team responsible for the checkout flow of a large US clothing brand, focused on conversion and payment experience.',
+        period: '~6 months',
+        mockup: 'checkout',
+        tags: ['E-commerce', 'Checkout', 'React'],
+      },
+      {
+        name: 'Multi-brand product listing page',
+        description:
+          'Just under a year on the team responsible for the product listing page of the same fashion retailer, working on personalization across the group\'s 4 brands.',
+        period: '~1 year',
+        mockup: 'products',
+        tags: ['E-commerce', 'Personalization', 'React'],
+      },
+      {
+        name: 'Catalog, search, and component library',
+        description:
+          "About a year and a half working directly on the product catalog and search engine of a financial super app's cashback marketplace, plus contributing to the component library used as the visual identity for its web products.",
+        period: '~1.5 years',
+        mockup: 'catalog',
+        tags: ['Design System', 'Search', 'React'],
+      },
+      {
+        name: 'Public-sector management system',
+        description:
+          'Development and maintenance of a web system used by municipal governments to digitize administrative processes, tracking permit requests and issuing clearance certificates.',
+        period: '~6 months',
+        mockup: 'publicsector',
+        tags: ['Public Sector', 'PHP', 'Bootstrap'],
+      },
+      {
+        name: 'SEO-optimized pages',
+        description:
+          "Led development of a financial super app's SEO-optimized static pages, improving search engine indexing and organic visibility.",
+        period: '~1.5 years',
+        mockup: 'seo',
+        tags: ['SEO', 'Static Site', 'React'],
+      },
+      {
+        name: 'Urban mobility app',
+        description:
+          'Built features for a ride-sharing Android app at a mobility startup, including the map screen, route drawing, and ride requests.',
+        period: '~6 months',
+        mockup: 'rideshare',
+        tags: ['Android', 'Kotlin', 'Mobility'],
+      },
+    ],
   },
   es: {
     title: 'Desarrollador Web',
@@ -310,18 +415,18 @@ export const content: Record<Lang, ResumeContent> = {
     summaryShort:
       'Desarrollador de software con énfasis en productos para la Web (Front-end). Me gustan las tareas que implican arquitectura de software y estructuración/refactorización de código.',
     skills: [
-      'React',
-      'Next.js',
-      'TypeScript',
-      'JavaScript',
-      'Angular / AngularJS',
-      'CSS / SASS',
-      'Design Systems',
-      'Server-Driven UI',
-      'Accesibilidad',
-      'SEO',
-      'Node.js',
-      'Git',
+      { key: 'react', label: 'React', size: 'lg' },
+      { key: 'typescript', label: 'TypeScript', size: 'lg' },
+      { key: 'nextjs', label: 'Next.js' },
+      { key: 'javascript', label: 'JavaScript' },
+      { key: 'angular', label: 'Angular / AngularJS' },
+      { key: 'sass', label: 'CSS / SASS' },
+      { key: 'design-systems', label: 'Design Systems', size: 'lg' },
+      { key: 'sdui', label: 'Server-Driven UI' },
+      { key: 'accessibility', label: 'Accesibilidad' },
+      { key: 'seo', label: 'SEO' },
+      { key: 'nodejs', label: 'Node.js', size: 'lg' },
+      { key: 'git', label: 'Git' },
     ],
     experience: [
       {
@@ -425,6 +530,55 @@ export const content: Record<Lang, ResumeContent> = {
         period: '2015 — 2016',
       },
     ],
-    projects: [],
+    projects: [
+      {
+        name: 'Checkout de e-commerce de moda',
+        description:
+          'Cerca de 6 meses en el equipo responsable del flujo de finalización de compra de una gran marca de ropa de EE. UU., enfocado en conversión y experiencia de pago.',
+        period: '~6 meses',
+        mockup: 'checkout',
+        tags: ['E-commerce', 'Checkout', 'React'],
+      },
+      {
+        name: 'Página de productos multi-marca',
+        description:
+          'Casi un año en el equipo responsable de la página de presentación de productos de la misma cadena de moda, trabajando en personalización entre las 4 marcas del grupo.',
+        period: '~1 año',
+        mockup: 'products',
+        tags: ['E-commerce', 'Personalización', 'React'],
+      },
+      {
+        name: 'Catálogo, búsqueda y biblioteca de componentes',
+        description:
+          'Cerca de un año y medio trabajando directamente en el catálogo de productos y los mecanismos de búsqueda del marketplace de cashback de una superapp financiera, además de colaborar en la construcción de la biblioteca de componentes usada como identidad visual de sus productos web.',
+        period: '~1,5 años',
+        mockup: 'catalog',
+        tags: ['Design System', 'Búsqueda', 'React'],
+      },
+      {
+        name: 'Sistema de gestión para el sector público',
+        description:
+          'Desarrollo y mantenimiento de un sistema web usado por municipios para digitalizar trámites administrativos, con seguimiento de solicitudes y emisión de certificados.',
+        period: '~6 meses',
+        mockup: 'publicsector',
+        tags: ['Sector Público', 'PHP', 'Bootstrap'],
+      },
+      {
+        name: 'Páginas optimizadas para SEO',
+        description:
+          'Liderazgo en el desarrollo de páginas estáticas optimizadas para SEO de una superapp financiera, mejorando la indexación y la visibilidad orgánica en buscadores.',
+        period: '~1,5 años',
+        mockup: 'seo',
+        tags: ['SEO', 'Static Site', 'React'],
+      },
+      {
+        name: 'Aplicación de movilidad urbana',
+        description:
+          'Desarrollo de funcionalidades de una aplicación Android de viajes compartidos para una startup de movilidad, incluyendo pantalla de mapa, trazado de ruta y solicitud de viaje.',
+        period: '~6 meses',
+        mockup: 'rideshare',
+        tags: ['Android', 'Kotlin', 'Movilidad'],
+      },
+    ],
   },
 };

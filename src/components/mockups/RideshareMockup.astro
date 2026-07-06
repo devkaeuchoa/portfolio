@@ -1,0 +1,111 @@
+---
+import type { Lang } from '../../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const t = {
+  pt: { eta: '4 min de espera', cta: 'Solicitar carona' },
+  en: { eta: '4 min wait', cta: 'Request ride' },
+  es: { eta: '4 min de espera', cta: 'Solicitar viaje' },
+}[lang];
+---
+
+<div class="mockup rideshare-mockup" aria-hidden="true">
+	<div class="map">
+		<svg viewBox="0 0 240 120" preserveAspectRatio="none">
+			<path d="M 20 100 Q 100 20 220 40" class="route" />
+		</svg>
+		<span class="pin origin" />
+		<span class="pin destination" />
+	</div>
+	<div class="row">
+		<span class="line short" />
+		<span class="eta">{t.eta}</span>
+	</div>
+	<div class="cta">{t.cta}</div>
+</div>
+
+<style>
+	.mockup {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		padding: 1rem 1.1rem;
+	}
+
+	.map {
+		position: relative;
+		height: 6.5rem;
+		border-radius: 8px;
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		overflow: hidden;
+		margin-bottom: 0.9rem;
+	}
+
+	.map svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.route {
+		fill: none;
+		stroke: var(--color-accent);
+		stroke-width: 3;
+		stroke-linecap: round;
+		stroke-dasharray: 6 6;
+	}
+
+	.pin {
+		position: absolute;
+		width: 0.6rem;
+		height: 0.6rem;
+		border-radius: 50%;
+		border: 2px solid var(--color-bg);
+	}
+
+	.pin.origin {
+		background: var(--color-accent);
+		left: 6%;
+		top: 78%;
+	}
+
+	.pin.destination {
+		background: var(--color-selected);
+		right: 6%;
+		top: 28%;
+	}
+
+	.row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 0.9rem;
+	}
+
+	.line.short {
+		height: 8px;
+		width: 45%;
+		border-radius: 4px;
+		background: var(--color-border);
+	}
+
+	.eta {
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: var(--color-muted);
+	}
+
+	.cta {
+		text-align: center;
+		background: var(--color-accent);
+		color: var(--color-bg);
+		font-weight: 700;
+		border-radius: 999px;
+		padding: 0.55rem 0.9rem;
+	}
+</style>

@@ -1,0 +1,148 @@
+---
+import type { Lang } from '../../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const t = {
+  pt: { brand: 'Marca', selectLabel: (b: string) => `Ver marca ${b}` },
+  en: { brand: 'Brand', selectLabel: (b: string) => `View brand ${b}` },
+  es: { brand: 'Marca', selectLabel: (b: string) => `Ver marca ${b}` },
+}[lang];
+
+const brands = [
+  { key: 'a', color: 'var(--color-accent)' },
+  { key: 'b', color: '#60a5fa' },
+  { key: 'c', color: '#f472b6' },
+  { key: 'd', color: '#fbbf24' },
+];
+---
+
+<div class="mockup products-mockup" data-products-mockup>
+	<div class="brand-row" role="group" aria-label={t.brand}>
+		{
+			brands.map((brand, i) => (
+				<button
+					type="button"
+					class:list={['brand-btn', i === 0 && 'is-active']}
+					data-brand={brand.key}
+					style={`--brand-color: ${brand.color}`}
+					aria-pressed={i === 0 ? 'true' : 'false'}
+					aria-label={t.selectLabel(brand.key.toUpperCase())}
+				>
+					{brand.key.toUpperCase()}
+				</button>
+			))
+		}
+	</div>
+	<div class="grid">
+		{
+			Array.from({ length: 4 }).map(() => (
+				<div class="card">
+					<div class="thumb" data-thumb />
+					<span class="line long" />
+					<span class="line short" />
+				</div>
+			))
+		}
+	</div>
+</div>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-products-mockup]').forEach((mockup) => {
+		const buttons = mockup.querySelectorAll<HTMLButtonElement>('.brand-btn');
+		const thumbs = mockup.querySelectorAll<HTMLElement>('[data-thumb]');
+
+		buttons.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				buttons.forEach((b) => {
+					b.classList.remove('is-active');
+					b.setAttribute('aria-pressed', 'false');
+				});
+				btn.classList.add('is-active');
+				btn.setAttribute('aria-pressed', 'true');
+
+				const color = btn.style.getPropertyValue('--brand-color');
+				thumbs.forEach((thumb) => {
+					thumb.style.background = color;
+				});
+			});
+		});
+	});
+</script>
+
+<style>
+	.mockup {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		padding: 1rem 1.1rem;
+	}
+
+	.brand-row {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 0.9rem;
+	}
+
+	.brand-btn {
+		width: 1.9rem;
+		height: 1.9rem;
+		border-radius: 50%;
+		border: 2px solid var(--color-border);
+		background: transparent;
+		color: var(--color-muted);
+		font-size: 0.75rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+	}
+
+	.brand-btn:hover,
+	.brand-btn:focus-visible {
+		transform: scale(1.08);
+		outline: none;
+	}
+
+	.brand-btn.is-active {
+		border-color: var(--brand-color);
+		color: var(--color-text);
+		background: color-mix(in srgb, var(--brand-color) 18%, transparent);
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.75rem;
+	}
+
+	.card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.thumb {
+		aspect-ratio: 1;
+		border-radius: 8px;
+		background: var(--color-accent);
+		transition: background 0.2s ease;
+	}
+
+	.line {
+		height: 7px;
+		border-radius: 4px;
+		background: var(--color-border);
+	}
+
+	.line.long {
+		width: 90%;
+	}
+
+	.line.short {
+		width: 50%;
+	}
+</style>

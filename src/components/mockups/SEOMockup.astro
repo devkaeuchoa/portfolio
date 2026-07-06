@@ -1,0 +1,121 @@
+---
+import type { Lang } from '../../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const t = {
+  pt: { url: 'exemplo.com › produtos', score: 'SEO' },
+  en: { url: 'example.com › products', score: 'SEO' },
+  es: { url: 'ejemplo.com › productos', score: 'SEO' },
+}[lang];
+---
+
+<div class="mockup seo-mockup" aria-hidden="true">
+	<div class="score-badge">
+		<span class="score-value">98</span>
+		<span class="score-label">{t.score}</span>
+	</div>
+	<div class="result">
+		<span class="url">{t.url}</span>
+		<span class="line title" />
+		<span class="line desc long" />
+		<span class="line desc short" />
+	</div>
+	<div class="tags-row">
+		<span class="meta-pill">&lt;title&gt;</span>
+		<span class="meta-pill">og:image</span>
+		<span class="meta-pill">sitemap.xml</span>
+	</div>
+</div>
+
+<style>
+	.mockup {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		padding: 1rem 1.1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.9rem;
+	}
+
+	.score-badge {
+		display: flex;
+		align-items: baseline;
+		gap: 0.35rem;
+		align-self: flex-start;
+		border: 2px solid var(--color-accent);
+		border-radius: 999px;
+		padding: 0.25rem 0.8rem;
+	}
+
+	.score-value {
+		font-weight: 800;
+		font-size: 1.1rem;
+		color: var(--color-accent);
+	}
+
+	.score-label {
+		font-size: 0.65rem;
+		font-weight: 700;
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.result {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.url {
+		font-size: 0.72rem;
+		color: var(--color-muted);
+	}
+
+	.line {
+		height: 8px;
+		border-radius: 4px;
+	}
+
+	.line.title {
+		width: 70%;
+		height: 10px;
+		background: var(--color-accent);
+		opacity: 0.85;
+	}
+
+	.line.desc {
+		background: var(--color-border);
+	}
+
+	.line.desc.long {
+		width: 95%;
+	}
+
+	.line.desc.short {
+		width: 65%;
+	}
+
+	.tags-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+		padding-top: 0.6rem;
+		border-top: 1px dashed var(--color-border);
+	}
+
+	.meta-pill {
+		font-size: 0.65rem;
+		font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+		color: var(--color-muted);
+		border: 1px solid var(--color-border);
+		border-radius: 6px;
+		padding: 0.15rem 0.5rem;
+	}
+</style>

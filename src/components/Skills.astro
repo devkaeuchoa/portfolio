@@ -1,5 +1,7 @@
 ---
 import { content, type Lang } from '../data/resume';
+import { techIcons } from '../data/techIcons';
+import { isConceptSkill, type TechKey } from '../data/skills';
 
 interface Props {
   lang: Lang;
@@ -10,27 +12,130 @@ const t = content[lang];
 const heading = { pt: 'Habilidades', en: 'Skills', es: 'Habilidades' }[lang];
 ---
 
-<section id="skills">
+<section id="skills" class="section-breakout">
+	<div class="section-breakout-inner">
 	<h2>{heading}</h2>
-	<ul class="skills">
-		{t.skills.map((skill) => <li>{skill}</li>)}
-	</ul>
+	<div class="skills-grid">
+		{
+			t.skills.map((skill) => (
+				<div class:list={['skill-card', skill.size === 'lg' && 'is-lg']}>
+					<span class="icon">
+						{isConceptSkill(skill.key) ? (
+							<>
+								{skill.key === 'design-systems' && (
+									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+										<rect x="3" y="3" width="9" height="9" rx="1.5" />
+										<rect x="8" y="8" width="9" height="9" rx="1.5" />
+										<rect x="13" y="13" width="8" height="8" rx="1.5" />
+									</svg>
+								)}
+								{skill.key === 'sdui' && (
+									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+										<rect x="2" y="4" width="6" height="16" rx="1.2" />
+										<circle cx="5" cy="7.5" r="0.6" fill="currentColor" stroke="none" />
+										<circle cx="5" cy="10.5" r="0.6" fill="currentColor" stroke="none" />
+										<path d="M10 12 H14" />
+										<path d="M12.5 9.5 L15 12 L12.5 14.5" />
+										<rect x="16" y="5" width="6" height="14" rx="1.2" />
+										<path d="M18 16 H20" />
+									</svg>
+								)}
+								{skill.key === 'accessibility' && (
+									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+										<circle cx="12" cy="5" r="2.2" fill="currentColor" stroke="none" />
+										<path d="M4 9 H20" />
+										<path d="M12 9 V21" />
+										<path d="M12 14 L7 21" />
+										<path d="M12 14 L17 21" />
+									</svg>
+								)}
+								{skill.key === 'seo' && (
+									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="10" cy="10" r="6.5" />
+										<path d="M14.7 14.7 L21 21" />
+										<path d="M6.5 11 L9 8 L11 10 L14 6" />
+									</svg>
+								)}
+							</>
+						) : (
+							<svg viewBox="0 0 24 24" fill="currentColor">
+								<path d={techIcons[skill.key as TechKey].path} />
+							</svg>
+						)}
+					</span>
+					<span class="label">{skill.label}</span>
+				</div>
+			))
+		}
+	</div>
+	</div>
 </section>
 
 <style>
-	.skills {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		list-style: none;
-		padding: 0;
+	.section-breakout {
+		width: 100vw;
+		max-width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
 	}
 
-	.skills li {
+	.section-breakout-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+	}
+
+	.skills-grid {
+		column-width: 150px;
+		column-gap: 0.75rem;
+		margin-top: 1.5rem;
+	}
+
+	.skill-card {
+		break-inside: avoid;
+		margin-bottom: 0.75rem;
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
-		border-radius: 999px;
-		padding: 0.3rem 0.9rem;
-		font-size: 0.9rem;
+		border-radius: 12px;
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.7rem;
+		transition: border-color 0.15s ease, transform 0.15s ease;
+	}
+
+	.skill-card:hover {
+		border-color: var(--color-accent);
+		transform: translateY(-2px);
+	}
+
+	.skill-card.is-lg {
+		padding: 1.5rem 1.2rem;
+	}
+
+	.icon {
+		color: var(--color-accent);
+		display: inline-flex;
+	}
+
+	.icon svg {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+
+	.is-lg .icon svg {
+		width: 2.4rem;
+		height: 2.4rem;
+	}
+
+	.label {
+		font-weight: 600;
+		font-size: 0.88rem;
+		line-height: 1.3;
+	}
+
+	.is-lg .label {
+		font-size: 1.05rem;
 	}
 </style>

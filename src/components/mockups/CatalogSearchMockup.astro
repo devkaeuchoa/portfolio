@@ -1,0 +1,147 @@
+---
+import type { Lang } from '../../data/resume';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const t = {
+  pt: { placeholder: 'Buscar produtos...', filters: ['Cashback', 'Preço', 'Categoria'] },
+  en: { placeholder: 'Search products...', filters: ['Cashback', 'Price', 'Category'] },
+  es: { placeholder: 'Buscar productos...', filters: ['Cashback', 'Precio', 'Categoría'] },
+}[lang];
+---
+
+<div class="mockup catalog-mockup" aria-hidden="true">
+	<div class="search-bar">
+		<span class="search-icon" />
+		<span class="placeholder">{t.placeholder}</span>
+	</div>
+	<div class="pills">
+		{t.filters.map((filter) => <span class="pill">{filter}</span>)}
+	</div>
+	<div class="results">
+		{
+			Array.from({ length: 3 }).map(() => (
+				<div class="result-row">
+					<span class="thumb" />
+					<div class="lines">
+						<span class="line long" />
+						<span class="line short" />
+					</div>
+				</div>
+			))
+		}
+	</div>
+</div>
+
+<style>
+	.mockup {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		padding: 1rem 1.1rem;
+	}
+
+	.search-bar {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 0.5rem 0.9rem;
+	}
+
+	.search-icon {
+		width: 0.8rem;
+		height: 0.8rem;
+		border: 2px solid var(--color-muted);
+		border-radius: 50%;
+		position: relative;
+		flex-shrink: 0;
+	}
+
+	.search-icon::after {
+		content: '';
+		position: absolute;
+		width: 0.45rem;
+		height: 2px;
+		background: var(--color-muted);
+		bottom: -0.3rem;
+		right: -0.25rem;
+		transform: rotate(45deg);
+	}
+
+	.placeholder {
+		font-size: 0.8rem;
+		color: var(--color-muted);
+	}
+
+	.pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin: 0.75rem 0;
+	}
+
+	.pill {
+		font-size: 0.72rem;
+		font-weight: 600;
+		color: var(--color-muted);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 0.2rem 0.7rem;
+	}
+
+	.pill:first-child {
+		color: var(--color-bg);
+		background: var(--color-selected);
+		border-color: var(--color-selected);
+	}
+
+	.results {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		padding-top: 0.6rem;
+		border-top: 1px dashed var(--color-border);
+	}
+
+	.result-row {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	.thumb {
+		width: 2rem;
+		height: 2rem;
+		border-radius: 6px;
+		background: var(--color-border);
+		flex-shrink: 0;
+	}
+
+	.lines {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		flex: 1;
+	}
+
+	.line {
+		height: 7px;
+		border-radius: 4px;
+		background: var(--color-border);
+	}
+
+	.line.long {
+		width: 80%;
+	}
+
+	.line.short {
+		width: 45%;
+	}
+</style>
