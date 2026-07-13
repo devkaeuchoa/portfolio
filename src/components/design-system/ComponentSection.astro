@@ -1,0 +1,50 @@
+---
+import CodeSample from './CodeSample.astro';
+
+interface Props {
+  heading: string;
+  description: string;
+  code: string;
+}
+
+const { heading, description, code } = Astro.props;
+---
+
+<div class="component-section">
+	<h3>{heading}</h3>
+	<p class="description">{description}</p>
+	<div class="demo">
+		<slot />
+	</div>
+	<CodeSample code={code} />
+</div>
+
+<style>
+	.component-section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	h3 {
+		margin: 0;
+		font-size: 1.05rem;
+	}
+
+	.description {
+		margin: 0;
+		color: var(--color-muted);
+		font-size: 0.9rem;
+	}
+
+	.demo {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		padding: 1.25rem;
+	}
+</style>

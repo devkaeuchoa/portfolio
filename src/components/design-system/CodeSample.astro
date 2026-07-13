@@ -1,0 +1,27 @@
+---
+interface Props {
+  code: string;
+}
+
+const { code } = Astro.props;
+---
+
+<pre><code>{code}</code></pre>
+
+<style>
+	pre {
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		padding: 0.85rem 1rem;
+		overflow-x: auto;
+		margin: 0;
+	}
+
+	code {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+		font-size: 0.8rem;
+		color: var(--color-muted);
+		white-space: pre;
+	}
+</style>

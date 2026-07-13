@@ -1,0 +1,40 @@
+---
+const steps = ['0.25rem', '0.4rem', '0.75rem', '1rem', '1.5rem', '2rem'];
+---
+
+<div class="spacing">
+	{
+		steps.map((step) => (
+			<div class="row">
+				<span class="box" style={`width: ${step}; height: ${step};`} />
+				<code>{step}</code>
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.spacing {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: 1.25rem;
+	}
+
+	.row {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	.box {
+		background: var(--color-accent);
+		border-radius: 3px;
+	}
+
+	code {
+		font-size: 0.75rem;
+		color: var(--color-muted);
+	}
+</style>

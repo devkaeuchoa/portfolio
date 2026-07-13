@@ -40,6 +40,7 @@ export interface Project {
   period?: string;
   mockup: 'checkout' | 'products' | 'catalog' | 'publicsector' | 'seo' | 'rideshare';
   tags: string[];
+  demoUrl?: string;
 }
 
 export interface ResumeContent {
@@ -204,6 +205,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~1,5 ano',
         mockup: 'catalog',
         tags: ['Design System', 'Busca', 'React'],
+        // Precisa ficar em sync com `base` em astro.config.mjs
+        demoUrl: '/portfolio/design-system/',
       },
       {
         name: 'Sistema de gestão para o setor público',
@@ -379,6 +382,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~1.5 years',
         mockup: 'catalog',
         tags: ['Design System', 'Search', 'React'],
+        // Must stay in sync with `base` in astro.config.mjs
+        demoUrl: '/portfolio/en/design-system/',
       },
       {
         name: 'Public-sector management system',
@@ -554,6 +559,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~1,5 años',
         mockup: 'catalog',
         tags: ['Design System', 'Búsqueda', 'React'],
+        // Debe mantenerse en sync con `base` en astro.config.mjs
+        demoUrl: '/portfolio/es/design-system/',
       },
       {
         name: 'Sistema de gestión para el sector público',

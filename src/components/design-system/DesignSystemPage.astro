@@ -1,0 +1,178 @@
+---
+import type { Lang } from '../../data/resume';
+import ColorSwatches from './ColorSwatches.astro';
+import TypeScale from './TypeScale.astro';
+import SpacingScale from './SpacingScale.astro';
+import ComponentSection from './ComponentSection.astro';
+import Badge from './Badge.astro';
+import Button from './Button.astro';
+import TextField from './TextField.astro';
+import Toggle from './Toggle.astro';
+import Card from './Card.astro';
+import Modal from './Modal.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const localePrefix = { pt: '', en: '/en', es: '/es' }[lang];
+const backHref = `${base}${localePrefix}/`;
+
+const t = {
+  pt: {
+    intro: 'Design System',
+    lead: 'Reconstrução funcional de uma biblioteca de componentes semelhante à que ajudei a construir no Inter — feita nativamente na stack deste site (Astro + CSS puro), com componentes reais e acessíveis, não mockups decorativos.',
+    back: '← Voltar ao portfólio',
+    tokensColor: 'Tokens: Cor',
+    tokensType: 'Tokens: Tipografia',
+    tokensSpacing: 'Tokens: Espaçamento',
+    components: 'Componentes',
+    badge: { heading: 'Badge', description: 'Rótulo compacto para categorizar ou destacar informação.' },
+    button: { heading: 'Button', description: 'Ação primária, secundária ou discreta, com estado desabilitado real.' },
+    textfield: { heading: 'Text Field', description: 'Campo de texto com rótulo associado, dica e estado de erro.' },
+    toggle: { heading: 'Toggle', description: 'Interruptor acessível baseado em checkbox nativo.' },
+    card: { heading: 'Card', description: 'Superfície para agrupar conteúdo relacionado.' },
+    modal: { heading: 'Modal', description: 'Diálogo nativo com foco preso e fechamento por Esc.' },
+    modalTrigger: 'Abrir modal',
+    modalTitle: 'Exemplo de modal',
+    modalBody: 'Este diálogo usa o elemento nativo <dialog>, então o navegador cuida do foco e do fechamento por Esc.',
+    modalClose: 'Fechar',
+  },
+  en: {
+    intro: 'Design System',
+    lead: 'A functional reconstruction of a component library similar to the one I helped build at Inter — built natively in this site\'s own stack (Astro + plain CSS), with real, accessible components rather than decorative mockups.',
+    back: '← Back to portfolio',
+    tokensColor: 'Tokens: Color',
+    tokensType: 'Tokens: Typography',
+    tokensSpacing: 'Tokens: Spacing',
+    components: 'Components',
+    badge: { heading: 'Badge', description: 'Compact label for categorizing or highlighting information.' },
+    button: { heading: 'Button', description: 'Primary, secondary, or ghost action, with a real disabled state.' },
+    textfield: { heading: 'Text Field', description: 'Text input with an associated label, hint, and error state.' },
+    toggle: { heading: 'Toggle', description: 'Accessible switch built on a native checkbox.' },
+    card: { heading: 'Card', description: 'Surface for grouping related content.' },
+    modal: { heading: 'Modal', description: 'Native dialog with focus trapping and Esc-to-close.' },
+    modalTrigger: 'Open modal',
+    modalTitle: 'Modal example',
+    modalBody: 'This dialog uses the native <dialog> element, so the browser handles focus and Esc-to-close for free.',
+    modalClose: 'Close',
+  },
+  es: {
+    intro: 'Design System',
+    lead: 'Reconstrucción funcional de una biblioteca de componentes similar a la que ayudé a construir en Inter, hecha nativamente con el stack de este sitio (Astro + CSS puro), con componentes reales y accesibles, no mockups decorativos.',
+    back: '← Volver al portafolio',
+    tokensColor: 'Tokens: Color',
+    tokensType: 'Tokens: Tipografía',
+    tokensSpacing: 'Tokens: Espaciado',
+    components: 'Componentes',
+    badge: { heading: 'Badge', description: 'Etiqueta compacta para categorizar o destacar información.' },
+    button: { heading: 'Button', description: 'Acción primaria, secundaria o discreta, con estado deshabilitado real.' },
+    textfield: { heading: 'Text Field', description: 'Campo de texto con etiqueta asociada, pista y estado de error.' },
+    toggle: { heading: 'Toggle', description: 'Interruptor accesible basado en un checkbox nativo.' },
+    card: { heading: 'Card', description: 'Superficie para agrupar contenido relacionado.' },
+    modal: { heading: 'Modal', description: 'Diálogo nativo con foco atrapado y cierre con Esc.' },
+    modalTrigger: 'Abrir modal',
+    modalTitle: 'Ejemplo de modal',
+    modalBody: 'Este diálogo usa el elemento nativo <dialog>, así que el navegador gestiona el foco y el cierre con Esc.',
+    modalClose: 'Cerrar',
+  },
+}[lang];
+---
+
+<article class="design-system">
+	<a href={backHref} class="back-link">{t.back}</a>
+	<h1>{t.intro}</h1>
+	<p class="lead">{t.lead}</p>
+
+	<section>
+		<h2>{t.tokensColor}</h2>
+		<ColorSwatches />
+	</section>
+
+	<section>
+		<h2>{t.tokensType}</h2>
+		<TypeScale />
+	</section>
+
+	<section>
+		<h2>{t.tokensSpacing}</h2>
+		<SpacingScale />
+	</section>
+
+	<section>
+		<h2>{t.components}</h2>
+		<div class="component-list">
+			<ComponentSection heading={t.badge.heading} description={t.badge.description} code={`<Badge tone="accent">Design System</Badge>`}>
+				<Badge tone="neutral">Neutral</Badge>
+				<Badge tone="accent">Accent</Badge>
+				<Badge tone="selected">Selected</Badge>
+			</ComponentSection>
+
+			<ComponentSection heading={t.button.heading} description={t.button.description} code={`<Button variant="primary">Save</Button>\n<Button variant="secondary">Cancel</Button>\n<Button variant="ghost">Learn more</Button>\n<Button variant="primary" disabled>Save</Button>`}>
+				<Button variant="primary">Primary</Button>
+				<Button variant="secondary">Secondary</Button>
+				<Button variant="ghost">Ghost</Button>
+				<Button variant="primary" disabled>Disabled</Button>
+			</ComponentSection>
+
+			<ComponentSection heading={t.textfield.heading} description={t.textfield.description} code={`<TextField label="Email" id="email" hint="We'll never share it" />\n<TextField label="Email" id="email-error" error="Invalid email" />`}>
+				<TextField label="Email" id="ds-email" placeholder="you@example.com" hint="We'll never share it" />
+				<TextField label="Email" id="ds-email-error" placeholder="you@example.com" error="Invalid email" />
+			</ComponentSection>
+
+			<ComponentSection heading={t.toggle.heading} description={t.toggle.description} code={`<Toggle label="Enable notifications" id="notifications" checked />`}>
+				<Toggle label="Off" id="ds-toggle-off" />
+				<Toggle label="On" id="ds-toggle-on" checked />
+			</ComponentSection>
+
+			<ComponentSection heading={t.card.heading} description={t.card.description} code={`<Card title="Plan">\n  <p>Details go here.</p>\n</Card>`}>
+				<Card title="Card title">
+					<p>Card body content goes here.</p>
+				</Card>
+			</ComponentSection>
+
+			<ComponentSection heading={t.modal.heading} description={t.modal.description} code={`<Modal id="example" triggerLabel="Open modal" title="Example" closeLabel="Close">\n  <p>Modal body content.</p>\n</Modal>`}>
+				<Modal id="ds-modal" triggerLabel={t.modalTrigger} title={t.modalTitle} closeLabel={t.modalClose}>
+					<p>{t.modalBody}</p>
+				</Modal>
+			</ComponentSection>
+		</div>
+	</section>
+</article>
+
+<style>
+	.design-system {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+	}
+
+	.back-link {
+		font-size: 0.9rem;
+		align-self: flex-start;
+	}
+
+	h1 {
+		margin: 0;
+	}
+
+	.lead {
+		margin: 0;
+		color: var(--color-muted);
+		max-width: 40rem;
+	}
+
+	h2 {
+		margin: 0 0 1rem;
+		font-size: 1.2rem;
+	}
+
+	.component-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+</style>

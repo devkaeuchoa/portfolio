@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DesignSystemPage from '../../components/design-system/DesignSystemPage.astro';
+import { profile } from '../../data/resume';
+
+const lang = 'en' as const;
+---
+
+<Layout
+	lang={lang}
+	title={`Design System — ${profile.name}`}
+	description="A functional reconstruction of an accessible component library, built natively in Astro."
+>
+	<main>
+		<DesignSystemPage lang={lang} />
+	</main>
+</Layout>

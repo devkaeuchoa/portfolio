@@ -1,0 +1,43 @@
+---
+const sizes = [
+  { rem: '0.8rem', sample: 'Aa' },
+  { rem: '0.92rem', sample: 'Aa' },
+  { rem: '1.05rem', sample: 'Aa' },
+  { rem: '1.4rem', sample: 'Aa' },
+  { rem: '1.9rem', sample: 'Aa' },
+];
+---
+
+<div class="scale">
+	{
+		sizes.map((size) => (
+			<div class="row">
+				<span class="sample" style={`font-size: ${size.rem};`}>{size.sample}</span>
+				<code>{size.rem}</code>
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.scale {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+	}
+
+	.row {
+		display: flex;
+		align-items: baseline;
+		gap: 1rem;
+	}
+
+	.sample {
+		font-weight: 600;
+	}
+
+	code {
+		font-size: 0.78rem;
+		color: var(--color-muted);
+	}
+</style>

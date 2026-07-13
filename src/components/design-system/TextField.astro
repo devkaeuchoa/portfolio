@@ -1,0 +1,81 @@
+---
+interface Props {
+  label: string;
+  id: string;
+  type?: string;
+  placeholder?: string;
+  value?: string;
+  hint?: string;
+  error?: string;
+  disabled?: boolean;
+}
+
+const { label, id, type = 'text', placeholder, value, hint, error, disabled = false } = Astro.props;
+const describedBy = [error && `${id}-error`, hint && `${id}-hint`].filter(Boolean).join(' ') || undefined;
+---
+
+<div class="field">
+	<label for={id}>{label}</label>
+	<input
+		id={id}
+		type={type}
+		placeholder={placeholder}
+		value={value}
+		disabled={disabled}
+		aria-invalid={error ? 'true' : undefined}
+		aria-describedby={describedBy}
+		class={error ? 'has-error' : undefined}
+	/>
+	{hint && !error && <p id={`${id}-hint`} class="hint">{hint}</p>}
+	{error && <p id={`${id}-error`} class="error">{error}</p>}
+</div>
+
+<style>
+	.field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		max-width: 22rem;
+	}
+
+	label {
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
+
+	input {
+		font: inherit;
+		font-size: 0.9rem;
+		color: var(--color-text);
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		padding: 0.5rem 0.7rem;
+	}
+
+	input:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 1px;
+	}
+
+	input:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	input.has-error {
+		border-color: var(--color-selected);
+	}
+
+	.hint {
+		margin: 0;
+		font-size: 0.78rem;
+		color: var(--color-muted);
+	}
+
+	.error {
+		margin: 0;
+		font-size: 0.78rem;
+		color: var(--color-selected);
+	}
+</style>

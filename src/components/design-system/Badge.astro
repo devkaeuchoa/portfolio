@@ -1,0 +1,32 @@
+---
+interface Props {
+  tone?: 'neutral' | 'accent' | 'selected';
+}
+
+const { tone = 'neutral' } = Astro.props;
+---
+
+<span class={`badge badge-${tone}`}>
+	<slot />
+</span>
+
+<style>
+	.badge {
+		display: inline-flex;
+		font-size: 0.8rem;
+		border-radius: 999px;
+		padding: 0.15rem 0.7rem;
+		border: 1px solid var(--color-border);
+		color: var(--color-muted);
+	}
+
+	.badge-accent {
+		border-color: var(--color-accent);
+		color: var(--color-accent);
+	}
+
+	.badge-selected {
+		border-color: var(--color-selected);
+		color: var(--color-selected);
+	}
+</style>

@@ -1,0 +1,59 @@
+---
+const tokens = [
+  { name: '--color-bg', label: 'Background' },
+  { name: '--color-surface', label: 'Surface' },
+  { name: '--color-text', label: 'Text' },
+  { name: '--color-muted', label: 'Muted' },
+  { name: '--color-border', label: 'Border' },
+  { name: '--color-accent', label: 'Accent' },
+  { name: '--color-selected', label: 'Selected' },
+];
+---
+
+<div class="swatches">
+	{
+		tokens.map((token) => (
+			<div class="swatch">
+				<span class="chip" style={`background: var(${token.name}); border: 1px solid var(--color-border);`} />
+				<div class="meta">
+					<span class="label">{token.label}</span>
+					<code>{token.name}</code>
+				</div>
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.swatches {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+		gap: 1rem;
+	}
+
+	.swatch {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.chip {
+		width: 100%;
+		height: 2.75rem;
+		border-radius: 8px;
+	}
+
+	.meta {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.label {
+		font-size: 0.85rem;
+	}
+
+	code {
+		font-size: 0.75rem;
+		color: var(--color-muted);
+	}
+</style>
