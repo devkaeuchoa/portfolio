@@ -233,7 +233,7 @@ const t = {
 
 	.example-grid {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 1rem;
 	}
 
@@ -241,6 +241,7 @@ const t = {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+		min-width: 0;
 	}
 
 	.col-label {
