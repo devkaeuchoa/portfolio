@@ -15,6 +15,7 @@ const t = {
     free: 'Grátis',
     total: 'Total',
     cta: 'Finalizar compra',
+    values: ['Vestido midi', 'Tam. M', 'Qtd. 1 · R$ 249,90'],
   },
   en: {
     title: 'Bag',
@@ -23,6 +24,7 @@ const t = {
     free: 'Free',
     total: 'Total',
     cta: 'Checkout',
+    values: ['Midi dress', 'Size M', 'Qty 1 · $249.90'],
   },
   es: {
     title: 'Bolsa',
@@ -31,8 +33,11 @@ const t = {
     free: 'Gratis',
     total: 'Total',
     cta: 'Finalizar compra',
+    values: ['Vestido midi', 'Talla M', 'Cant. 1 · $249,90'],
   },
 }[lang];
+
+const lineWidths = ['long', 'short', 'medium'];
 ---
 
 <div class="mockup checkout-mockup" aria-hidden="true">
@@ -41,9 +46,14 @@ const t = {
 		<span class="muted">{t.items}</span>
 	</div>
 	<div class="lines">
-		<span class="line long" />
-		<span class="line short" />
-		<span class="line medium" />
+		{
+			t.values.map((value, i) => (
+				<div class="value-row" style={`animation-delay: ${i * 0.3}s`}>
+					<span class={`skeleton line ${lineWidths[i]}`} />
+					<span class="value">{value}</span>
+				</div>
+			))
+		}
 	</div>
 	<div class="row">
 		<span class="muted">{t.shipping}</span>
@@ -83,15 +93,31 @@ const t = {
 	.lines {
 		display: flex;
 		flex-direction: column;
-		gap: 0.4rem;
+		gap: 0.55rem;
 		margin: 0.75rem 0;
 		padding: 0.75rem 0;
 		border-top: 1px dashed var(--color-border);
 		border-bottom: 1px dashed var(--color-border);
 	}
 
-	.line {
+	.value-row {
+		position: relative;
+		height: 1rem;
+	}
+
+	.skeleton,
+	.value {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		animation: value-cycle 4s ease-in-out infinite;
+		animation-play-state: var(--anim-play, paused);
+	}
+
+	.skeleton.line {
 		height: 8px;
+		align-self: center;
 		border-radius: 4px;
 		background: var(--color-border);
 	}
@@ -106,6 +132,51 @@ const t = {
 
 	.line.short {
 		width: 40%;
+	}
+
+	.value {
+		color: var(--color-text);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		animation-name: value-cycle-reverse;
+	}
+
+	@keyframes value-cycle {
+		0%,
+		40% {
+			opacity: 1;
+		}
+		50%,
+		100% {
+			opacity: 0;
+		}
+	}
+
+	@keyframes value-cycle-reverse {
+		0%,
+		40% {
+			opacity: 0;
+		}
+		50%,
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.skeleton,
+		.value {
+			animation: none;
+		}
+
+		.skeleton {
+			opacity: 0;
+		}
+
+		.value {
+			opacity: 1;
+		}
 	}
 
 	.row.total {

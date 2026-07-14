@@ -53,24 +53,44 @@ const brands = [
 
 <script>
 	document.querySelectorAll<HTMLElement>('[data-products-mockup]').forEach((mockup) => {
-		const buttons = mockup.querySelectorAll<HTMLButtonElement>('.brand-btn');
+		const buttons = Array.from(mockup.querySelectorAll<HTMLButtonElement>('.brand-btn'));
 		const thumbs = mockup.querySelectorAll<HTMLElement>('[data-thumb]');
 
-		buttons.forEach((btn) => {
-			btn.addEventListener('click', () => {
-				buttons.forEach((b) => {
-					b.classList.remove('is-active');
-					b.setAttribute('aria-pressed', 'false');
-				});
-				btn.classList.add('is-active');
-				btn.setAttribute('aria-pressed', 'true');
-
-				const color = btn.style.getPropertyValue('--brand-color');
-				thumbs.forEach((thumb) => {
-					thumb.style.background = color;
-				});
+		const activate = (btn: HTMLButtonElement) => {
+			buttons.forEach((b) => {
+				b.classList.remove('is-active');
+				b.setAttribute('aria-pressed', 'false');
 			});
+			btn.classList.add('is-active');
+			btn.setAttribute('aria-pressed', 'true');
+
+			const color = btn.style.getPropertyValue('--brand-color');
+			thumbs.forEach((thumb) => {
+				thumb.style.background = color;
+			});
+		};
+
+		buttons.forEach((btn) => {
+			btn.addEventListener('click', () => activate(btn));
 		});
+
+		if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			const slot = mockup.closest<HTMLElement>('.mockup-col');
+			let index = 0;
+
+			setInterval(() => {
+				const playing = !slot || getComputedStyle(slot).getPropertyValue('--anim-play').trim() === 'running';
+				if (!playing) {
+					if (index !== 0) {
+						index = 0;
+						activate(buttons[0]);
+					}
+					return;
+				}
+				index = (index + 1) % buttons.length;
+				activate(buttons[index]);
+			}, 1800);
+		}
 	});
 </script>
 
@@ -129,7 +149,7 @@ const brands = [
 		aspect-ratio: 1;
 		border-radius: 8px;
 		background: var(--color-accent);
-		transition: background 0.2s ease;
+		transition: background 0.4s ease;
 	}
 
 	.line {

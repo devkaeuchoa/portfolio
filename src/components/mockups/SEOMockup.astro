@@ -16,7 +16,7 @@ const t = {
 
 <div class="mockup seo-mockup" aria-hidden="true">
 	<div class="score-badge">
-		<span class="score-value">98</span>
+		<span class="score-value" data-score-value>60</span>
 		<span class="score-label">{t.score}</span>
 	</div>
 	<div class="result">
@@ -31,6 +31,62 @@ const t = {
 		<span class="meta-pill">sitemap.xml</span>
 	</div>
 </div>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-score-value]').forEach((el) => {
+		const min = 60;
+		const max = 98;
+
+		const style = getComputedStyle(el);
+		const fromRgb = style.getPropertyValue('--color-selected-rgb').trim();
+		const toRgb = style.getPropertyValue('--color-accent-rgb').trim();
+		const [fr, fg, fb] = fromRgb.split(',').map((n) => parseFloat(n));
+		const [tr, tg, tb] = toRgb.split(',').map((n) => parseFloat(n));
+
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || Number.isNaN(fr) || Number.isNaN(tr)) {
+			el.textContent = String(max);
+			el.style.color = `rgb(${toRgb})`;
+			return;
+		}
+
+		const duration = 2000;
+		const holdMs = 1800;
+		const slot = el.closest<HTMLElement>('.mockup-col');
+		let start: number | null = null;
+
+		const frame = (timestamp: number) => {
+			const playing = !slot || getComputedStyle(slot).getPropertyValue('--anim-play').trim() === 'running';
+			if (!playing) {
+				start = null;
+				el.textContent = String(min);
+				el.style.color = `rgb(${fromRgb})`;
+				requestAnimationFrame(frame);
+				return;
+			}
+
+			if (start === null) start = timestamp;
+			const progress = Math.min((timestamp - start) / duration, 1);
+			const value = Math.round(min + (max - min) * progress);
+			const r = Math.round(fr + (tr - fr) * progress);
+			const g = Math.round(fg + (tg - fg) * progress);
+			const b = Math.round(fb + (tb - fb) * progress);
+
+			el.textContent = String(value);
+			el.style.color = `rgb(${r}, ${g}, ${b})`;
+
+			if (progress < 1) {
+				requestAnimationFrame(frame);
+			} else {
+				setTimeout(() => {
+					start = null;
+					requestAnimationFrame(frame);
+				}, holdMs);
+			}
+		};
+
+		requestAnimationFrame(frame);
+	});
+</script>
 
 <style>
 	.mockup {
@@ -51,6 +107,24 @@ const t = {
 		border: 2px solid var(--color-accent);
 		border-radius: 999px;
 		padding: 0.25rem 0.8rem;
+		animation: score-glow 2.4s ease-in-out infinite;
+		animation-play-state: var(--anim-play, paused);
+	}
+
+	@keyframes score-glow {
+		0%,
+		100% {
+			box-shadow: 0 0 0 0 rgba(var(--color-accent-rgb), 0.4);
+		}
+		50% {
+			box-shadow: 0 0 0 5px rgba(var(--color-accent-rgb), 0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.score-badge {
+			animation: none;
+		}
 	}
 
 	.score-value {

@@ -54,6 +54,28 @@ const demoLinkLabel = { pt: 'Ver projeto', en: 'View project', es: 'Ver proyecto
 </section>
 )}
 
+<script>
+	const slots = Array.from(document.querySelectorAll<HTMLElement>('.projects-grid .mockup-col'));
+
+	if (slots.length > 0) {
+		const activate = (index: number) => {
+			slots.forEach((slot, i) => {
+				slot.style.setProperty('--anim-play', i === index ? 'running' : 'paused');
+			});
+		};
+
+		let active = 0;
+		activate(active);
+
+		if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			setInterval(() => {
+				active = (active + 1) % slots.length;
+				activate(active);
+			}, 4000);
+		}
+	}
+</script>
+
 <style>
 	.section-breakout {
 		width: 100vw;

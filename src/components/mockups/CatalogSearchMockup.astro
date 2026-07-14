@@ -8,16 +8,18 @@ interface Props {
 const { lang } = Astro.props;
 
 const t = {
-  pt: { placeholder: 'Buscar produtos...', filters: ['Cashback', 'Preço', 'Categoria'] },
-  en: { placeholder: 'Search products...', filters: ['Cashback', 'Price', 'Category'] },
-  es: { placeholder: 'Buscar productos...', filters: ['Cashback', 'Precio', 'Categoría'] },
+  pt: { placeholder: 'Buscar produtos...', query: 'tênis branco', filters: ['Cashback', 'Preço', 'Categoria'] },
+  en: { placeholder: 'Search products...', query: 'white sneakers', filters: ['Cashback', 'Price', 'Category'] },
+  es: { placeholder: 'Buscar productos...', query: 'zapatillas blancas', filters: ['Cashback', 'Precio', 'Categoría'] },
 }[lang];
 ---
 
-<div class="mockup catalog-mockup" aria-hidden="true">
+<div class="mockup catalog-mockup" aria-hidden="true" data-catalog-mockup data-query={t.query}>
 	<div class="search-bar">
 		<span class="search-icon" />
-		<span class="placeholder">{t.placeholder}</span>
+		<span class="placeholder" data-placeholder>{t.placeholder}</span>
+		<span class="typed" data-typed hidden></span>
+		<span class="cursor" />
 	</div>
 	<div class="pills">
 		{t.filters.map((filter) => <span class="pill">{filter}</span>)}
@@ -36,6 +38,71 @@ const t = {
 		}
 	</div>
 </div>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-catalog-mockup]').forEach((mockup) => {
+		const placeholder = mockup.querySelector<HTMLElement>('[data-placeholder]');
+		const typed = mockup.querySelector<HTMLElement>('[data-typed]');
+		const query = mockup.dataset.query ?? '';
+
+		if (!placeholder || !typed || !query) return;
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+		const slot = mockup.closest<HTMLElement>('.mockup-col');
+		let index = 0;
+		let phase: 'idle' | 'typing' | 'pause' | 'deleting' = 'idle';
+		let waitTicks = 0;
+
+		const tick = () => {
+			const playing = !slot || getComputedStyle(slot).getPropertyValue('--anim-play').trim() === 'running';
+			if (!playing) {
+				if (phase !== 'idle' || index !== 0) {
+					phase = 'idle';
+					index = 0;
+					waitTicks = 0;
+					placeholder.hidden = false;
+					typed.hidden = true;
+					typed.textContent = '';
+				}
+				setTimeout(tick, 200);
+				return;
+			}
+
+			if (phase === 'idle') {
+				waitTicks++;
+				if (waitTicks >= 12) {
+					waitTicks = 0;
+					phase = 'typing';
+					placeholder.hidden = true;
+					typed.hidden = false;
+				}
+			} else if (phase === 'typing') {
+				index++;
+				typed.textContent = query.slice(0, index);
+				if (index >= query.length) {
+					phase = 'pause';
+				}
+			} else if (phase === 'pause') {
+				waitTicks++;
+				if (waitTicks >= 16) {
+					waitTicks = 0;
+					phase = 'deleting';
+				}
+			} else if (phase === 'deleting') {
+				index--;
+				typed.textContent = query.slice(0, index);
+				if (index <= 0) {
+					phase = 'idle';
+					placeholder.hidden = false;
+					typed.hidden = true;
+				}
+			}
+			setTimeout(tick, phase === 'typing' || phase === 'deleting' ? 90 : 100);
+		};
+
+		setTimeout(tick, 100);
+	});
+</script>
 
 <style>
 	.mockup {
@@ -78,6 +145,40 @@ const t = {
 	.placeholder {
 		font-size: 0.8rem;
 		color: var(--color-muted);
+	}
+
+	.typed {
+		font-size: 0.8rem;
+		color: var(--color-text);
+	}
+
+	.typed[hidden] {
+		display: none;
+	}
+
+	.cursor {
+		width: 1px;
+		height: 0.85rem;
+		background: var(--color-muted);
+		animation: blink 1.1s step-end infinite;
+		animation-play-state: var(--anim-play, paused);
+	}
+
+	@keyframes blink {
+		0%,
+		45% {
+			opacity: 1;
+		}
+		50%,
+		100% {
+			opacity: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.cursor {
+			animation: none;
+		}
 	}
 
 	.pills {

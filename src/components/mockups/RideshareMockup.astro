@@ -58,6 +58,20 @@ const t = {
 		stroke-width: 3;
 		stroke-linecap: round;
 		stroke-dasharray: 6 6;
+		animation: route-flow 1.2s linear infinite;
+		animation-play-state: var(--anim-play, paused);
+	}
+
+	@keyframes route-flow {
+		to {
+			stroke-dashoffset: -24;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.route {
+			animation: none;
+		}
 	}
 
 	.pin {
@@ -78,6 +92,24 @@ const t = {
 		background: var(--color-selected);
 		right: 6%;
 		top: 28%;
+		animation: pin-pulse 1.6s ease-in-out infinite;
+		animation-play-state: var(--anim-play, paused);
+	}
+
+	@keyframes pin-pulse {
+		0%,
+		100% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(1.35);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.pin.destination {
+			animation: none;
+		}
 	}
 
 	.row {

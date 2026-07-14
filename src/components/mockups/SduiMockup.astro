@@ -82,6 +82,24 @@ const t = {
 		color: var(--color-accent);
 		font-size: 1.1rem;
 		flex-shrink: 0;
+		animation: arrow-nudge 1.6s ease-in-out infinite;
+		animation-play-state: var(--anim-play, paused);
+	}
+
+	@keyframes arrow-nudge {
+		0%,
+		100% {
+			transform: translateX(0);
+		}
+		50% {
+			transform: translateX(4px);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.arrow {
+			animation: none;
+		}
 	}
 
 	.mini-card {
