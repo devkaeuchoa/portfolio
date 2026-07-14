@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CheckoutPage from '../../components/checkout/CheckoutPage.astro';
+import { profile } from '../../data/resume';
+
+const lang = 'en' as const;
+---
+
+<Layout
+	lang={lang}
+	title={`Checkout — ${profile.name}`}
+	description="A reconstruction of the checkout flow: a live cart total and a simulated payment step via bottom sheet."
+>
+	<main>
+		<CheckoutPage lang={lang} />
+	</main>
+</Layout>

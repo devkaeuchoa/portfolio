@@ -252,7 +252,7 @@ const collapseAllLabel = { pt: 'Recolher todos', en: 'Collapse all', es: 'Contra
 		document.querySelectorAll<HTMLElement>('.company-wrap.open').forEach((wrap) => {
 			wrap.classList.remove('open');
 		});
-		document.body.classList.remove('scroll-locked');
+		document.documentElement.classList.remove('scroll-locked');
 	};
 
 	document.querySelectorAll<HTMLAnchorElement>('[data-company-trigger]').forEach((link) => {
@@ -265,7 +265,7 @@ const collapseAllLabel = { pt: 'Recolher todos', en: 'Collapse all', es: 'Contra
 				closeAllCompanyPopovers();
 				wrap.classList.add('open');
 				if (isSheetViewport()) {
-					document.body.classList.add('scroll-locked');
+					document.documentElement.classList.add('scroll-locked');
 				}
 			}
 		});
@@ -287,7 +287,7 @@ const collapseAllLabel = { pt: 'Recolher todos', en: 'Collapse all', es: 'Contra
 		document.querySelectorAll<HTMLElement>('.company-wrap.open').forEach((wrap) => {
 			if (!wrap.contains(e.target as Node)) {
 				wrap.classList.remove('open');
-				document.body.classList.remove('scroll-locked');
+				document.documentElement.classList.remove('scroll-locked');
 			}
 		});
 	});

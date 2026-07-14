@@ -8,9 +8,28 @@ interface Props {
   hint?: string;
   error?: string;
   disabled?: boolean;
+  required?: boolean;
+  pattern?: string;
+  maxlength?: number;
+  inputmode?: 'text' | 'numeric' | 'decimal' | 'tel' | 'email' | 'url' | 'search' | 'none';
+  autocomplete?: string;
 }
 
-const { label, id, type = 'text', placeholder, value, hint, error, disabled = false } = Astro.props;
+const {
+  label,
+  id,
+  type = 'text',
+  placeholder,
+  value,
+  hint,
+  error,
+  disabled = false,
+  required = false,
+  pattern,
+  maxlength,
+  inputmode,
+  autocomplete,
+} = Astro.props;
 const describedBy = [error && `${id}-error`, hint && `${id}-hint`].filter(Boolean).join(' ') || undefined;
 ---
 
@@ -22,6 +41,11 @@ const describedBy = [error && `${id}-error`, hint && `${id}-hint`].filter(Boolea
 		placeholder={placeholder}
 		value={value}
 		disabled={disabled}
+		required={required}
+		pattern={pattern}
+		maxlength={maxlength}
+		inputmode={inputmode}
+		autocomplete={autocomplete}
 		aria-invalid={error ? 'true' : undefined}
 		aria-describedby={describedBy}
 		class={error ? 'has-error' : undefined}
@@ -36,6 +60,7 @@ const describedBy = [error && `${id}-error`, hint && `${id}-hint`].filter(Boolea
 		flex-direction: column;
 		gap: 0.35rem;
 		max-width: 22rem;
+		min-width: 0;
 	}
 
 	label {
@@ -44,6 +69,8 @@ const describedBy = [error && `${id}-error`, hint && `${id}-hint`].filter(Boolea
 	}
 
 	input {
+		width: 100%;
+		min-width: 0;
 		font: inherit;
 		font-size: 0.9rem;
 		color: var(--color-text);

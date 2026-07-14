@@ -189,6 +189,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~6 meses',
         mockup: 'checkout',
         tags: ['E-commerce', 'Checkout', 'React'],
+        // Precisa ficar em sync com `base` em astro.config.mjs
+        demoUrl: '/portfolio/checkout/',
       },
       {
         name: 'Página de produtos multi-marca',
@@ -380,6 +382,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~6 months',
         mockup: 'checkout',
         tags: ['E-commerce', 'Checkout', 'React'],
+        // Must stay in sync with `base` in astro.config.mjs
+        demoUrl: '/portfolio/en/checkout/',
       },
       {
         name: 'Multi-brand product listing page',
@@ -571,6 +575,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~6 meses',
         mockup: 'checkout',
         tags: ['E-commerce', 'Checkout', 'React'],
+        // Debe mantenerse en sync con `base` en astro.config.mjs
+        demoUrl: '/portfolio/es/checkout/',
       },
       {
         name: 'Página de productos multi-marca',

@@ -1,0 +1,355 @@
+---
+import type { Lang } from '../../data/resume';
+import TextField from '../design-system/TextField.astro';
+import Button from '../design-system/Button.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const t = {
+  pt: {
+    title: 'Pagamento',
+    secure: 'Ambiente simulado — nenhum dado real é coletado, enviado ou armazenado.',
+    name: 'Nome no cartão',
+    namePlaceholder: 'Como está no cartão',
+    number: 'Número do cartão',
+    expiry: 'Validade (MM/AA)',
+    cvv: 'CVV',
+    confirm: 'Confirmar pagamento (simulado)',
+    cancel: 'Cancelar',
+    success: '✓ Pagamento simulado com sucesso',
+  },
+  en: {
+    title: 'Payment',
+    secure: 'Simulated environment — no real data is collected, sent, or stored.',
+    name: 'Name on card',
+    namePlaceholder: 'As shown on the card',
+    number: 'Card number',
+    expiry: 'Expiry (MM/YY)',
+    cvv: 'CVV',
+    confirm: 'Confirm payment (simulated)',
+    cancel: 'Cancel',
+    success: '✓ Payment simulated successfully',
+  },
+  es: {
+    title: 'Pago',
+    secure: 'Entorno simulado — ningún dato real es recolectado, enviado o almacenado.',
+    name: 'Nombre en la tarjeta',
+    namePlaceholder: 'Como aparece en la tarjeta',
+    number: 'Número de tarjeta',
+    expiry: 'Vencimiento (MM/AA)',
+    cvv: 'CVV',
+    confirm: 'Confirmar pago (simulado)',
+    cancel: 'Cancelar',
+    success: '✓ Pago simulado con éxito',
+  },
+}[lang];
+---
+
+<dialog id="card-payment-sheet" aria-labelledby="card-payment-title" data-card-sheet>
+	<div class="sheet-header">
+		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lock-icon" aria-hidden="true">
+			<rect x="4" y="11" width="16" height="10" rx="2" />
+			<path d="M8 11V7a4 4 0 0 1 8 0v4" />
+		</svg>
+		<h4 id="card-payment-title">{t.title}</h4>
+	</div>
+	<p class="secure-copy">{t.secure}</p>
+
+	<form data-card-form autocomplete="off" novalidate>
+		<TextField
+			label={t.name}
+			id="cc-name"
+			placeholder={t.namePlaceholder}
+			required
+			autocomplete="off"
+		/>
+		<TextField
+			label={t.number}
+			id="cc-number"
+			type="text"
+			inputmode="numeric"
+			placeholder="0000 0000 0000 0000"
+			required
+			pattern="[0-9 ]{19}"
+			maxlength={19}
+			autocomplete="off"
+		/>
+		<div class="row">
+			<TextField
+				label={t.expiry}
+				id="cc-expiry"
+				type="text"
+				inputmode="numeric"
+				placeholder="MM/AA"
+				required
+				pattern="[0-9]{2}/[0-9]{2}"
+				maxlength={5}
+				autocomplete="off"
+			/>
+			<TextField
+				label={t.cvv}
+				id="cc-cvv"
+				type="text"
+				inputmode="numeric"
+				placeholder="123"
+				required
+				pattern="[0-9]{3,4}"
+				maxlength={4}
+				autocomplete="off"
+			/>
+		</div>
+
+		<div class="actions">
+			<Button variant="primary" type="button" data-sheet-confirm>{t.confirm}</Button>
+			<Button variant="secondary" type="button" data-sheet-cancel>{t.cancel}</Button>
+		</div>
+	</form>
+
+	<p class="success-message" data-success-message hidden>{t.success}</p>
+</dialog>
+
+<script>
+	const dialog = document.querySelector<HTMLDialogElement>('[data-card-sheet]');
+	if (!dialog) throw new Error('card sheet missing');
+
+	const form = dialog.querySelector<HTMLFormElement>('[data-card-form]');
+	const cancelBtn = dialog.querySelector<HTMLButtonElement>('[data-sheet-cancel]');
+	const confirmBtn = dialog.querySelector<HTMLButtonElement>('[data-sheet-confirm]');
+	const successMessage = dialog.querySelector<HTMLElement>('[data-success-message]');
+	const numberInput = dialog.querySelector<HTMLInputElement>('#cc-number');
+	const expiryInput = dialog.querySelector<HTMLInputElement>('#cc-expiry');
+	const cvvInput = dialog.querySelector<HTMLInputElement>('#cc-cvv');
+
+	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const desktopQuery = window.matchMedia('(min-width: 640px)');
+	let lastTrigger: HTMLElement | null = null;
+
+	const positionSheet = (trigger: HTMLElement) => {
+		if (!desktopQuery.matches) {
+			// Mobile: real bottom sheet, fixed to the viewport edge via CSS — no inline anchoring.
+			dialog.style.top = '';
+			dialog.style.left = '';
+			dialog.style.transformOrigin = '';
+			return;
+		}
+
+		const rect = trigger.getBoundingClientRect();
+		const gap = 12;
+		const sheetWidth = dialog.offsetWidth;
+		const sheetHeight = dialog.offsetHeight;
+
+		let left: number;
+		let origin: string;
+
+		const spaceRight = window.innerWidth - rect.right;
+		if (spaceRight >= sheetWidth + gap) {
+			left = rect.right + gap;
+			origin = 'center left';
+		} else {
+			left = rect.left - sheetWidth - gap;
+			origin = 'center right';
+		}
+
+		let top = Math.min(rect.top, window.innerHeight - sheetHeight - gap);
+		top = Math.max(top, gap);
+
+		dialog.style.top = `${top}px`;
+		dialog.style.left = `${left}px`;
+		dialog.style.transformOrigin = origin;
+	};
+
+	const openSheet = (trigger: HTMLElement) => {
+		lastTrigger = trigger;
+		form?.hidden && (form.hidden = false);
+		if (successMessage) successMessage.hidden = true;
+		document.documentElement.classList.add('scroll-locked');
+		dialog.showModal();
+		positionSheet(trigger);
+		if (reducedMotion) {
+			dialog.classList.add('is-open');
+		} else {
+			requestAnimationFrame(() => dialog.classList.add('is-open'));
+		}
+	};
+
+	window.addEventListener('resize', () => {
+		if (dialog.open && lastTrigger) positionSheet(lastTrigger);
+	});
+
+	const closeSheet = () => {
+		document.documentElement.classList.remove('scroll-locked');
+		if (reducedMotion) {
+			dialog.close();
+			dialog.classList.remove('is-open');
+			lastTrigger?.focus();
+			return;
+		}
+		dialog.classList.remove('is-open');
+		dialog.addEventListener(
+			'transitionend',
+			() => {
+				dialog.close();
+				lastTrigger?.focus();
+			},
+			{ once: true },
+		);
+	};
+
+	document.querySelectorAll<HTMLElement>('[data-open-card-sheet]').forEach((trigger) => {
+		trigger.addEventListener('click', () => openSheet(trigger));
+	});
+
+	cancelBtn?.addEventListener('click', () => closeSheet());
+	dialog.addEventListener('cancel', (event) => {
+		event.preventDefault();
+		closeSheet();
+	});
+
+	numberInput?.addEventListener('input', () => {
+		const digits = numberInput.value.replace(/\D/g, '').slice(0, 16);
+		numberInput.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+	});
+
+	expiryInput?.addEventListener('input', () => {
+		const digits = expiryInput.value.replace(/\D/g, '').slice(0, 4);
+		expiryInput.value = digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+	});
+
+	cvvInput?.addEventListener('input', () => {
+		cvvInput.value = cvvInput.value.replace(/\D/g, '').slice(0, 4);
+	});
+
+	confirmBtn?.addEventListener('click', () => {
+		if (!form || !form.reportValidity()) return;
+
+		form.hidden = true;
+		if (successMessage) successMessage.hidden = false;
+
+		setTimeout(() => {
+			form.reset();
+			closeSheet();
+			dialog.dispatchEvent(new CustomEvent('payment-simulated', { bubbles: true }));
+		}, 1500);
+	});
+</script>
+
+<style>
+	dialog {
+		background: var(--color-surface);
+		color: var(--color-text);
+		border: none;
+		border-radius: 16px 16px 0 0;
+		padding: 1.5rem;
+		margin: 0;
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		top: auto;
+		width: 100%;
+		max-height: calc(100vh - 2rem);
+		overflow-y: auto;
+		transform: translateY(100%);
+		transition: transform 0.3s ease;
+	}
+
+	dialog[open] {
+		display: block;
+	}
+
+	dialog.is-open {
+		transform: translateY(0);
+	}
+
+	dialog::backdrop {
+		background: rgba(0, 0, 0, 0.4);
+	}
+
+	@media (min-width: 640px) {
+		dialog {
+			left: auto;
+			right: auto;
+			bottom: auto;
+			top: 0;
+			border-radius: 16px;
+			width: min(34rem, calc(100vw - 2rem));
+			transform: scale(0.96);
+			opacity: 0;
+			transition: opacity 0.2s ease, transform 0.2s ease;
+		}
+
+		dialog.is-open {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		dialog {
+			transition: none;
+		}
+	}
+
+	.sheet-header {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin-bottom: 0.4rem;
+	}
+
+	.lock-icon {
+		width: 1.2rem;
+		height: 1.2rem;
+		color: var(--color-accent);
+		flex-shrink: 0;
+	}
+
+	h4 {
+		margin: 0;
+	}
+
+	.secure-copy {
+		margin: 0 0 1.25rem;
+		font-size: 0.8rem;
+		color: var(--color-muted);
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	form :global(.field) {
+		max-width: none;
+	}
+
+	.row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+	}
+
+	.actions {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		margin-top: 0.5rem;
+	}
+
+	.actions :global(.btn) {
+		width: 100%;
+	}
+
+	.success-message {
+		margin: 0;
+		text-align: center;
+		font-weight: 700;
+		color: var(--color-accent);
+		padding: 1.5rem 0;
+	}
+</style>

@@ -3,12 +3,13 @@ interface Props {
   variant?: 'primary' | 'secondary' | 'ghost';
   disabled?: boolean;
   type?: 'button' | 'submit';
+  [key: `data-${string}`]: string | undefined;
 }
 
-const { variant = 'primary', disabled = false, type = 'button' } = Astro.props;
+const { variant = 'primary', disabled = false, type = 'button', ...rest } = Astro.props;
 ---
 
-<button type={type} class={`btn btn-${variant}`} disabled={disabled}>
+<button type={type} class={`btn btn-${variant}`} disabled={disabled} {...rest}>
 	<slot />
 </button>
 
