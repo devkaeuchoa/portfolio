@@ -15,7 +15,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = content[lang];
 const heading = { pt: 'Projetos', en: 'Projects', es: 'Proyectos' }[lang];
-const demoLinkLabel = { pt: 'Ver projeto', en: 'View project', es: 'Ver proyecto' }[lang];
+const demoLinkLabel = { pt: 'Ver Demo', en: 'View Demo', es: 'Ver Demo' }[lang];
 ---
 
 {t.projects.length > 0 && (

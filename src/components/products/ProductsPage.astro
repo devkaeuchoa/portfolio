@@ -1,0 +1,493 @@
+---
+import type { Lang } from '../../data/resume';
+import Card from '../design-system/Card.astro';
+import Badge from '../design-system/Badge.astro';
+import Button from '../design-system/Button.astro';
+import CodeSample from '../design-system/CodeSample.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const localePrefix = { pt: '', en: '/en', es: '/es' }[lang];
+const backHref = `${base}${localePrefix}/`;
+
+const currency = { pt: 'R$', en: '$', es: '$' }[lang];
+const decimal = { pt: ',', en: '.', es: ',' }[lang];
+const price = (value: string) => `${currency}${value.replace('.', decimal)}`;
+
+type Brand = {
+  key: string;
+  name: string;
+  color: string;
+  tagline: string;
+  products: { name: string; price: string; tag: string }[];
+};
+
+const brandsByLang: Record<Lang, Brand[]> = {
+  pt: [
+    {
+      key: 'aura',
+      name: 'Aura',
+      color: '#4ade80',
+      tagline: 'Peças técnicas com acabamento premium.',
+      products: [
+        { name: 'Jaqueta técnica', price: price('459.90'), tag: 'Novo' },
+        { name: 'Calça alfaiataria', price: price('329.90'), tag: 'Best seller' },
+        { name: 'Camisa linho', price: price('219.90'), tag: '-15%' },
+        { name: 'Mochila técnica', price: price('279.90'), tag: '-10%' },
+      ],
+    },
+    {
+      key: 'nord',
+      name: 'Nord',
+      color: '#60a5fa',
+      tagline: 'Conforto e lã nobre para o inverno.',
+      products: [
+        { name: 'Suéter tricô', price: price('389.90'), tag: 'Novo' },
+        { name: 'Casaco de lã', price: price('549.90'), tag: 'Edição limitada' },
+        { name: 'Cachecol xadrez', price: price('129.90'), tag: '-10%' },
+        { name: 'Luva de couro', price: price('159.90'), tag: 'Best seller' },
+      ],
+    },
+    {
+      key: 'mira',
+      name: 'Mira',
+      color: '#f472b6',
+      tagline: 'Silhuetas femininas, cores vivas.',
+      products: [
+        { name: 'Vestido midi', price: price('299.90'), tag: 'Novo' },
+        { name: 'Saia plissada', price: price('189.90'), tag: 'Best seller' },
+        { name: 'Blusa cropped', price: price('149.90'), tag: '-20%' },
+        { name: 'Bolsa mini', price: price('219.90'), tag: 'Edição limitada' },
+      ],
+    },
+    {
+      key: 'rook',
+      name: 'Rook',
+      color: '#fbbf24',
+      tagline: 'Streetwear urbano e despojado.',
+      products: [
+        { name: 'Bermuda cargo', price: price('229.90'), tag: 'Novo' },
+        { name: 'Camiseta oversized', price: price('129.90'), tag: 'Best seller' },
+        { name: 'Boné aba reta', price: price('99.90'), tag: '-15%' },
+        { name: 'Tênis skate', price: price('259.90'), tag: '-10%' },
+      ],
+    },
+  ],
+  en: [
+    {
+      key: 'aura',
+      name: 'Aura',
+      color: '#4ade80',
+      tagline: 'Technical pieces with a premium finish.',
+      products: [
+        { name: 'Technical jacket', price: price('459.90'), tag: 'New' },
+        { name: 'Tailored trousers', price: price('329.90'), tag: 'Best seller' },
+        { name: 'Linen shirt', price: price('219.90'), tag: '-15%' },
+        { name: 'Technical backpack', price: price('279.90'), tag: '-10%' },
+      ],
+    },
+    {
+      key: 'nord',
+      name: 'Nord',
+      color: '#60a5fa',
+      tagline: 'Comfort and fine wool for winter.',
+      products: [
+        { name: 'Knit sweater', price: price('389.90'), tag: 'New' },
+        { name: 'Wool coat', price: price('549.90'), tag: 'Limited run' },
+        { name: 'Plaid scarf', price: price('129.90'), tag: '-10%' },
+        { name: 'Leather gloves', price: price('159.90'), tag: 'Best seller' },
+      ],
+    },
+    {
+      key: 'mira',
+      name: 'Mira',
+      color: '#f472b6',
+      tagline: 'Feminine silhouettes, vivid colors.',
+      products: [
+        { name: 'Midi dress', price: price('299.90'), tag: 'New' },
+        { name: 'Pleated skirt', price: price('189.90'), tag: 'Best seller' },
+        { name: 'Cropped top', price: price('149.90'), tag: '-20%' },
+        { name: 'Mini bag', price: price('219.90'), tag: 'Limited run' },
+      ],
+    },
+    {
+      key: 'rook',
+      name: 'Rook',
+      color: '#fbbf24',
+      tagline: 'Urban, easygoing streetwear.',
+      products: [
+        { name: 'Cargo shorts', price: price('229.90'), tag: 'New' },
+        { name: 'Oversized tee', price: price('129.90'), tag: 'Best seller' },
+        { name: 'Flat-brim cap', price: price('99.90'), tag: '-15%' },
+        { name: 'Skate sneakers', price: price('259.90'), tag: '-10%' },
+      ],
+    },
+  ],
+  es: [
+    {
+      key: 'aura',
+      name: 'Aura',
+      color: '#4ade80',
+      tagline: 'Piezas técnicas con acabado premium.',
+      products: [
+        { name: 'Chaqueta técnica', price: price('459.90'), tag: 'Nuevo' },
+        { name: 'Pantalón de sastre', price: price('329.90'), tag: 'Best seller' },
+        { name: 'Camisa de lino', price: price('219.90'), tag: '-15%' },
+        { name: 'Mochila técnica', price: price('279.90'), tag: '-10%' },
+      ],
+    },
+    {
+      key: 'nord',
+      name: 'Nord',
+      color: '#60a5fa',
+      tagline: 'Comodidad y lana noble para el invierno.',
+      products: [
+        { name: 'Suéter de punto', price: price('389.90'), tag: 'Nuevo' },
+        { name: 'Abrigo de lana', price: price('549.90'), tag: 'Edición limitada' },
+        { name: 'Bufanda de cuadros', price: price('129.90'), tag: '-10%' },
+        { name: 'Guantes de cuero', price: price('159.90'), tag: 'Best seller' },
+      ],
+    },
+    {
+      key: 'mira',
+      name: 'Mira',
+      color: '#f472b6',
+      tagline: 'Siluetas femeninas, colores vivos.',
+      products: [
+        { name: 'Vestido midi', price: price('299.90'), tag: 'Nuevo' },
+        { name: 'Falda plisada', price: price('189.90'), tag: 'Best seller' },
+        { name: 'Blusa cropped', price: price('149.90'), tag: '-20%' },
+        { name: 'Bolso mini', price: price('219.90'), tag: 'Edición limitada' },
+      ],
+    },
+    {
+      key: 'rook',
+      name: 'Rook',
+      color: '#fbbf24',
+      tagline: 'Streetwear urbano y desenfadado.',
+      products: [
+        { name: 'Bermuda cargo', price: price('229.90'), tag: 'Nuevo' },
+        { name: 'Camiseta oversized', price: price('129.90'), tag: 'Best seller' },
+        { name: 'Gorra plana', price: price('99.90'), tag: '-15%' },
+        { name: 'Zapatillas de skate', price: price('259.90'), tag: '-10%' },
+      ],
+    },
+  ],
+};
+
+const brands = brandsByLang[lang];
+
+const t = {
+  pt: {
+    intro: 'Produtos multi-marca',
+    lead: 'Reconstrução da personalização entre as 4 marcas de uma rede de moda: cada marca troca cor de destaque, texto e catálogo instantaneamente, sem reload — usando os mesmos componentes Card, Badge e Button do design system.',
+    back: '← Voltar ao portfólio',
+    ctaLabel: 'Ver produto',
+    howHeading: 'Como funciona',
+    howDesc: 'Cada marca sobrescreve --color-accent localmente. Os componentes do design system já leem essa variável, então eles se re-colorem sozinhos — nenhum componente precisou saber que marcas existem.',
+  },
+  en: {
+    intro: 'Multi-brand products',
+    lead: 'A reconstruction of personalization across 4 brands of a fashion retail group: each brand swaps its accent color, copy, and catalog instantly, no reload — using the same Card, Badge, and Button components from the design system.',
+    back: '← Back to portfolio',
+    ctaLabel: 'View product',
+    howHeading: 'How it works',
+    howDesc: "Each brand overrides --color-accent locally. The design system components already read that variable, so they re-color themselves automatically — no component needed to know brands exist.",
+  },
+  es: {
+    intro: 'Productos multi-marca',
+    lead: 'Reconstrucción de la personalización entre las 4 marcas de una cadena de moda: cada marca cambia su color de acento, texto y catálogo al instante, sin recargar — usando los mismos componentes Card, Badge y Button del design system.',
+    back: '← Volver al portafolio',
+    ctaLabel: 'Ver producto',
+    howHeading: 'Cómo funciona',
+    howDesc: 'Cada marca sobrescribe --color-accent localmente. Los componentes del design system ya leen esa variable, así que se recolorean solos — ningún componente necesitó saber que existen marcas.',
+  },
+}[lang];
+
+const codeSample = `.brand-panel {
+  --color-accent: var(--brand-color);
+}
+
+<!-- Badge/Button already read var(--color-accent) -->
+<Badge tone="accent">${brands[0].products[0].tag}</Badge>
+<Button variant="primary">${t.ctaLabel}</Button>`;
+---
+
+<div class="section-breakout">
+<div class="section-breakout-inner">
+<article class="products-page">
+	<a href={backHref} class="back-link">{t.back}</a>
+	<h1>{t.intro}</h1>
+	<p class="lead">{t.lead}</p>
+
+	<div class="brand-switcher" role="tablist" aria-label={t.intro}>
+		{
+			brands.map((brand, i) => (
+				<button
+					type="button"
+					role="tab"
+					id={`tab-${brand.key}`}
+					aria-controls={`panel-${brand.key}`}
+					aria-selected={i === 0 ? 'true' : 'false'}
+					tabindex={i === 0 ? 0 : -1}
+					class:list={['brand-tab', i === 0 && 'is-active']}
+					data-brand-tab={brand.key}
+					style={`--brand-color: ${brand.color}`}
+				>
+					<span class="dot" />
+					{brand.name}
+				</button>
+			))
+		}
+	</div>
+
+	<div class="brand-panels">
+		{
+			brands.map((brand, i) => (
+				<section
+					id={`panel-${brand.key}`}
+					role="tabpanel"
+					aria-labelledby={`tab-${brand.key}`}
+					aria-hidden={i !== 0 ? 'true' : 'false'}
+					inert={i !== 0}
+					class:list={['brand-panel', i === 0 && 'is-visible']}
+					data-brand-panel={brand.key}
+					style={`--brand-color: ${brand.color}`}
+				>
+					<p class="tagline">{brand.tagline}</p>
+					<div class="product-grid">
+						{
+							brand.products.map((product) => (
+								<Card title={product.name}>
+									<div class="product-thumb" />
+									<Badge tone="accent">{product.tag}</Badge>
+									<p class="price">{product.price}</p>
+									<Button variant="primary">{t.ctaLabel}</Button>
+								</Card>
+							))
+						}
+					</div>
+				</section>
+			))
+		}
+	</div>
+
+	<section class="how-it-works">
+		<h2>{t.howHeading}</h2>
+		<p class="description">{t.howDesc}</p>
+		<CodeSample code={codeSample} />
+	</section>
+</article>
+</div>
+</div>
+
+<script>
+	document.querySelectorAll<HTMLElement>('.brand-switcher').forEach((switcher) => {
+		const tabs = Array.from(switcher.querySelectorAll<HTMLButtonElement>('.brand-tab'));
+		const panelsWrap = switcher.parentElement?.querySelector<HTMLElement>('.brand-panels');
+		const panels = Array.from(panelsWrap?.querySelectorAll<HTMLElement>('.brand-panel') ?? []);
+
+		if (panelsWrap && panels.length > 0) {
+			const syncHeight = () => {
+				const tallest = Math.max(...panels.map((panel) => panel.scrollHeight));
+				panelsWrap.style.minHeight = `${tallest}px`;
+			};
+			syncHeight();
+			window.addEventListener('resize', syncHeight);
+		}
+
+		const activate = (tab: HTMLButtonElement) => {
+			tabs.forEach((t) => {
+				const selected = t === tab;
+				t.classList.toggle('is-active', selected);
+				t.setAttribute('aria-selected', selected ? 'true' : 'false');
+				t.tabIndex = selected ? 0 : -1;
+			});
+			panels.forEach((panel) => {
+				const active = panel.dataset.brandPanel === tab.dataset.brandTab;
+				panel.classList.toggle('is-visible', active);
+				panel.toggleAttribute('inert', !active);
+				panel.setAttribute('aria-hidden', active ? 'false' : 'true');
+			});
+		};
+
+		tabs.forEach((tab, i) => {
+			tab.addEventListener('click', () => activate(tab));
+			tab.addEventListener('keydown', (event) => {
+				if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+				event.preventDefault();
+				const next = event.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+				tabs[next].focus();
+				activate(tabs[next]);
+			});
+		});
+	});
+</script>
+
+<style>
+	.section-breakout {
+		width: 100vw;
+		max-width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+	}
+
+	.section-breakout-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+	}
+
+	.products-page {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.back-link {
+		font-size: 0.9rem;
+		align-self: flex-start;
+	}
+
+	h1 {
+		margin: 0;
+	}
+
+	.lead {
+		margin: 0;
+		color: var(--color-muted);
+		max-width: 40rem;
+	}
+
+	.brand-switcher {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+	}
+
+	.brand-tab {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font: inherit;
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--color-muted);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 0.45rem 1rem;
+		cursor: pointer;
+		transition: border-color 0.15s ease, color 0.15s ease;
+	}
+
+	.brand-tab .dot {
+		width: 0.6rem;
+		height: 0.6rem;
+		border-radius: 50%;
+		background: var(--brand-color);
+	}
+
+	.brand-tab:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+
+	.brand-tab.is-active {
+		color: var(--color-text);
+		border-color: var(--brand-color);
+	}
+
+	.brand-panels {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.brand-panel {
+		--color-accent: var(--brand-color);
+		grid-column: 1;
+		grid-row: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		min-width: 0;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s ease;
+	}
+
+	.brand-panel.is-visible {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.brand-panel {
+			transition: none;
+		}
+	}
+
+	.tagline {
+		margin: 0;
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: var(--color-text);
+		overflow-wrap: break-word;
+	}
+
+	.product-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (min-width: 640px) {
+		.product-grid {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+
+	.product-grid :global(.card) {
+		border-color: var(--color-accent);
+		max-width: none;
+	}
+
+	.product-thumb {
+		width: 100%;
+		aspect-ratio: 1;
+		border-radius: 8px;
+		border: 1px solid var(--color-border);
+		background: linear-gradient(
+			135deg,
+			color-mix(in srgb, var(--color-accent) 30%, transparent),
+			color-mix(in srgb, var(--color-accent) 8%, transparent)
+		);
+	}
+
+	.price {
+		margin: 0;
+		font-weight: 700;
+	}
+
+	.product-grid :global(.btn-primary) {
+		width: 100%;
+		padding: 0.35rem 0.8rem;
+		font-size: 0.8rem;
+	}
+
+	.how-it-works h2 {
+		margin: 0 0 0.6rem;
+		font-size: 1.05rem;
+	}
+
+	.how-it-works .description {
+		margin: 0 0 0.75rem;
+		color: var(--color-muted);
+		font-size: 0.9rem;
+	}
+</style>

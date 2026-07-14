@@ -197,6 +197,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~1 ano',
         mockup: 'products',
         tags: ['E-commerce', 'Personalização', 'React'],
+        // Precisa ficar em sync com `base` em astro.config.mjs
+        demoUrl: '/portfolio/products/',
       },
       {
         name: 'Catálogo, busca e biblioteca de componentes',
@@ -386,6 +388,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~1 year',
         mockup: 'products',
         tags: ['E-commerce', 'Personalization', 'React'],
+        // Must stay in sync with `base` in astro.config.mjs
+        demoUrl: '/portfolio/en/products/',
       },
       {
         name: 'Catalog, search, and component library',
@@ -575,6 +579,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~1 año',
         mockup: 'products',
         tags: ['E-commerce', 'Personalización', 'React'],
+        // Debe mantenerse en sync con `base` en astro.config.mjs
+        demoUrl: '/portfolio/es/products/',
       },
       {
         name: 'Catálogo, búsqueda y biblioteca de componentes',

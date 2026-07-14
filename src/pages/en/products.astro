@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductsPage from '../../components/products/ProductsPage.astro';
+import { profile } from '../../data/resume';
+
+const lang = 'en' as const;
+---
+
+<Layout
+	lang={lang}
+	title={`Multi-brand products — ${profile.name}`}
+	description="A reconstruction of personalization across 4 brands of a fashion retail group, built with the design system components."
+>
+	<main>
+		<ProductsPage lang={lang} />
+	</main>
+</Layout>
