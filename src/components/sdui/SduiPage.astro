@@ -1,0 +1,264 @@
+---
+import type { Lang } from '../../data/resume';
+import type { SduiNode } from './schema';
+import SDUIRenderer from './SDUIRenderer.astro';
+import CodeSample from '../design-system/CodeSample.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const localePrefix = { pt: '', en: '/en', es: '/es' }[lang];
+const backHref = `${base}${localePrefix}/`;
+
+const examplesByLang: Record<Lang, { heading: string; json: string }[]> = {
+  pt: [
+    {
+      heading: 'Card de cashback',
+      json: `{
+  "type": "card",
+  "title": "Cashback disponível",
+  "children": [
+    { "type": "text", "text": "R$ 42,10 acumulados este mês" },
+    { "type": "badge", "text": "Disponível", "tone": "accent" },
+    { "type": "button", "label": "Resgatar", "variant": "primary" }
+  ]
+}`,
+    },
+    {
+      heading: 'Lista de benefícios',
+      json: `[
+  { "type": "heading", "text": "Benefícios do plano" },
+  {
+    "type": "list",
+    "items": ["Cartão sem anuidade", "Conta em dólar", "Cashback em compras"]
+  }
+]`,
+    },
+    {
+      heading: 'Grupo de ações',
+      json: `[
+  { "type": "badge", "text": "Novo", "tone": "accent" },
+  { "type": "badge", "text": "Urgente", "tone": "selected" },
+  { "type": "button", "label": "Confirmar", "variant": "primary" },
+  { "type": "button", "label": "Cancelar", "variant": "secondary" },
+  { "type": "button", "label": "Saiba mais", "variant": "ghost" }
+]`,
+    },
+  ],
+  en: [
+    {
+      heading: 'Cashback card',
+      json: `{
+  "type": "card",
+  "title": "Cashback available",
+  "children": [
+    { "type": "text", "text": "$42.10 earned this month" },
+    { "type": "badge", "text": "Available", "tone": "accent" },
+    { "type": "button", "label": "Redeem", "variant": "primary" }
+  ]
+}`,
+    },
+    {
+      heading: 'Benefits list',
+      json: `[
+  { "type": "heading", "text": "Plan benefits" },
+  {
+    "type": "list",
+    "items": ["No annual fee card", "USD account", "Cashback on purchases"]
+  }
+]`,
+    },
+    {
+      heading: 'Action group',
+      json: `[
+  { "type": "badge", "text": "New", "tone": "accent" },
+  { "type": "badge", "text": "Urgent", "tone": "selected" },
+  { "type": "button", "label": "Confirm", "variant": "primary" },
+  { "type": "button", "label": "Cancel", "variant": "secondary" },
+  { "type": "button", "label": "Learn more", "variant": "ghost" }
+]`,
+    },
+  ],
+  es: [
+    {
+      heading: 'Card de cashback',
+      json: `{
+  "type": "card",
+  "title": "Cashback disponible",
+  "children": [
+    { "type": "text", "text": "$42,10 acumulados este mes" },
+    { "type": "badge", "text": "Disponible", "tone": "accent" },
+    { "type": "button", "label": "Canjear", "variant": "primary" }
+  ]
+}`,
+    },
+    {
+      heading: 'Lista de beneficios',
+      json: `[
+  { "type": "heading", "text": "Beneficios del plan" },
+  {
+    "type": "list",
+    "items": ["Tarjeta sin anualidad", "Cuenta en dólares", "Cashback en compras"]
+  }
+]`,
+    },
+    {
+      heading: 'Grupo de acciones',
+      json: `[
+  { "type": "badge", "text": "Nuevo", "tone": "accent" },
+  { "type": "badge", "text": "Urgente", "tone": "selected" },
+  { "type": "button", "label": "Confirmar", "variant": "primary" },
+  { "type": "button", "label": "Cancelar", "variant": "secondary" },
+  { "type": "button", "label": "Saber más", "variant": "ghost" }
+]`,
+    },
+  ],
+};
+
+const examples = examplesByLang[lang].map((example) => ({
+  heading: example.heading,
+  json: example.json,
+  nodes: JSON.parse(example.json) as SduiNode | SduiNode[],
+})).map((example) => ({
+  ...example,
+  nodes: Array.isArray(example.nodes) ? example.nodes : [example.nodes],
+}));
+
+const t = {
+  pt: {
+    intro: 'Server-Driven UI',
+    lead: 'Demonstração real de SDUI: cada exemplo abaixo é interpretado a partir do JSON à esquerda em tempo de build, e a interface à direita usa os mesmos componentes Button, Badge e Card do design system. Nada aqui é mockup — mude o JSON e a UI muda junto.',
+    back: '← Voltar ao portfólio',
+    jsonLabel: 'JSON',
+    renderLabel: 'Resultado',
+  },
+  en: {
+    intro: 'Server-Driven UI',
+    lead: "A real SDUI demo: each example below is interpreted from the JSON on the left at build time, and the UI on the right uses the same Button, Badge, and Card components from the design system. Nothing here is a mockup — change the JSON and the UI changes with it.",
+    back: '← Back to portfolio',
+    jsonLabel: 'JSON',
+    renderLabel: 'Result',
+  },
+  es: {
+    intro: 'Server-Driven UI',
+    lead: 'Demostración real de SDUI: cada ejemplo de abajo se interpreta a partir del JSON de la izquierda en tiempo de build, y la interfaz de la derecha usa los mismos componentes Button, Badge y Card del design system. Nada aquí es un mockup: cambia el JSON y la UI cambia con él.',
+    back: '← Volver al portafolio',
+    jsonLabel: 'JSON',
+    renderLabel: 'Resultado',
+  },
+}[lang];
+---
+
+<div class="section-breakout">
+<div class="section-breakout-inner">
+<article class="sdui-page">
+	<a href={backHref} class="back-link">{t.back}</a>
+	<h1>{t.intro}</h1>
+	<p class="lead">{t.lead}</p>
+
+	<div class="examples">
+		{
+			examples.map((example) => (
+				<section class="example">
+					<h2>{example.heading}</h2>
+					<div class="example-grid">
+						<div class="col">
+							<span class="col-label">{t.jsonLabel}</span>
+							<CodeSample code={example.json} />
+						</div>
+						<div class="col">
+							<span class="col-label">{t.renderLabel}</span>
+							<div class="render-box">
+								{example.nodes.map((node) => <SDUIRenderer node={node} />)}
+							</div>
+						</div>
+					</div>
+				</section>
+			))
+		}
+	</div>
+</article>
+</div>
+</div>
+
+<style>
+	.section-breakout {
+		width: 100vw;
+		max-width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+	}
+
+	.section-breakout-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+	}
+
+	.sdui-page {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+	}
+
+	.back-link {
+		font-size: 0.9rem;
+		align-self: flex-start;
+	}
+
+	h1 {
+		margin: 0;
+	}
+
+	.lead {
+		margin: 0;
+		color: var(--color-muted);
+		max-width: 40rem;
+	}
+
+	.examples {
+		display: flex;
+		flex-direction: column;
+		gap: 2.25rem;
+	}
+
+	.example h2 {
+		margin: 0 0 0.85rem;
+		font-size: 1.05rem;
+	}
+
+	.example-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.col {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.col-label {
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--color-muted);
+	}
+
+	.render-box {
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		padding: 1rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.6rem;
+	}
+</style>

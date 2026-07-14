@@ -38,7 +38,7 @@ export interface Project {
   name: string;
   description: string;
   period?: string;
-  mockup: 'checkout' | 'products' | 'catalog' | 'publicsector' | 'seo' | 'rideshare';
+  mockup: 'checkout' | 'products' | 'catalog' | 'publicsector' | 'seo' | 'rideshare' | 'sdui';
   tags: string[];
   demoUrl?: string;
 }
@@ -223,6 +223,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~1,5 ano',
         mockup: 'seo',
         tags: ['SEO', 'Static Site', 'React'],
+        // Precisa ficar em sync com `base` em astro.config.mjs
+        demoUrl: '/portfolio/seo/',
       },
       {
         name: 'Aplicativo de mobilidade urbana',
@@ -231,6 +233,16 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~6 meses',
         mockup: 'rideshare',
         tags: ['Android', 'Kotlin', 'Mobilidade'],
+      },
+      {
+        name: 'Server-Driven UI: JSON vira interface',
+        description:
+          'Projeto pessoal que reconstrói o conceito de Server-Driven UI explorado no Inter: uma tela interpreta um schema JSON em tempo de build e renderiza a interface real usando os componentes do design system embutido neste portfólio.',
+        period: 'Projeto pessoal',
+        mockup: 'sdui',
+        tags: ['SDUI', 'JSON', 'Astro'],
+        // Precisa ficar em sync com `base` em astro.config.mjs
+        demoUrl: '/portfolio/sdui/',
       },
     ],
   },
@@ -400,6 +412,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~1.5 years',
         mockup: 'seo',
         tags: ['SEO', 'Static Site', 'React'],
+        // Must stay in sync with `base` in astro.config.mjs
+        demoUrl: '/portfolio/en/seo/',
       },
       {
         name: 'Urban mobility app',
@@ -408,6 +422,16 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~6 months',
         mockup: 'rideshare',
         tags: ['Android', 'Kotlin', 'Mobility'],
+      },
+      {
+        name: 'Server-Driven UI: JSON becomes interface',
+        description:
+          "Personal project reconstructing the Server-Driven UI concept from my time at Inter: a page interprets a JSON schema at build time and renders real UI using this portfolio's own embedded design system.",
+        period: 'Personal project',
+        mockup: 'sdui',
+        tags: ['SDUI', 'JSON', 'Astro'],
+        // Must stay in sync with `base` in astro.config.mjs
+        demoUrl: '/portfolio/en/sdui/',
       },
     ],
   },
@@ -577,6 +601,8 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~1,5 años',
         mockup: 'seo',
         tags: ['SEO', 'Static Site', 'React'],
+        // Debe mantenerse en sync con `base` en astro.config.mjs
+        demoUrl: '/portfolio/es/seo/',
       },
       {
         name: 'Aplicación de movilidad urbana',
@@ -585,6 +611,16 @@ export const content: Record<Lang, ResumeContent> = {
         period: '~6 meses',
         mockup: 'rideshare',
         tags: ['Android', 'Kotlin', 'Movilidad'],
+      },
+      {
+        name: 'Server-Driven UI: el JSON se vuelve interfaz',
+        description:
+          'Proyecto personal que reconstruye el concepto de Server-Driven UI explorado en Inter: una pantalla interpreta un schema JSON en tiempo de build y renderiza la interfaz real usando los componentes del design system embebido en este portafolio.',
+        period: 'Proyecto personal',
+        mockup: 'sdui',
+        tags: ['SDUI', 'JSON', 'Astro'],
+        // Debe mantenerse en sync con `base` en astro.config.mjs
+        demoUrl: '/portfolio/es/sdui/',
       },
     ],
   },

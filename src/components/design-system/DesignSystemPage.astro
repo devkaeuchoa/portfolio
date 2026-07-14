@@ -82,6 +82,8 @@ const t = {
 }[lang];
 ---
 
+<div class="section-breakout">
+<div class="section-breakout-inner">
 <article class="design-system">
 	<a href={backHref} class="back-link">{t.back}</a>
 	<h1>{t.intro}</h1>
@@ -142,8 +144,23 @@ const t = {
 		</div>
 	</section>
 </article>
+</div>
+</div>
 
 <style>
+	.section-breakout {
+		width: 100vw;
+		max-width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+	}
+
+	.section-breakout-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+	}
+
 	.design-system {
 		display: flex;
 		flex-direction: column;

@@ -6,6 +6,7 @@ import CatalogSearchMockup from './mockups/CatalogSearchMockup.astro';
 import PublicSectorMockup from './mockups/PublicSectorMockup.astro';
 import SEOMockup from './mockups/SEOMockup.astro';
 import RideshareMockup from './mockups/RideshareMockup.astro';
+import SduiMockup from './mockups/SduiMockup.astro';
 
 interface Props {
   lang: Lang;
@@ -32,6 +33,7 @@ const demoLinkLabel = { pt: 'Ver projeto', en: 'View project', es: 'Ver proyecto
 						{project.mockup === 'publicsector' && <PublicSectorMockup lang={lang} />}
 						{project.mockup === 'seo' && <SEOMockup lang={lang} />}
 						{project.mockup === 'rideshare' && <RideshareMockup lang={lang} />}
+						{project.mockup === 'sdui' && <SduiMockup lang={lang} />}
 					</div>
 					<div class="text-col">
 						<h3>{project.name}</h3>

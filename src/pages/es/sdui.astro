@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SduiPage from '../../components/sdui/SduiPage.astro';
+import { profile } from '../../data/resume';
+
+const lang = 'es' as const;
+---
+
+<Layout
+	lang={lang}
+	title={`Server-Driven UI — ${profile.name}`}
+	description="Demostración de Server-Driven UI: JSON interpretado en tiempo de build y renderizado con componentes reales."
+>
+	<main>
+		<SduiPage lang={lang} />
+	</main>
+</Layout>

@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SeoPage from '../../components/seo/SeoPage.astro';
+import { profile } from '../../data/resume';
+
+const lang = 'es' as const;
+---
+
+<Layout
+	lang={lang}
+	title={`SEO — ${profile.name}`}
+	description="Técnicas reales de SEO aplicadas en este sitio: canonical, Open Graph, JSON-LD y sitemap.xml."
+>
+	<main>
+		<SeoPage lang={lang} />
+	</main>
+</Layout>

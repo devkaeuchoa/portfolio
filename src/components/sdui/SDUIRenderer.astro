@@ -1,0 +1,60 @@
+---
+import type { SduiNode } from './schema';
+import Card from '../design-system/Card.astro';
+import Button from '../design-system/Button.astro';
+import Badge from '../design-system/Badge.astro';
+import SDUIRenderer from './SDUIRenderer.astro';
+
+interface Props {
+  node: SduiNode;
+}
+
+const { node } = Astro.props;
+---
+
+{node.type === 'card' && (
+	<Card title={node.title}>
+		{node.children.map((child) => <SDUIRenderer node={child} />)}
+	</Card>
+)}
+
+{node.type === 'heading' && <h4 class="sdui-heading">{node.text}</h4>}
+
+{node.type === 'text' && <p class="sdui-text">{node.text}</p>}
+
+{node.type === 'button' && <Button variant={node.variant}>{node.label}</Button>}
+
+{node.type === 'badge' && <Badge tone={node.tone}>{node.text}</Badge>}
+
+{node.type === 'list' && (
+	<ul class="sdui-list">
+		{node.items.map((item) => <li>{item}</li>)}
+	</ul>
+)}
+
+<style>
+	.sdui-heading {
+		flex-basis: 100%;
+		margin: 0;
+		font-size: 0.95rem;
+	}
+
+	.sdui-text {
+		flex-basis: 100%;
+		margin: 0;
+		font-size: 0.88rem;
+		color: var(--color-muted);
+	}
+
+	.sdui-list {
+		flex-basis: 100%;
+		margin: 0;
+		padding-left: 1.1rem;
+		font-size: 0.88rem;
+		color: var(--color-muted);
+	}
+
+	.sdui-list li + li {
+		margin-top: 0.25rem;
+	}
+</style>
