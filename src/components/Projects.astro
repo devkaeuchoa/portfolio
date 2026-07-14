@@ -16,6 +16,7 @@ const { lang } = Astro.props;
 const t = content[lang];
 const heading = { pt: 'Projetos', en: 'Projects', es: 'Proyectos' }[lang];
 const demoLinkLabel = { pt: 'Ver Demo', en: 'View Demo', es: 'Ver Demo' }[lang];
+const sortedProjects = [...t.projects].sort((a, b) => Number(!!b.demoUrl) - Number(!!a.demoUrl));
 ---
 
 {t.projects.length > 0 && (
@@ -24,7 +25,7 @@ const demoLinkLabel = { pt: 'Ver Demo', en: 'View Demo', es: 'Ver Demo' }[lang];
 	<h2>{heading}</h2>
 	<div class="projects-grid">
 		{
-			t.projects.map((project) => (
+			sortedProjects.map((project) => (
 				<article class="entry">
 					<div class="mockup-col">
 						{project.mockup === 'checkout' && <CheckoutMockup lang={lang} />}
